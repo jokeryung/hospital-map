@@ -1,0 +1,2568 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>醫管局醫院聯網溫習地圖與互動測驗系統</title>
+  
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-light: #3b82f6;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+      --c-hke: #1d4ed8;
+      --c-hkw: #0f766e;
+      --c-kcc: #c2410c;
+      --c-kec: #6d28d9;
+      --c-kwc: #be123c;
+      --c-nte: #047857;
+      --c-ntw: #b45309;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding: 0;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #0f766e 100%);
+      color: white;
+      padding: 24px 20px;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-title-box h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .header-title-box p {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      margin-top: 4px;
+    }
+
+    .header-stats {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .stat-badge {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1400px;
+      margin: 20px auto;
+      padding: 0 16px;
+    }
+
+    /* Exam Tips Alert Banner */
+    .tips-banner {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-left: 5px solid #f59e0b;
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+    }
+
+    .tips-banner .icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      line-height: 1.2;
+    }
+
+    .tips-banner strong {
+      color: #92400e;
+    }
+
+    .tips-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 8px 16px;
+      margin-top: 8px;
+      color: #78350f;
+    }
+
+    .tip-tag {
+      background: #fef3c7;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      color: #b45309;
+      font-size: 0.8rem;
+      margin-right: 4px;
+    }
+
+    /* Main Grid: List + Map */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 20px;
+      min-height: 680px;
+      margin-bottom: 28px;
+    }
+
+    @media (max-width: 1024px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Left Sidebar: Hospital List */
+    .sidebar-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      height: 680px;
+      min-height: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .sidebar-header {
+      flex: 0 0 auto;
+      padding: 16px 18px 12px;
+      border-bottom: 1px solid var(--border);
+      background: #fafafa;
+      z-index: 5;
+    }
+
+    .sidebar-header h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sidebar-header .count-pill {
+      font-size: 0.75rem;
+      background: #e2e8f0;
+      color: #475569;
+      padding: 2px 8px;
+      border-radius: 9999px;
+    }
+
+    .btn-toggle-all {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      cursor: pointer;
+      color: #475569;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+
+    .btn-toggle-all:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .search-input-box {
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .search-input-box input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .search-input-box input:focus {
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+
+    .search-input-box .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+
+    /* Filter pills */
+    .cluster-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-top: 4px;
+    }
+
+    .filter-btn {
+      border: 1px solid #cbd5e1;
+      background: white;
+      color: #334155;
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .filter-btn:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .filter-btn.active {
+      background: #0f172a;
+      color: white;
+      border-color: #0f172a;
+    }
+
+    .filter-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Sidebar Content List - CRITICAL FIX FOR OVERFLOW & SQUISHING */
+    .sidebar-list {
+      flex: 1 1 0px;
+      min-height: 0;
+      height: 0;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      padding: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .cluster-group {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .cluster-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .cluster-group-header {
+      padding: 10px 14px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      border-left: 5px solid #94a3b8;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      min-height: 42px;
+    }
+
+    .cluster-group-header:hover {
+      filter: brightness(0.96);
+    }
+
+    .cluster-group-header .cluster-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cluster-group-header .toggle-icon {
+      font-size: 0.75rem;
+      color: #64748b;
+      transition: transform 0.2s;
+    }
+
+    .cluster-group.collapsed .cluster-group-header {
+      border-radius: var(--radius-sm);
+    }
+
+    .cluster-group.collapsed .toggle-icon {
+      transform: rotate(-90deg);
+    }
+
+    .cluster-group.collapsed .hospital-items {
+      display: none !important;
+    }
+
+    .hospital-items {
+      padding: 6px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: #ffffff;
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    }
+
+    .hospital-item {
+      padding: 9px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      border: 1px solid #f1f5f9;
+      background: #ffffff;
+    }
+
+    .hospital-item:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      transform: translateX(2px);
+    }
+
+    .hospital-item.active {
+      background: #e0f2fe !important;
+      border-color: #0284c7 !important;
+      box-shadow: 0 0 0 1.5px #0284c7;
+    }
+
+    .hospital-item-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hospital-item-meta {
+      font-size: 0.74rem;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .trap-badge {
+      background: #fee2e2;
+      color: #b91c1c;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    /* Right: Map Area */
+    .map-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      height: 680px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: #fafafa;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .map-header h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .map-toolbar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn-sm {
+      background: white;
+      border: 1px solid #cbd5e1;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s;
+    }
+
+    .btn-sm:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    #map {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      background: #e5e7eb;
+      z-index: 1;
+    }
+
+    /* Custom Map Markers */
+    .custom-div-icon {
+      background: none;
+      border: none;
+    }
+
+    .hospital-pin {
+      width: 28px;
+      height: 28px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.35);
+      border: 2px solid white;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+    }
+
+    .hospital-pin .pin-icon {
+      transform: rotate(45deg);
+      color: white;
+      font-size: 13px;
+      font-weight: 900;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .hospital-pin:hover {
+      transform: rotate(-45deg) scale(1.25);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.45);
+      z-index: 9999 !important;
+    }
+
+    .hospital-pin.highlighted {
+      transform: rotate(-45deg) scale(1.4);
+      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.6), 0 6px 12px rgba(0,0,0,0.4);
+      animation: pulse-pin 1.2s infinite alternate;
+      z-index: 99999 !important;
+    }
+
+    @keyframes pulse-pin {
+      from { transform: rotate(-45deg) scale(1.3); }
+      to { transform: rotate(-45deg) scale(1.55); }
+    }
+
+    /* Leaflet Popup Styling */
+    .leaflet-popup-content-wrapper {
+      border-radius: var(--radius-sm);
+      padding: 4px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .popup-box {
+      font-family: inherit;
+      padding: 8px 10px;
+      max-width: 270px;
+    }
+
+    .popup-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+
+    .popup-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .popup-district {
+      font-size: 0.78rem;
+      color: #64748b;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .popup-note {
+      font-size: 0.78rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 6px 8px;
+      border-radius: 4px;
+      color: #334155;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .popup-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: #0284c7;
+      color: white;
+      border: none;
+      padding: 6px 0;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .popup-btn:hover {
+      background: #0369a1;
+    }
+
+    /* Map Legend */
+    .map-legend {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(6px);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border);
+      z-index: 800;
+      font-size: 0.75rem;
+      max-width: 210px;
+    }
+
+    .map-legend-title {
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 6px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+
+    .legend-item:hover {
+      background: #f1f5f9;
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    .legend-name {
+      color: #1e293b;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .legend-count {
+      color: #94a3b8;
+      font-size: 0.7rem;
+    }
+
+    /* Quiz Section */
+    .quiz-section {
+      background: var(--card-bg);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin-bottom: 40px;
+    }
+
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #f1f5f9;
+      margin-bottom: 24px;
+    }
+
+    .quiz-title-area h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quiz-title-area p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .quiz-control-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .score-box {
+      background: #f1f5f9;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #1e293b;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .score-box .num {
+      color: #2563eb;
+      font-size: 1.15rem;
+    }
+
+    .btn-refresh {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25);
+      transition: all 0.2s;
+    }
+
+    .btn-refresh:hover {
+      background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-refresh:active {
+      transform: translateY(0);
+    }
+
+    /* Filter Quiz Mode */
+    .quiz-mode-select {
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #334155;
+      background: white;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Questions Container */
+    .questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .question-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      transition: border-color 0.2s;
+    }
+
+    .question-card:hover {
+      border-color: #cbd5e1;
+    }
+
+    .question-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .question-number {
+      background: #0f172a;
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.88rem;
+      flex-shrink: 0;
+    }
+
+    .question-text-box {
+      flex: 1;
+    }
+
+    .question-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+      background: #e2e8f0;
+      color: #475569;
+    }
+
+    .question-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.4;
+    }
+
+    .question-title .highlight {
+      color: #2563eb;
+      background: #eff6ff;
+      padding: 1px 6px;
+      border-radius: 4px;
+      border: 1px solid #bfdbfe;
+    }
+
+    /* Options Grid */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 640px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .option-btn {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #1e293b;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+      transform: translateY(-1px);
+    }
+
+    .option-letter {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    /* Option States */
+    .option-btn.selected-correct {
+      background: #ecfdf5 !important;
+      border-color: #10b981 !important;
+      color: #065f46 !important;
+    }
+
+    .option-btn.selected-correct .option-letter {
+      background: #10b981;
+      color: white;
+    }
+
+    .option-btn.selected-wrong {
+      background: #fef2f2 !important;
+      border-color: #ef4444 !important;
+      color: #991b1b !important;
+    }
+
+    .option-btn.selected-wrong .option-letter {
+      background: #ef4444;
+      color: white;
+    }
+
+    .option-btn.reveal-correct {
+      background: #ecfdf5 !important;
+      border-color: #10b981 !important;
+      border-style: dashed !important;
+      color: #065f46 !important;
+    }
+
+    .option-btn.reveal-correct .option-letter {
+      background: #10b981;
+      color: white;
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    /* Feedback Explanation Box */
+    .feedback-box {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .feedback-box.correct {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #16a34a;
+      color: #166534;
+    }
+
+    .feedback-box.wrong {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-left: 4px solid #dc2626;
+      color: #991b1b;
+    }
+
+    .feedback-header {
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .feedback-detail {
+      color: #334155;
+      font-size: 0.86rem;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed rgba(0,0,0,0.1);
+    }
+
+    .btn-show-on-map {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+      background: #0284c7;
+      color: white;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-show-on-map:hover {
+      background: #0369a1;
+    }
+
+    /* Study Card Matrix */
+    .study-matrix {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-top: 24px;
+    }
+
+    .study-matrix h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .matrix-card {
+      background: white;
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .matrix-card-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .matrix-card ul {
+      list-style-type: none;
+      font-size: 0.8rem;
+      color: #475569;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .matrix-card li {
+      position: relative;
+      padding-left: 14px;
+    }
+
+    .matrix-card li::before {
+      content: "•";
+      position: absolute;
+      left: 2px;
+      color: #94a3b8;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 24px 16px 36px;
+      color: #94a3b8;
+      font-size: 0.82rem;
+      border-top: 1px solid var(--border);
+      background: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="header-content">
+      <div class="header-title-box">
+        <h1>醫管局醫院聯網溫習地圖與測驗系統</h1>
+        <p>依據醫護支援人員 (PCA) 護理技巧課程筆記編製 ｜ 43 間公立醫院及醫療機構全收錄</p>
+      </div>
+      <div class="header-stats">
+        <div class="stat-badge">7 大醫院聯網</div>
+        <div class="stat-badge">43 間公立機構</div>
+        <div class="stat-badge">地圖互動高亮</div>
+        <div class="stat-badge">無限自動出題 MC</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <!-- Exam Trap Highlights Banner -->
+    <div class="tips-banner">
+      
+      <div>
+        <strong>【考牌筆試必記易錯重點 & 特殊行政劃分】</strong>
+        <p style="margin-top: 2px; font-size: 0.85rem; color: #92400e;">考試最常出「地理位置」同「行政聯網」不同的陷阱題，請特別留意以下幾間：</p>
+        <div class="tips-list">
+          <div><span class="tip-tag">港島東聯網</span><strong>長洲醫院</strong>（位於離島，但納入港島東！）</div>
+          <div><span class="tip-tag">九龍西聯網</span><strong>仁濟醫院</strong>（位於荃灣新界，但納入九龍西！）</div>
+          <div><span class="tip-tag">九龍西聯網</span><strong>北大嶼山醫院</strong>（位於東涌離島，但納入九龍西！）</div>
+          <div><span class="tip-tag">港島西聯網</span><strong>葛量洪醫院</strong>（位於黃竹坑，但屬港島西；黃竹坑醫院屬港島東！）</div>
+          <div><span class="tip-tag">九龍東聯網</span><strong>將軍澳醫院 / 靈實醫院</strong>（行政屬西貢新界，但納入九龍東！）</div>
+          <div><span class="tip-tag">九龍中聯網</span><strong>香港兒童醫院 / 輸血服務中心</strong>（位於啟德及京士柏，納入九龍中！）</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Section: List & Map -->
+    <div class="main-grid">
+      
+      <!-- Left: Sidebar Hospital List -->
+      <div class="sidebar-card">
+        <div class="sidebar-header">
+          <h2>
+            <span>醫院名單 (按聯網分組)</span>
+            <div class="header-actions">
+              <span class="count-pill" id="total-visible-count">共 43 間</span>
+              <button class="btn-toggle-all" id="btn-toggle-groups" title="展開或收起所有聯網">全部收起/展開</button>
+            </div>
+          </h2>
+          
+          <div class="search-input-box">
+            
+            <input type="text" id="hospital-search" placeholder="搜尋醫院名稱、地區、關鍵字..." autocomplete="off">
+          </div>
+
+          <div class="cluster-filter-bar" id="filter-buttons">
+            <button class="filter-btn active" data-cluster="all">全部 (43)</button>
+            <button class="filter-btn" data-cluster="港島東聯網">
+              <span class="filter-dot" style="background: var(--c-hke);"></span>港島東 (7)
+            </button>
+            <button class="filter-btn" data-cluster="港島西聯網">
+              <span class="filter-dot" style="background: var(--c-hkw);"></span>港島西 (7)
+            </button>
+            <button class="filter-btn" data-cluster="九龍中聯網">
+              <span class="filter-dot" style="background: var(--c-kcc);"></span>九龍中 (9)
+            </button>
+            <button class="filter-btn" data-cluster="九龍東聯網">
+              <span class="filter-dot" style="background: var(--c-kec);"></span>九龍東 (3)
+            </button>
+            <button class="filter-btn" data-cluster="九龍西聯網">
+              <span class="filter-dot" style="background: var(--c-kwc);"></span>九龍西 (5)
+            </button>
+            <button class="filter-btn" data-cluster="新界東聯網">
+              <span class="filter-dot" style="background: var(--c-nte);"></span>新界東 (7)
+            </button>
+            <button class="filter-btn" data-cluster="新界西聯網">
+              <span class="filter-dot" style="background: var(--c-ntw);"></span>新界西 (5)
+            </button>
+          </div>
+        </div>
+
+        <!-- Scrollable Hospital List -->
+        <div class="sidebar-list" id="sidebar-hospital-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Right: Interactive Map -->
+      <div class="map-card">
+        <div class="map-header">
+          <h2>
+            <span>香港公立醫院分佈地圖 (Google Maps 繁體中文底圖)</span>
+            <span style="font-size: 0.78rem; font-weight: normal; color: #64748b;">(已切換至 Google 地圖，右上角可切換衛星視角)</span>
+          </h2>
+          <div class="map-toolbar">
+            <button class="btn-sm" id="btn-reset-map" title="還原至全香港視角">全港視野</button>
+          </div>
+        </div>
+
+        <div id="map"></div>
+
+        <!-- Legend -->
+        <div class="map-legend">
+          <div class="map-legend-title">
+            <span>聯網顏色對照</span>
+            <span>點擊快速篩選</span>
+          </div>
+          <div class="legend-item" onclick="filterByCluster('港島東聯網')">
+            <div class="legend-color" style="background: var(--c-hke);"></div>
+            <span class="legend-name">港島東聯網</span>
+            <span class="legend-count">7間</span>
+          </div>
+          <div class="legend-item" onclick="filterByCluster('港島西聯網')">
+            <div class="legend-color" style="background: var(--c-hkw);"></div>
+            <span class="legend-name">港島西聯網</span>
+            <span class="legend-count">7間</span>
+          </div>
+          <div class="legend-item" onclick="filterByCluster('九龍中聯網')">
+            <div class="legend-color" style="background: var(--c-kcc);"></div>
+            <span class="legend-name">九龍中聯網</span>
+            <span class="legend-count">9間</span>
+          </div>
+          <div class="legend-item" onclick="filterByCluster('九龍東聯網')">
+            <div class="legend-color" style="background: var(--c-kec);"></div>
+            <span class="legend-name">九龍東聯網</span>
+            <span class="legend-count">3間</span>
+          </div>
+          <div class="legend-item" onclick="filterByCluster('九龍西聯網')">
+            <div class="legend-color" style="background: var(--c-kwc);"></div>
+            <span class="legend-name">九龍西聯網</span>
+            <span class="legend-count">5間</span>
+          </div>
+          <div class="legend-item" onclick="filterByCluster('新界東聯網')">
+            <div class="legend-color" style="background: var(--c-nte);"></div>
+            <span class="legend-name">新界東聯網</span>
+            <span class="legend-count">7間</span>
+          </div>
+          <div class="legend-item" onclick="filterByCluster('新界西聯網')">
+            <div class="legend-color" style="background: var(--c-ntw);"></div>
+            <span class="legend-name">新界西聯網</span>
+            <span class="legend-count">5間</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Quiz Section: Multiple Choice Questions -->
+    <div class="quiz-section" id="quiz-container">
+      <div class="quiz-header">
+        <div class="quiz-title-area">
+          <h2>醫院聯網溫習測驗 (隨機 5 條 MC 題)</h2>
+          <p>針對筆試考核重點：測驗某某區/聯網有邊間醫院、某醫院屬於邊個聯網，即時批改並附詳盡解析。</p>
+        </div>
+        
+        <div class="quiz-control-bar">
+          <select id="quiz-mode" class="quiz-mode-select">
+            <option value="mixed">混合出題 (聯網問醫院 + 醫院問聯網)</option>
+            <option value="cluster-to-hospital">考題：某某聯網包含邊間醫院？</option>
+            <option value="hospital-to-cluster">考題：某間醫院屬於邊個聯網？</option>
+            <option value="traps-only">考牌易錯陷阱特訓 (長洲/仁濟/東涌等)</option>
+          </select>
+
+          <div class="score-box">
+            <span>得分:</span>
+            <span class="num" id="current-score">0 / 0</span>
+          </div>
+
+          <button class="btn-refresh" id="btn-refresh-quiz">
+            <span>換一批題目 / 重新生成 5 題</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Questions List Container -->
+      <div class="questions-list" id="questions-container">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+
+    <!-- Summary Cheat Sheet Section -->
+    <div class="study-matrix">
+      <h3>7 大醫院聯網重點全覽表（按大區劃分）</h3>
+      <div class="matrix-grid">
+        <div class="matrix-card">
+          <div class="matrix-card-title" style="color: var(--c-hke);">
+            <span>港島東聯網 (7間)</span>
+          </div>
+          <ul>
+            <li><strong>東區尤德夫人那打素醫院</strong> (急症全科龍頭)</li>
+            <li><strong>東華東院</strong> (眼科/復康)</li>
+            <li><strong>長洲醫院</strong> (注意：離島區，屬港島東)</li>
+            <li><strong>律敦治醫院</strong> (灣仔急症全科)</li>
+            <li><strong>春磡角慈氏護養院</strong> (護養)</li>
+            <li><strong>黃竹坑醫院</strong> (老人護養)</li>
+            <li><strong>鄧肇堅醫院</strong> (急症訓練中心/日間)</li>
+          </ul>
+        </div>
+
+        <div class="matrix-card">
+          <div class="matrix-card-title" style="color: var(--c-hkw);">
+            <span>港島西聯網 (7間)</span>
+          </div>
+          <ul>
+            <li><strong>瑪麗醫院</strong> (港島西龍頭/教學醫院)</li>
+            <li><strong>葛量洪醫院</strong> (注意：黃竹坑，屬港島西心胸肺專科)</li>
+            <li><strong>東華醫院</strong> (上環/日間手術)</li>
+            <li><strong>大口環根德公爵夫人兒童醫院</strong> (兒童專科)</li>
+            <li><strong>東華三院馮堯敬醫院</strong> (老人科復康)</li>
+            <li><strong>麥理浩復康院</strong> (復康)</li>
+            <li><strong>贊育醫院</strong> (日間產科/婦科)</li>
+          </ul>
+        </div>
+
+        <div class="matrix-card">
+          <div class="matrix-card-title" style="color: var(--c-kcc);">
+            <span>九龍中聯網 (9間)</span>
+          </div>
+          <ul>
+            <li><strong>伊利沙伯醫院</strong> (急症全科龍頭)</li>
+            <li><strong>廣華醫院</strong> (油麻地急症全科)</li>
+            <li><strong>九龍醫院</strong> (胸肺復康/精神科)</li>
+            <li><strong>香港兒童醫院</strong> (啟德第三層兒科)</li>
+            <li><strong>香港眼科醫院</strong> (專科眼科轉介)</li>
+            <li><strong>香港紅十字會輸血服務中心</strong> (全港血庫)</li>
+            <li><strong>香港佛教醫院</strong> (樂富全科復康)</li>
+            <li><strong>聖母醫院</strong> (黃大仙社區全科)</li>
+            <li><strong>東華三院黃大仙醫院</strong> (胸肺復康)</li>
+            <li style="color:#b45309;"><em>[未來] 啟德新急症醫院 (興建中)</em></li>
+          </ul>
+        </div>
+
+        <div class="matrix-card">
+          <div class="matrix-card-title" style="color: var(--c-kec);">
+            <span>九龍東聯網 (3間)</span>
+          </div>
+          <ul>
+            <li><strong>基督教聯合醫院</strong> (觀塘急症全科龍頭)</li>
+            <li><strong>將軍澳醫院</strong> (注意：西貢新界，屬九龍東)</li>
+            <li><strong>靈實醫院</strong> (將軍澳復康療養)</li>
+          </ul>
+        </div>
+
+        <div class="matrix-card">
+          <div class="matrix-card-title" style="color: var(--c-kwc);">
+            <span>九龍西聯網 (5間)</span>
+          </div>
+          <ul>
+            <li><strong>瑪嘉烈醫院</strong> (急症龍頭/傳染病中心)</li>
+            <li><strong>明愛醫院</strong> (深水埗急症全科)</li>
+            <li><strong>葵涌醫院</strong> (精神科專科)</li>
+            <li><strong>仁濟醫院</strong> (注意：荃灣新界，屬九龍西)</li>
+            <li><strong>北大嶼山醫院</strong> (注意：東涌離島，屬九龍西)</li>
+          </ul>
+        </div>
+
+        <div class="matrix-card">
+          <div class="matrix-card-title" style="color: var(--c-nte);">
+            <span>新界東聯網 (7間)</span>
+          </div>
+          <ul>
+            <li><strong>威爾斯親王醫院</strong> (新界東龍頭/中大教學)</li>
+            <li><strong>雅麗氏何妙齡那打素醫院</strong> (大埔急症全科)</li>
+            <li><strong>北區醫院</strong> (上水急症全科)</li>
+            <li><strong>大埔醫院</strong> (復康/精神科)</li>
+            <li><strong>沙田醫院</strong> (沙田亞公角療養復康)</li>
+            <li><strong>白普理寧養中心</strong> (沙田善終寧養)</li>
+            <li><strong>沙田慈氏護養院</strong> (沙田嚴重殘疾護養)</li>
+          </ul>
+        </div>
+
+        <div class="matrix-card">
+          <div class="matrix-card-title" style="color: var(--c-ntw);">
+            <span>新界西聯網 (5間)</span>
+          </div>
+          <ul>
+            <li><strong>屯門醫院</strong> (新界西急症龍頭)</li>
+            <li><strong>博愛醫院</strong> (元朗凹頭急症全科)</li>
+            <li><strong>天水圍醫院</strong> (天水圍急症全科)</li>
+            <li><strong>青山醫院</strong> (屯門精神科專科)</li>
+            <li><strong>小欖醫院</strong> (嚴重智障療養，遷屯門)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>醫管局醫院聯網溫習互動系統 ｜ 專為醫護支援人員護理證書考生設計 ｜ 地圖數據基於香港醫院管理局公開資訊</p>
+  </footer>
+
+  <!-- Leaflet Map JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <script>
+    // Data definition
+    const hospitalsData = [
+  {
+    "id": "h1",
+    "name": "東區尤德夫人那打素醫院",
+    "cluster": "港島東聯網",
+    "region": "香港島",
+    "district": "東區 (柴灣)",
+    "lat": 22.2694,
+    "lng": 114.2361,
+    "note": "港島東龍頭急症全科醫院，設有24小時急症室及多個專科。",
+    "isTrap": false
+  },
+  {
+    "id": "h2",
+    "name": "東華東院",
+    "cluster": "港島東聯網",
+    "region": "香港島",
+    "district": "灣仔區 (掃桿埔/銅鑼灣)",
+    "lat": 22.2745,
+    "lng": 114.1906,
+    "note": "提供眼科、日間手術、內科及復康延續護理服務。",
+    "isTrap": false
+  },
+  {
+    "id": "h3",
+    "name": "長洲醫院",
+    "cluster": "港島東聯網",
+    "region": "香港島",
+    "district": "離島區 (長洲)",
+    "lat": 22.2078,
+    "lng": 114.0322,
+    "note": "【考牌必考陷阱】：地理上位於離島區（長洲），但行政管理上納入「港島東聯網」！",
+    "isTrap": true
+  },
+  {
+    "id": "h4",
+    "name": "律敦治醫院",
+    "cluster": "港島東聯網",
+    "region": "香港島",
+    "district": "灣仔區 (灣仔)",
+    "lat": 22.2753,
+    "lng": 114.1751,
+    "note": "急症全科醫院，與鄧肇堅醫院同為管治合作夥伴。",
+    "isTrap": false
+  },
+  {
+    "id": "h5",
+    "name": "春磡角慈氏護養院",
+    "cluster": "港島東聯網",
+    "region": "香港島",
+    "district": "南區 (舂磡角)",
+    "lat": 22.2173,
+    "lng": 114.2016,
+    "note": "專門為嚴重肢體傷殘及長期病患者提供延續護理與護養服務。",
+    "isTrap": false
+  },
+  {
+    "id": "h6",
+    "name": "黃竹坑醫院",
+    "cluster": "港島東聯網",
+    "region": "香港島",
+    "district": "南區 (黃竹坑)",
+    "lat": 22.2505,
+    "lng": 114.1706,
+    "note": "【注意區分】：黃竹坑醫院屬「港島東聯網」，專注長者護養及復康；而同在黃竹坑的葛量洪醫院則屬「港島西聯網」！",
+    "isTrap": true
+  },
+  {
+    "id": "h7",
+    "name": "鄧肇堅醫院",
+    "cluster": "港島東聯網",
+    "region": "香港島",
+    "district": "灣仔區 (灣仔)",
+    "lat": 22.2747,
+    "lng": 114.1772,
+    "note": "設有社區日間醫療中心、急症科訓練中心及專科門診。",
+    "isTrap": false
+  },
+  {
+    "id": "h8",
+    "name": "大口環根德公爵夫人兒童醫院",
+    "cluster": "港島西聯網",
+    "region": "香港島",
+    "district": "南區 (沙灣/薄扶林)",
+    "lat": 22.2737,
+    "lng": 114.1245,
+    "note": "專門提供兒科骨科、脊柱畸形矯正及神經發育康復等特殊兒童醫療服務。",
+    "isTrap": false
+  },
+  {
+    "id": "h9",
+    "name": "東華三院馮堯敬醫院",
+    "cluster": "港島西聯網",
+    "region": "香港島",
+    "district": "南區 (沙灣/薄扶林)",
+    "lat": 22.2747,
+    "lng": 114.1255,
+    "note": "專為長者提供內科延續護理、老人科復康及日間醫院服務。",
+    "isTrap": false
+  },
+  {
+    "id": "h10",
+    "name": "東華醫院",
+    "cluster": "港島西聯網",
+    "region": "香港島",
+    "district": "中西區 (上環)",
+    "lat": 22.2842,
+    "lng": 114.1478,
+    "note": "香港歷史最悠久的華人慈善醫院，現設日間手術、耳鼻喉科及腎科日間中心。",
+    "isTrap": false
+  },
+  {
+    "id": "h11",
+    "name": "麥理浩復康院",
+    "cluster": "港島西聯網",
+    "region": "香港島",
+    "district": "南區 (沙灣/薄扶林)",
+    "lat": 22.2764,
+    "lng": 114.1264,
+    "note": "提供全面復康服務，包括神經復康、脊髓損傷及義肢矯形等。",
+    "isTrap": false
+  },
+  {
+    "id": "h12",
+    "name": "葛量洪醫院",
+    "cluster": "港島西聯網",
+    "region": "香港島",
+    "district": "南區 (黃竹坑)",
+    "lat": 22.2504,
+    "lng": 114.1747,
+    "note": "【考牌必考陷阱】：座落於黃竹坑，但屬於「港島西聯網」！以心胸肺科專科及心臟轉介中心聞名。",
+    "isTrap": true
+  },
+  {
+    "id": "h13",
+    "name": "瑪麗醫院",
+    "cluster": "港島西聯網",
+    "region": "香港島",
+    "district": "南區 (薄扶林)",
+    "lat": 22.2707,
+    "lng": 114.1311,
+    "note": "港島西龍頭醫院，香港大學李嘉誠醫學院教學醫院，全港主要器官移植及急症創傷中心。",
+    "isTrap": false
+  },
+  {
+    "id": "h14",
+    "name": "贊育醫院",
+    "cluster": "港島西聯網",
+    "region": "香港島",
+    "district": "中西區 (西營盤)",
+    "lat": 22.2863,
+    "lng": 114.1422,
+    "note": "日間婦產科產前及產後檢查診所、日間婦科診療中心。",
+    "isTrap": false
+  },
+  {
+    "id": "h15",
+    "name": "九龍醫院",
+    "cluster": "九龍中聯網",
+    "region": "九龍",
+    "district": "九龍城區 (亞皆老街)",
+    "lat": 22.3243,
+    "lng": 114.1812,
+    "note": "提供急症精神科、呼吸系統科、胸肺復康及骨科延續護理。",
+    "isTrap": false
+  },
+  {
+    "id": "h16",
+    "name": "伊利沙伯醫院",
+    "cluster": "九龍中聯網",
+    "region": "九龍",
+    "district": "油尖旺區 (京士柏)",
+    "lat": 22.3088,
+    "lng": 114.1747,
+    "note": "九龍中大型急症全科龍頭醫院，第三層醫療轉介及主要急症創傷中心。",
+    "isTrap": false
+  },
+  {
+    "id": "h17",
+    "name": "香港佛教醫院",
+    "cluster": "九龍中聯網",
+    "region": "九龍",
+    "district": "黃大仙區 (樂富)",
+    "lat": 22.3364,
+    "lng": 114.1866,
+    "note": "社區全科醫院，提供內科、骨科及關節置換復康護理服務。",
+    "isTrap": false
+  },
+  {
+    "id": "h18",
+    "name": "香港紅十字會輸血服務中心",
+    "cluster": "九龍中聯網",
+    "region": "九龍",
+    "district": "油尖旺區 (京士柏)",
+    "lat": 22.3101,
+    "lng": 114.1738,
+    "note": "【注意】：全港公私立醫院唯一血液及血製品供應機構，行政歸九龍中聯網。",
+    "isTrap": true
+  },
+  {
+    "id": "h19",
+    "name": "香港眼科醫院",
+    "cluster": "九龍中聯網",
+    "region": "九龍",
+    "district": "九龍城區 (亞皆老街)",
+    "lat": 22.3256,
+    "lng": 114.1856,
+    "note": "全港第三層眼科專科轉介中心及日間手術中心。",
+    "isTrap": false
+  },
+  {
+    "id": "h20",
+    "name": "香港兒童醫院",
+    "cluster": "九龍中聯網",
+    "region": "九龍",
+    "district": "九龍城區/觀塘區 (啟德)",
+    "lat": 22.3168,
+    "lng": 114.2117,
+    "note": "【注意】：位於啟德，是全港唯一第三層兒科轉介專科醫院，屬於「九龍中聯網」。",
+    "isTrap": true
+  },
+  {
+    "id": "h21",
+    "name": "廣華醫院",
+    "cluster": "九龍中聯網",
+    "region": "九龍",
+    "district": "油尖旺區 (油麻地)",
+    "lat": 22.3155,
+    "lng": 114.1714,
+    "note": "東華三院創辦的重要急症全科醫院，設24小時急症室及中西醫結合服務。",
+    "isTrap": false
+  },
+  {
+    "id": "h22",
+    "name": "聖母醫院",
+    "cluster": "九龍中聯網",
+    "region": "九龍",
+    "district": "黃大仙區 (黃大仙)",
+    "lat": 22.3444,
+    "lng": 114.1983,
+    "note": "社區醫院，提供非急症內科、外科及日間手術門診服務。",
+    "isTrap": false
+  },
+  {
+    "id": "h23",
+    "name": "東華三院黃大仙醫院",
+    "cluster": "九龍中聯網",
+    "region": "九龍",
+    "district": "黃大仙區 (黃大仙)",
+    "lat": 22.3435,
+    "lng": 114.1969,
+    "note": "提供延續護理、結核病及胸肺科專科復康、老人科及安寧療護。",
+    "isTrap": false
+  },
+  {
+    "id": "h24",
+    "name": "基督教聯合醫院",
+    "cluster": "九龍東聯網",
+    "region": "九龍",
+    "district": "觀塘區 (觀塘協和街)",
+    "lat": 22.3225,
+    "lng": 114.2267,
+    "note": "九龍東龍頭大型急症全科醫院，服務觀塘區龐大人口。",
+    "isTrap": false
+  },
+  {
+    "id": "h25",
+    "name": "將軍澳醫院",
+    "cluster": "九龍東聯網",
+    "region": "九龍",
+    "district": "西貢區 (將軍澳寶寧里)",
+    "lat": 22.3175,
+    "lng": 114.27,
+    "note": "【注意】：行政區雖屬西貢區（新界），但納入「九龍東聯網」！設24小時急症室及日間手術。",
+    "isTrap": true
+  },
+  {
+    "id": "h26",
+    "name": "靈實醫院",
+    "cluster": "九龍東聯網",
+    "region": "九龍",
+    "district": "西貢區 (將軍澳靈實路)",
+    "lat": 22.3136,
+    "lng": 114.2547,
+    "note": "【注意】：位於將軍澳，屬於「九龍東聯網」，提供老人科、復康及胸肺療養安寧照護。",
+    "isTrap": true
+  },
+  {
+    "id": "h27",
+    "name": "仁濟醫院",
+    "cluster": "九龍西聯網",
+    "region": "九龍",
+    "district": "荃灣區 (荃灣仁濟街)",
+    "lat": 22.3703,
+    "lng": 114.1194,
+    "note": "【考牌必考大陷阱】：地理上在荃灣（新界），但行政劃分上屬於「九龍西聯網」！千萬別選新界西！",
+    "isTrap": true
+  },
+  {
+    "id": "h28",
+    "name": "明愛醫院",
+    "cluster": "九龍西聯網",
+    "region": "九龍",
+    "district": "深水埗區 (長沙灣)",
+    "lat": 22.34,
+    "lng": 114.1533,
+    "note": "深水埗主要急症全科醫院，設有兒童發展復康中心及日間醫療中心。",
+    "isTrap": false
+  },
+  {
+    "id": "h29",
+    "name": "葵涌醫院",
+    "cluster": "九龍西聯網",
+    "region": "九龍",
+    "district": "葵青區 (葵涌)",
+    "lat": 22.3586,
+    "lng": 114.1264,
+    "note": "精神科專科醫院，提供成人、兒童及青少年精神科及藥物成癮治療。",
+    "isTrap": false
+  },
+  {
+    "id": "h30",
+    "name": "瑪嘉烈醫院",
+    "cluster": "九龍西聯網",
+    "region": "九龍",
+    "district": "葵青區 (荔景/瑪嘉烈)",
+    "lat": 22.3411,
+    "lng": 114.135,
+    "note": "九龍西龍頭急症全科醫院，全港傳染病中心所在及大型急症創傷中心。",
+    "isTrap": false
+  },
+  {
+    "id": "h31",
+    "name": "北大嶼山醫院",
+    "cluster": "九龍西聯網",
+    "region": "九龍",
+    "district": "離島區 (東涌)",
+    "lat": 22.2894,
+    "lng": 113.9422,
+    "note": "【考牌必考大陷阱】：地理上在東涌（離島區），但行政劃分上屬於「九龍西聯網」！千萬別選新界西或離島！",
+    "isTrap": true
+  },
+  {
+    "id": "h32",
+    "name": "大埔醫院",
+    "cluster": "新界東聯網",
+    "region": "新界及離島",
+    "district": "大埔區 (大埔全安路)",
+    "lat": 22.4594,
+    "lng": 114.175,
+    "note": "延續護理、復康及精神科專科醫院，與雅麗氏何妙齡那打素醫院相鄰。",
+    "isTrap": false
+  },
+  {
+    "id": "h33",
+    "name": "北區醫院",
+    "cluster": "新界東聯網",
+    "region": "新界及離島",
+    "district": "北區 (上水保健路)",
+    "lat": 22.4975,
+    "lng": 114.1247,
+    "note": "上水主要急症全科醫院，設24小時急症室及各專科。",
+    "isTrap": false
+  },
+  {
+    "id": "h34",
+    "name": "白普理寧養中心",
+    "cluster": "新界東聯網",
+    "region": "新界及離島",
+    "district": "沙田區 (亞公角山路)",
+    "lat": 22.3992,
+    "lng": 114.2133,
+    "note": "全港首間專門為末期病人提供善終緩和醫護的寧養中心。",
+    "isTrap": false
+  },
+  {
+    "id": "h35",
+    "name": "沙田慈氏護養院",
+    "cluster": "新界東聯網",
+    "region": "新界及離島",
+    "district": "沙田區 (亞公角山路)",
+    "lat": 22.4005,
+    "lng": 114.2142,
+    "note": "專門為嚴重傷殘、中風及中樞神經病患長者提供延續護養。",
+    "isTrap": false
+  },
+  {
+    "id": "h36",
+    "name": "沙田醫院",
+    "cluster": "新界東聯網",
+    "region": "新界及離島",
+    "district": "沙田區 (亞公角山路)",
+    "lat": 22.3989,
+    "lng": 114.2122,
+    "note": "提供老人科、內科、外科及精神科之療養及復康服務。",
+    "isTrap": false
+  },
+  {
+    "id": "h37",
+    "name": "威爾斯親王醫院",
+    "cluster": "新界東聯網",
+    "region": "新界及離島",
+    "district": "沙田區 (沙田銀城街)",
+    "lat": 22.3794,
+    "lng": 114.2028,
+    "note": "新界東龍頭醫院，香港中文大學醫學院教學醫院，大型急症及創傷中心。",
+    "isTrap": false
+  },
+  {
+    "id": "h38",
+    "name": "雅麗氏何妙齡那打素醫院",
+    "cluster": "新界東聯網",
+    "region": "新界及離島",
+    "district": "大埔區 (大埔全安路)",
+    "lat": 22.4589,
+    "lng": 114.1742,
+    "note": "大埔區主要急症全科醫院，基督教背景公立醫院。",
+    "isTrap": false
+  },
+  {
+    "id": "h39",
+    "name": "小欖醫院",
+    "cluster": "新界西聯網",
+    "region": "新界及離島",
+    "district": "屯門區 (青松觀路)",
+    "lat": 22.4069,
+    "lng": 113.9744,
+    "note": "專門為全港16歲以上嚴重智障人士提供療養及康復專科護理，已遷至屯門青松觀路。",
+    "isTrap": false
+  },
+  {
+    "id": "h40",
+    "name": "屯門醫院",
+    "cluster": "新界西聯網",
+    "region": "新界及離島",
+    "district": "屯門區 (青松觀路)",
+    "lat": 22.4078,
+    "lng": 113.9761,
+    "note": "新界西龍頭急症全科醫院，大型急症及創傷中心。",
+    "isTrap": false
+  },
+  {
+    "id": "h41",
+    "name": "青山醫院",
+    "cluster": "新界西聯網",
+    "region": "新界及離島",
+    "district": "屯門區 (青松觀路)",
+    "lat": 22.4064,
+    "lng": 113.9742,
+    "note": "香港歷史最悠久之大型精神科專科醫院，提供全面精神健康服務。",
+    "isTrap": false
+  },
+  {
+    "id": "h42",
+    "name": "博愛醫院",
+    "cluster": "新界西聯網",
+    "region": "新界及離島",
+    "district": "元朗區 (凹頭)",
+    "lat": 22.445,
+    "lng": 114.0417,
+    "note": "元朗區急症全科醫院，設24小時急症室及日間專科手術。",
+    "isTrap": false
+  },
+  {
+    "id": "h43",
+    "name": "天水圍醫院",
+    "cluster": "新界西聯網",
+    "region": "新界及離島",
+    "district": "元朗區 (天水圍天壇街)",
+    "lat": 22.4592,
+    "lng": 113.9986,
+    "note": "急症全科醫院，服務天水圍及鄰近社區，設急症室及住院服務。",
+    "isTrap": false
+  }
+];
+    const clusterConfig = {
+  "港島東聯網": {
+    "color": "#1d4ed8",
+    "bgColor": "#dbeafe",
+    "badgeBg": "#2563eb",
+    "name": "港島東聯網",
+    "region": "香港島",
+    "count": 7
+  },
+  "港島西聯網": {
+    "color": "#0f766e",
+    "bgColor": "#ccfbf1",
+    "badgeBg": "#0d9488",
+    "name": "港島西聯網",
+    "region": "香港島",
+    "count": 7
+  },
+  "九龍中聯網": {
+    "color": "#c2410c",
+    "bgColor": "#ffedd5",
+    "badgeBg": "#ea580c",
+    "name": "九龍中聯網",
+    "region": "九龍",
+    "count": 9
+  },
+  "九龍東聯網": {
+    "color": "#6d28d9",
+    "bgColor": "#ede9fe",
+    "badgeBg": "#7c3aed",
+    "name": "九龍東聯網",
+    "region": "九龍",
+    "count": 3
+  },
+  "九龍西聯網": {
+    "color": "#be123c",
+    "bgColor": "#ffe4e6",
+    "badgeBg": "#e11d48",
+    "name": "九龍西聯網",
+    "region": "九龍",
+    "count": 5
+  },
+  "新界東聯網": {
+    "color": "#047857",
+    "bgColor": "#d1fae5",
+    "badgeBg": "#059669",
+    "name": "新界東聯網",
+    "region": "新界及離島",
+    "count": 7
+  },
+  "新界西聯網": {
+    "color": "#b45309",
+    "bgColor": "#fef3c7",
+    "badgeBg": "#d97706",
+    "name": "新界西聯網",
+    "region": "新界及離島",
+    "count": 5
+  }
+};
+
+    // State
+    let currentFilter = 'all';
+    let markersMap = {};
+    let activeHospitalId = null;
+    let mapInstance = null;
+    let quizQuestions = [];
+    let userAnswers = {};
+    let totalScore = 0;
+    let answeredCount = 0;
+
+    // 1. Initialize Map
+    function initMap() {
+      // HK center coordinates
+      const hkCenter = [22.345, 114.16];
+      const initialZoom = 11;
+
+      mapInstance = L.map('map', {
+        zoomControl: true,
+        scrollWheelZoom: true
+      }).setView(hkCenter, initialZoom);
+
+      // Google Maps & OSM Tile Layers
+      const googleStreets = L.tileLayer('https://mt{s}.google.com/vt/lyrs=m&hl=zh-HK&x={x}&y={y}&z={z}', {
+        subdomains: ['0', '1', '2', '3'],
+        maxZoom: 20,
+        minZoom: 9,
+        attribution: '&copy; Google Maps'
+      });
+
+      const googleSatellite = L.tileLayer('https://mt{s}.google.com/vt/lyrs=y&hl=zh-HK&x={x}&y={y}&z={z}', {
+        subdomains: ['0', '1', '2', '3'],
+        maxZoom: 20,
+        minZoom: 9,
+        attribution: '&copy; Google Maps'
+      });
+
+      const osmStandard = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        minZoom: 9,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      });
+
+      // Default to Google Maps Streets
+      googleStreets.addTo(mapInstance);
+
+      // Layer control switcher
+      const baseMaps = {
+        "Google 地圖 (繁體中文)": googleStreets,
+        "Google 衛星地圖 (附街名)": googleSatellite,
+        "OpenStreetMap": osmStandard
+      };
+      L.control.layers(baseMaps, null, { position: 'topright' }).addTo(mapInstance);
+
+      // Add hospital markers
+      hospitalsData.forEach(h => {
+        const conf = clusterConfig[h.cluster];
+        const color = conf ? conf.color : '#2563eb';
+
+        // Custom HTML Marker Pin
+        const customIcon = L.divIcon({
+          className: 'custom-div-icon',
+          html: `
+            <div class="hospital-pin" id="pin-${h.id}" style="background-color: ${color};" title="${h.name} (${h.cluster})">
+              <span class="pin-icon">＋</span>
+            </div>
+          `,
+          iconSize: [28, 28],
+          iconAnchor: [14, 28],
+          popupAnchor: [0, -28]
+        });
+
+        const marker = L.marker([h.lat, h.lng], { icon: customIcon }).addTo(mapInstance);
+
+        // Tooltip (指埋去間醫院會寫佢係屬於邊區)
+        const tooltipContent = `
+          <div style="font-family: inherit; font-size: 12px; line-height: 1.4; padding: 2px 4px;">
+            <strong style="color: #0f172a; font-size: 13px;">${h.name}</strong><br>
+            <span style="display:inline-block; margin-top:2px; font-weight:700; color: ${color};">● ${h.cluster}</span>
+            <span style="color: #64748b;">(${h.district})</span>
+          </div>
+        `;
+        marker.bindTooltip(tooltipContent, {
+          direction: 'top',
+          offset: [0, -26],
+          opacity: 0.95
+        });
+
+        // Popup (點擊查看詳細) - 簡潔純資訊卡，已移除冗餘按鈕
+        const popupContent = `
+          <div class="popup-box">
+            <span class="popup-badge" style="background-color: ${color};">${h.cluster}</span>
+            <div class="popup-title">${h.name}</div>
+            <div class="popup-district">${h.region} · ${h.district}</div>
+            <div class="popup-note" style="margin-bottom: 0;">${h.note}</div>
+          </div>
+        `;
+        marker.bindPopup(popupContent);
+
+        // Marker click handler
+        marker.on('click', () => {
+          highlightHospitalInList(h.id);
+        });
+
+        markersMap[h.id] = marker;
+      });
+
+      // Reset Map button
+      document.getElementById('btn-reset-map').addEventListener('click', () => {
+        mapInstance.setView(hkCenter, initialZoom);
+        resetActiveStates();
+      });
+    }
+
+    // 2. Render Sidebar Hospital List
+    function renderSidebarList() {
+      const listContainer = document.getElementById('sidebar-hospital-list');
+      listContainer.innerHTML = '';
+
+      const searchQuery = document.getElementById('hospital-search').value.trim().toLowerCase();
+
+      // Filter hospitals
+      const filteredHospitals = hospitalsData.filter(h => {
+        const matchesCluster = (currentFilter === 'all' || h.cluster === currentFilter);
+        const matchesSearch = !searchQuery || 
+          h.name.toLowerCase().includes(searchQuery) || 
+          h.cluster.toLowerCase().includes(searchQuery) ||
+          h.district.toLowerCase().includes(searchQuery) ||
+          h.region.toLowerCase().includes(searchQuery) ||
+          h.note.toLowerCase().includes(searchQuery);
+        return matchesCluster && matchesSearch;
+      });
+
+      // Update count pill
+      document.getElementById('total-visible-count').textContent = `共 ${filteredHospitals.length} 間`;
+
+      // Group by cluster
+      const clusters = [
+        "港島東聯網", "港島西聯網", "九龍中聯網", 
+        "九龍東聯網", "九龍西聯網", "新界東聯網", "新界西聯網"
+      ];
+
+      let anyGroupShown = false;
+
+      clusters.forEach(cName => {
+        const clusterHospitals = filteredHospitals.filter(h => h.cluster === cName);
+        if (clusterHospitals.length === 0) return;
+
+        anyGroupShown = true;
+        const conf = clusterConfig[cName];
+
+        const groupEl = document.createElement('div');
+        groupEl.className = 'cluster-group';
+        groupEl.id = `group-${cName}`;
+
+        const headerEl = document.createElement('div');
+        headerEl.className = 'cluster-group-header';
+        headerEl.style.borderLeftColor = conf.color;
+        headerEl.style.backgroundColor = conf.bgColor;
+        headerEl.innerHTML = `
+          <div class="cluster-title">
+            <span style="color: ${conf.color};">●</span>
+            <span style="color: #0f172a;">${cName}</span>
+            <span style="font-size: 0.75rem; color: #64748b; font-weight: normal;">(${clusterHospitals.length}間)</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        `;
+
+        headerEl.addEventListener('click', () => {
+          groupEl.classList.toggle('collapsed');
+        });
+
+        const itemsEl = document.createElement('div');
+        itemsEl.className = 'hospital-items';
+
+        clusterHospitals.forEach(h => {
+          const itemEl = document.createElement('div');
+          itemEl.className = `hospital-item ${activeHospitalId === h.id ? 'active' : ''}`;
+          itemEl.id = `item-${h.id}`;
+          itemEl.innerHTML = `
+            <div class="hospital-item-title">
+              <span>${h.name}</span>
+              ${h.isTrap ? '<span class="trap-badge">考點</span>' : ''}
+            </div>
+            <div class="hospital-item-meta">
+              <span>${h.district}</span>
+              <span style="color:${conf.color}; font-weight:600;">${h.cluster}</span>
+            </div>
+          `;
+
+          itemEl.addEventListener('click', () => {
+            selectAndFocusHospital(h.id);
+          });
+
+          itemsEl.appendChild(itemEl);
+        });
+
+        groupEl.appendChild(headerEl);
+        groupEl.appendChild(itemsEl);
+        listContainer.appendChild(groupEl);
+      });
+
+      if (!anyGroupShown) {
+        listContainer.innerHTML = `
+          <div style="text-align: center; color: #94a3b8; padding: 40px 20px;">
+            
+            <p style="font-size: 0.9rem;">搵唔到符合「<strong>${searchQuery}</strong>」既醫院</p>
+            <p style="font-size: 0.8rem; margin-top: 4px;">請試下輸入其他關鍵字（如：瑪麗、長洲、荃灣、屯門）</p>
+          </div>
+        `;
+      }
+
+      // Sync map markers visibility
+      hospitalsData.forEach(h => {
+        const marker = markersMap[h.id];
+        if (marker) {
+          const isVisible = filteredHospitals.some(fh => fh.id === h.id);
+          if (isVisible) {
+            if (!mapInstance.hasLayer(marker)) marker.addTo(mapInstance);
+          } else {
+            if (mapInstance.hasLayer(marker)) mapInstance.removeLayer(marker);
+          }
+        }
+      });
+    }
+
+    // Safe container-only scrolling that never shifts the outer window
+    function scrollToHospitalInSidebar(hospitalId) {
+      const listContainer = document.getElementById('sidebar-hospital-list');
+      const itemEl = document.getElementById(`item-${hospitalId}`);
+      if (!listContainer || !itemEl) return;
+
+      // Ensure parent cluster group is open
+      const groupEl = itemEl.closest('.cluster-group');
+      if (groupEl && groupEl.classList.contains('collapsed')) {
+        groupEl.classList.remove('collapsed');
+      }
+
+      // Scroll inside container smoothly
+      const offsetTop = itemEl.offsetTop - listContainer.offsetTop;
+      listContainer.scrollTo({
+        top: Math.max(0, offsetTop - 20),
+        behavior: 'smooth'
+      });
+    }
+
+    // Select and focus hospital on map
+    function selectAndFocusHospital(hospitalId) {
+      const hospital = hospitalsData.find(h => h.id === hospitalId);
+      if (!hospital) return;
+
+      activeHospitalId = hospitalId;
+
+      // Update sidebar active class
+      document.querySelectorAll('.hospital-item').forEach(el => el.classList.remove('active'));
+      const activeEl = document.getElementById(`item-${hospitalId}`);
+      if (activeEl) {
+        activeEl.classList.add('active');
+        scrollToHospitalInSidebar(hospitalId);
+      }
+
+      // Highlight marker on map
+      highlightMarkerOnMap(hospitalId);
+
+      // Pan & zoom map
+      if (mapInstance) {
+        mapInstance.flyTo([hospital.lat, hospital.lng], 14, {
+          duration: 0.8,
+          easeLinearity: 0.25
+        });
+
+        // Open popup
+        const marker = markersMap[hospitalId];
+        if (marker) {
+          setTimeout(() => {
+            marker.openPopup();
+          }, 800);
+        }
+      }
+    }
+
+    function highlightMarkerOnMap(hospitalId) {
+      document.querySelectorAll('.hospital-pin').forEach(pin => pin.classList.remove('highlighted'));
+      const pin = document.getElementById(`pin-${hospitalId}`);
+      if (pin) {
+        pin.classList.add('highlighted');
+      }
+    }
+
+    function highlightHospitalInList(hospitalId) {
+      activeHospitalId = hospitalId;
+      document.querySelectorAll('.hospital-item').forEach(el => el.classList.remove('active'));
+      const activeEl = document.getElementById(`item-${hospitalId}`);
+      if (activeEl) {
+        activeEl.classList.add('active');
+        scrollToHospitalInSidebar(hospitalId);
+      }
+      highlightMarkerOnMap(hospitalId);
+    }
+
+    function focusHospitalFromMap(hospitalId) {
+      highlightHospitalInList(hospitalId);
+    }
+
+    function resetActiveStates() {
+      activeHospitalId = null;
+      document.querySelectorAll('.hospital-item').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.hospital-pin').forEach(pin => pin.classList.remove('highlighted'));
+      mapInstance.closePopup();
+    }
+
+    // Filter by cluster
+    function filterByCluster(clusterName) {
+      currentFilter = clusterName;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        if (btn.dataset.cluster === clusterName) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      renderSidebarList();
+
+      // Pan map to cluster center if specific cluster
+      if (clusterName !== 'all') {
+        const inCluster = hospitalsData.filter(h => h.cluster === clusterName);
+        if (inCluster.length > 0) {
+          const group = new L.featureGroup(inCluster.map(h => markersMap[h.id]));
+          mapInstance.fitBounds(group.getBounds().pad(0.2));
+        }
+      } else {
+        mapInstance.setView([22.345, 114.16], 11);
+      }
+    }
+
+    // 3. Quiz Engine
+    const ALL_CLUSTERS = [
+      "港島東聯網", "港島西聯網", "九龍中聯網", 
+      "九龍東聯網", "九龍西聯網", "新界東聯網", "新界西聯網"
+    ];
+
+    function generateQuiz() {
+      const mode = document.getElementById('quiz-mode').value;
+      quizQuestions = [];
+      userAnswers = {};
+      totalScore = 0;
+      answeredCount = 0;
+      updateScoreUI();
+
+      const questionsContainer = document.getElementById('questions-container');
+      questionsContainer.innerHTML = '';
+
+      // Pick 5 distinct questions
+      const generated = [];
+      const usedHospitals = new Set();
+      const usedClusters = new Set();
+
+      for (let i = 0; i < 5; i++) {
+        let q = null;
+        let attempts = 0;
+
+        while (!q && attempts < 50) {
+          attempts++;
+          let qType;
+          if (mode === 'mixed') {
+            const types = ['hospital-to-cluster', 'cluster-to-hospital', 'not-in-cluster', 'trap-special'];
+            qType = types[Math.floor(Math.random() * types.length)];
+          } else if (mode === 'traps-only') {
+            qType = 'trap-special';
+          } else {
+            qType = mode;
+          }
+
+          q = buildSingleQuestion(qType, usedHospitals, usedClusters);
+        }
+
+        // Fallback
+        if (!q) {
+          q = buildSingleQuestion('hospital-to-cluster', new Set(), new Set());
+        }
+
+        generated.push(q);
+      }
+
+      quizQuestions = generated;
+      renderQuizUI();
+    }
+
+    function buildSingleQuestion(type, usedHospitals, usedClusters) {
+      if (type === 'trap-special') {
+        // High frequency trap hospitals
+        const trapList = hospitalsData.filter(h => h.isTrap);
+        const available = trapList.filter(h => !usedHospitals.has(h.id));
+        const target = available.length > 0 ? available[Math.floor(Math.random() * available.length)] : trapList[Math.floor(Math.random() * trapList.length)];
+        usedHospitals.add(target.id);
+
+        // Options: 4 clusters
+        const wrongClusters = ALL_CLUSTERS.filter(c => c !== target.cluster);
+        shuffleArray(wrongClusters);
+        const options = [target.cluster, wrongClusters[0], wrongClusters[1], wrongClusters[2]];
+        shuffleArray(options);
+
+        return {
+          type: 'trap',
+          tag: '考牌易錯陷阱題',
+          title: `【${target.name}】座落於 ${target.district}，請問它在醫管局架構下屬於邊一個聯網？`,
+          targetHospital: target,
+          correctAnswer: target.cluster,
+          options: options,
+          explanation: `<strong>正解：${target.cluster}</strong>。<br>${target.note}<br>${target.name} 位於 ${target.district}。`
+        };
+      }
+
+      if (type === 'hospital-to-cluster') {
+        const available = hospitalsData.filter(h => !usedHospitals.has(h.id));
+        const target = available.length > 0 ? available[Math.floor(Math.random() * available.length)] : hospitalsData[Math.floor(Math.random() * hospitalsData.length)];
+        usedHospitals.add(target.id);
+
+        const wrongClusters = ALL_CLUSTERS.filter(c => c !== target.cluster);
+        shuffleArray(wrongClusters);
+        const options = [target.cluster, wrongClusters[0], wrongClusters[1], wrongClusters[2]];
+        shuffleArray(options);
+
+        return {
+          type: 'h2c',
+          tag: '醫院歸屬聯網',
+          title: `請問【${target.name}】屬於邊一個醫院聯網？`,
+          targetHospital: target,
+          correctAnswer: target.cluster,
+          options: options,
+          explanation: `<strong>正解：${target.cluster}</strong>。<br>${target.note}<br>所在區域：${target.region} · ${target.district}`
+        };
+      }
+
+      if (type === 'cluster-to-hospital') {
+        // Pick a cluster
+        const cluster = ALL_CLUSTERS[Math.floor(Math.random() * ALL_CLUSTERS.length)];
+        const inCluster = hospitalsData.filter(h => h.cluster === cluster);
+        const outCluster = hospitalsData.filter(h => h.cluster !== cluster);
+
+        const correctH = inCluster[Math.floor(Math.random() * inCluster.length)];
+        usedHospitals.add(correctH.id);
+
+        shuffleArray(outCluster);
+        const distractors = [outCluster[0], outCluster[1], outCluster[2]];
+
+        const optionsObjs = [correctH, ...distractors];
+        shuffleArray(optionsObjs);
+        const options = optionsObjs.map(h => h.name);
+
+        return {
+          type: 'c2h',
+          tag: '聯網包含醫院',
+          title: `請問以下邊一間醫院屬於【${cluster}】？`,
+          targetHospital: correctH,
+          correctAnswer: correctH.name,
+          options: options,
+          optionsBreakdown: optionsObjs,
+          explanation: `<strong>正解：${correctH.name}</strong>。<br>
+            • <strong>${correctH.name}</strong> 屬於 ${cluster} (${correctH.district})<br>
+            • ${distractors[0].name} 屬於 <em>${distractors[0].cluster}</em><br>
+            • ${distractors[1].name} 屬於 <em>${distractors[1].cluster}</em><br>
+            • ${distractors[2].name} 屬於 <em>${distractors[2].cluster}</em>`
+        };
+      }
+
+      if (type === 'not-in-cluster') {
+        // Find a cluster with >= 4 hospitals
+        const eligibleClusters = ALL_CLUSTERS.filter(c => clusterConfig[c].count >= 4);
+        const cluster = eligibleClusters[Math.floor(Math.random() * eligibleClusters.length)];
+        const inCluster = hospitalsData.filter(h => h.cluster === cluster);
+        const outCluster = hospitalsData.filter(h => h.cluster !== cluster);
+
+        shuffleArray(inCluster);
+        const threeIn = [inCluster[0], inCluster[1], inCluster[2]];
+        const oneOut = outCluster[Math.floor(Math.random() * outCluster.length)];
+
+        const optionsObjs = [...threeIn, oneOut];
+        shuffleArray(optionsObjs);
+        const options = optionsObjs.map(h => h.name);
+
+        return {
+          type: 'not_in',
+          tag: '逆向排除題',
+          title: `以下邊一間醫院<strong>「不屬於」</strong>【${cluster}】？`,
+          targetHospital: oneOut,
+          correctAnswer: oneOut.name,
+          options: options,
+          explanation: `<strong>正解：${oneOut.name}</strong>。<br>
+            • <strong>${oneOut.name}</strong> 其實屬於 <em>${oneOut.cluster}</em> (${oneOut.district})！<br>
+            其餘三間 (${threeIn[0].name}、${threeIn[1].name}、${threeIn[2].name}) 均為【${cluster}】轄下醫院。`
+        };
+      }
+    }
+
+    function renderQuizUI() {
+      const container = document.getElementById('questions-container');
+      container.innerHTML = '';
+
+      quizQuestions.forEach((q, qIndex) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = `q-card-${qIndex}`;
+
+        const letters = ['A', 'B', 'C', 'D'];
+
+        let optionsHtml = '';
+        q.options.forEach((opt, optIndex) => {
+          optionsHtml += `
+            <button class="option-btn" id="btn-opt-${qIndex}-${optIndex}" onclick="selectAnswer(${qIndex}, ${optIndex}, '${opt.replace(/'/g, "\'")}')">
+              <span class="option-letter">${letters[optIndex]}</span>
+              <span>${opt}</span>
+            </button>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="question-card-header">
+            <div class="question-number">${qIndex + 1}</div>
+            <div class="question-text-box">
+              <span class="question-tag">${q.tag}</span>
+              <div class="question-title">${q.title}</div>
+            </div>
+          </div>
+          
+          <div class="options-grid">
+            ${optionsHtml}
+          </div>
+
+          <div class="feedback-box" id="feedback-${qIndex}">
+            <div class="feedback-header" id="feedback-header-${qIndex}"></div>
+            <div class="feedback-detail" id="feedback-detail-${qIndex}">${q.explanation}</div>
+            ${q.targetHospital ? `
+              <button class="btn-show-on-map" onclick="jumpToMapHospital('${q.targetHospital.id}')">
+                喺地圖定位 ${q.targetHospital.name}
+              </button>
+            ` : ''}
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function selectAnswer(qIndex, optIndex, selectedValue) {
+      if (userAnswers[qIndex] !== undefined) return; // already answered
+
+      userAnswers[qIndex] = selectedValue;
+      answeredCount++;
+
+      const q = quizQuestions[qIndex];
+      const isCorrect = (selectedValue === q.correctAnswer);
+
+      if (isCorrect) totalScore++;
+      updateScoreUI();
+
+      // Style buttons
+      const card = document.getElementById(`q-card-${qIndex}`);
+      const buttons = card.querySelectorAll('.option-btn');
+
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        const optText = q.options[idx];
+
+        if (optText === q.correctAnswer) {
+          if (idx === optIndex) {
+            btn.classList.add('selected-correct');
+          } else {
+            btn.classList.add('reveal-correct');
+          }
+        } else if (idx === optIndex && !isCorrect) {
+          btn.classList.add('selected-wrong');
+        }
+      });
+
+      // Show feedback
+      const feedbackBox = document.getElementById(`feedback-${qIndex}`);
+      const feedbackHeader = document.getElementById(`feedback-header-${qIndex}`);
+
+      feedbackBox.style.display = 'block';
+      if (isCorrect) {
+        feedbackBox.className = 'feedback-box correct';
+        feedbackHeader.innerHTML = `答啱咗！答案正確！`;
+      } else {
+        feedbackBox.className = 'feedback-box wrong';
+        feedbackHeader.innerHTML = `答錯咗，請再記一記！正確答案係：【${q.correctAnswer}】`;
+      }
+    }
+
+    function updateScoreUI() {
+      const scoreEl = document.getElementById('current-score');
+      if (answeredCount === 0) {
+        scoreEl.textContent = `0 / 5`;
+      } else {
+        const pct = Math.round((totalScore / answeredCount) * 100);
+        scoreEl.textContent = `${totalScore} / ${answeredCount} (正答率: ${pct}%%)`;
+      }
+    }
+
+    function jumpToMapHospital(hospitalId) {
+      document.querySelector('.map-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        selectAndFocusHospital(hospitalId);
+      }, 500);
+    }
+
+    // Helper: shuffle
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Document Ready
+    document.addEventListener('DOMContentLoaded', () => {
+      initMap();
+      renderSidebarList();
+      generateQuiz();
+
+      // Search input event
+      document.getElementById('hospital-search').addEventListener('input', () => {
+        renderSidebarList();
+      });
+
+      // Filter button clicks
+      document.querySelectorAll('#filter-buttons .filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#filter-buttons .filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          filterByCluster(btn.dataset.cluster);
+        });
+      });
+
+      // Quiz mode change
+      document.getElementById('quiz-mode').addEventListener('change', () => {
+        generateQuiz();
+      });
+
+      // Refresh quiz button
+      document.getElementById('btn-refresh-quiz').addEventListener('click', () => {
+        generateQuiz();
+      });
+
+      // Toggle all groups button
+      let allExpanded = true;
+      document.getElementById('btn-toggle-groups').addEventListener('click', () => {
+        allExpanded = !allExpanded;
+        document.querySelectorAll('.cluster-group').forEach(grp => {
+          if (allExpanded) {
+            grp.classList.remove('collapsed');
+          } else {
+            grp.classList.add('collapsed');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
