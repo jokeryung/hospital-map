@@ -60,9 +60,7 @@
       color: white;
       padding: 24px 20px;
       box-shadow: var(--shadow-md);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      position: relative;
     }
 
     .header-content {
@@ -758,6 +756,26 @@
       transform: translateY(0);
     }
 
+    .quiz-bottom-bar {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 2px dashed #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .btn-refresh-large {
+      padding: 14px 28px;
+      font-size: 1.02rem;
+      width: 100%;
+      max-width: 440px;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+    }
+
     /* Filter Quiz Mode */
     .quiz-mode-select {
       padding: 9px 12px;
@@ -1330,16 +1348,19 @@
             <span>得分:</span>
             <span class="num" id="current-score">0 / 0</span>
           </div>
-
-          <button class="btn-refresh" id="btn-refresh-quiz">
-            <span>換一批題目 / 重新生成 5 題</span>
-          </button>
         </div>
       </div>
 
       <!-- Questions List Container -->
       <div class="questions-list" id="questions-container">
         <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- Quiz Bottom Actions -->
+      <div class="quiz-bottom-bar">
+        <button class="btn-refresh btn-refresh-large" id="btn-refresh-quiz">
+          <span>換一批題目 / 重新生成 5 題 (再練習)</span>
+        </button>
       </div>
     </div>
 
@@ -2530,9 +2551,14 @@
         generateQuiz();
       });
 
-      // Refresh quiz button
+      // Refresh quiz button (moved to bottom)
       document.getElementById('btn-refresh-quiz').addEventListener('click', () => {
         generateQuiz();
+        // Smoothly scroll back to the beginning of the quiz
+        const quizEl = document.getElementById('quiz-container');
+        if (quizEl) {
+          quizEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
 
       // Toggle all groups button
