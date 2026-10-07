@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>醫護支援人員護理技巧綜合溫習系統 (20 題 MC 測驗)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #2563eb;
+      --teal: #0f766e;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+      --correct-bg: #ecfdf5;
+      --correct-border: #10b981;
+      --correct-text: #065f46;
+      --wrong-bg: #fef2f2;
+      --wrong-border: #ef4444;
+      --wrong-text: #991b1b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.55;
+      padding: 0;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* Header - Non-sticky, scrolls away naturally */
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #0f766e 100%);
+      color: white;
+      padding: 24px 20px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+
+    .header-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .header-title-box h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    .header-title-box p {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .header-stats {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .stat-badge {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1000px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+
+    /* Filter & Progress Control Panel */
+    .control-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .control-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .category-select-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .category-select-box label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #334155;
+      white-space: nowrap;
+    }
+
+    .category-select {
+      width: 100%;
+      max-width: 400px;
+      padding: 8px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #1e293b;
+      background: white;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .category-select:focus {
+      border-color: var(--primary-light);
+    }
+
+    .progress-box {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .score-highlight {
+      color: #2563eb;
+      font-size: 1.1rem;
+    }
+
+    /* Question Cards List */
+    .questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .question-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .question-card:hover {
+      border-color: #cbd5e1;
+    }
+
+    .question-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .question-badge-num {
+      background: #0f172a;
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .question-info {
+      flex: 1;
+    }
+
+    .meta-tags-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .page-tag {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid #bae6fd;
+    }
+
+    .category-tag {
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .question-stem {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.5;
+    }
+
+    /* Options Grid */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .option-btn {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #1e293b;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+      line-height: 1.4;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+      transform: translateY(-1px);
+    }
+
+    .option-letter {
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    /* Option states */
+    .option-btn.selected-correct {
+      background: var(--correct-bg) !important;
+      border-color: var(--correct-border) !important;
+      color: var(--correct-text) !important;
+    }
+
+    .option-btn.selected-correct .option-letter {
+      background: var(--correct-border);
+      color: white;
+    }
+
+    .option-btn.selected-wrong {
+      background: var(--wrong-bg) !important;
+      border-color: var(--wrong-border) !important;
+      color: var(--wrong-text) !important;
+    }
+
+    .option-btn.selected-wrong .option-letter {
+      background: var(--wrong-border);
+      color: white;
+    }
+
+    .option-btn.reveal-correct {
+      background: var(--correct-bg) !important;
+      border-color: var(--correct-border) !important;
+      border-style: dashed !important;
+      color: var(--correct-text) !important;
+    }
+
+    .option-btn.reveal-correct .option-letter {
+      background: var(--correct-border);
+      color: white;
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    /* Detailed Explanation Box */
+    .explanation-box {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      line-height: 1.55;
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .explanation-box.correct {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #16a34a;
+      color: #166534;
+    }
+
+    .explanation-box.wrong {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-left: 4px solid #dc2626;
+      color: #991b1b;
+    }
+
+    .explanation-result-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    .explanation-detail {
+      color: #334155;
+      font-size: 0.88rem;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(0,0,0,0.1);
+    }
+
+    .explanation-page-callout {
+      margin-top: 8px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: #0369a1;
+      background: #e0f2fe;
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    /* Bottom Action Bar */
+    .bottom-bar {
+      margin-top: 32px;
+      padding: 24px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .summary-stats {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .btn-refresh {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: white;
+      border: none;
+      padding: 15px 32px;
+      border-radius: var(--radius-sm);
+      font-weight: 800;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .btn-refresh:hover {
+      background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-refresh:active {
+      transform: translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 16px 40px;
+      color: #94a3b8;
+      font-size: 0.82rem;
+      border-top: 1px solid var(--border);
+      background: white;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Non-sticky Header -->
+  <header>
+    <div class="header-content">
+      <div class="header-title-box">
+        <h1>醫護支援人員護理技巧綜合溫習系統</h1>
+        <p>依據《醫護支援人員護理技巧 I 基礎證書》講義重點編製 ｜ 每輪精選 20 題，附詳盡解析與筆記頁數出處</p>
+      </div>
+      <div class="header-stats">
+        <div class="stat-badge">每次精選 20 題 MC</div>
+        <div class="stat-badge">標註講義具體頁數</div>
+        <div class="stat-badge">錯題即時詳細解析</div>
+        <div class="stat-badge">無限題庫隨機刷新</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <!-- Control Panel -->
+    <div class="control-panel">
+      <div class="control-row">
+        <div class="category-select-box">
+          <label for="topic-filter">溫習範疇篩選：</label>
+          <select id="topic-filter" class="category-select">
+            <option value="all">全範圍綜合隨機 20 題 (全真模擬考試)</option>
+            <option value="hospice_corpse">舒緩治療、臨終心理與屍體處理 (講義筆記第 193 - 202 頁)</option>
+            <option value="vitals_care">生命表徵、體溫脈搏呼吸血壓及檢驗 (講義筆記第 162 - 193 頁)</option>
+            <option value="infection_waste">清潔消毒、漂白水與醫療廢物 (講義筆記第 82 - 149 頁)</option>
+            <option value="diseases_systems">人體系統、常見疾病、高血壓與糖尿病 (講義筆記第 26 - 62 頁)</option>
+            <option value="roles_terms">醫療架構、醫護英文縮寫與職責 (講義筆記第 5 - 20 頁)</option>
+          </select>
+        </div>
+
+        <div class="progress-box">
+          <span>進度與成績：</span>
+          <span class="score-highlight" id="top-score-display">0 / 0 (0%)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions Container -->
+    <div class="questions-list" id="questions-container">
+      <!-- 20 questions injected by JS -->
+    </div>
+
+    <!-- Bottom Action Bar (Refresh button at bottom) -->
+    <div class="bottom-bar">
+      <div class="summary-stats" id="bottom-summary-text">
+        請完成上方 20 條題目後，可在此查看成績並換一批題目繼續練習。
+      </div>
+      <button class="btn-refresh" id="btn-refresh-quiz-bottom">
+        換一批題目 / 重新生成 20 題 (再練習)
+      </button>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>醫護支援人員護理技巧 I 基礎證書綜合溫習系統 ｜ 講義出處頁碼精確對照 ｜ 專供學員溫習與考試練習使用</p>
+  </footer>
+
+  <script>
+    // Full Question Bank
+    const fullQuestionsBank = [{"id": "q1", "category": "醫療體系與職責", "page": "講義筆記第 5 頁", "question": "根據講義介紹，香港共有多少間私營醫院？", "options": ["10 間", "12 間", "13 間", "15 間"], "answer": "13 間", "explanation": "講義第 5 頁明確列出：香港共有十三家私營醫院（包括嘉諾撒、播道、香港港安-司徒拔道、浸信會、養和、明德、寶血、仁安、聖保祿、聖德肋撒、香港港安-荃灣、港怡、香港中文大學醫院）。"}, {"id": "q2", "category": "醫療體系與職責", "page": "講義筆記第 10 頁", "question": "在醫管局《病人約章》中，以下哪一項屬於「病人的責任」而非病人的權利？", "options": ["詳細向醫護人員交代目前的健康狀況、過往病歷及過敏情況", "清楚知道病情、診斷結果和治療計劃及潛在風險", "接受或拒絕任何藥物、檢查或治療並知悉後果", "把個人病情資料及私隱獲得保密"], "answer": "詳細向醫護人員交代目前的健康狀況、過往病歷及過敏情況", "explanation": "講義第 10 頁《病人約章》第二部分（病人的責任）：詳細向醫護人員交代目前的健康狀況、過往病歷資料、過敏情況及其他有關詳情。其餘三項（知情權、選擇權、私隱權）均屬於第一部分「病人的權利」。"}, {"id": "q3", "category": "醫護人員名稱與英文縮寫", "page": "講義筆記第 17 頁", "question": "病房中統籌整個病房日常運作及護理管理的「病房經理」，其英文職稱縮寫是甚麼？", "options": ["D.O.M.", "W.M.", "N.O.", "A.P.N."], "answer": "W.M.", "explanation": "講義第 17 頁：病房經理英文為 Ward Manager，縮寫為 W.M.；D.O.M. 是部門運作經理 (Department Operations Manager)；N.O. 是護士長 (Nursing Officer)；A.P.N. 是資深護師 (Advanced Practice Nurse)。"}, {"id": "q4", "category": "醫護人員名稱與英文縮寫", "page": "講義筆記第 17 頁", "question": "醫管局架構中，「部門運作經理」的英文職稱縮寫是甚麼？", "options": ["D.O.M.", "C.C.E.", "H.C.E.", "GM(N)"], "answer": "D.O.M.", "explanation": "講義第 17 頁：部門運作經理為 Department Operations Manager (D.O.M.)；C.C.E. 為聯網總監 (Cluster Chief Executive)；H.C.E. 為醫院行政總監 (Hospital Chief Executive)；GM(N) 為護理總經理。"}, {"id": "q5", "category": "醫院部門英文縮寫", "page": "講義筆記第 15 頁", "question": "醫院內負責為各病房及手術室清洗、消毒及包裝重用無菌醫療物品的「中央消毒物品供應部」，其英文縮寫是甚麼？", "options": ["C.S.S.D.", "T.S.S.U.", "C.N.S.", "C.G.A.T."], "answer": "C.S.S.D.", "explanation": "講義第 15 頁：中央消毒物品供應部為 Central Sterile Supply Department (C.S.S.D.)；T.S.S.U. 為手術室消毒物品供應部；C.N.S. 為社康護理服務；C.G.A.T. 為社區老人評估小組。"}, {"id": "q6", "category": "病房常用英文術語", "page": "講義筆記第 18 頁", "question": "病房記錄病人每日飲水量、靜脈輸液量以及排尿量、引流量的表格稱為「進出量紀錄表」，其英文縮寫是甚麼？", "options": ["I&O Chart", "TPR Chart", "BP Chart", "MAR Chart"], "answer": "I&O Chart", "explanation": "講義第 18 頁：進出量紀錄表為 Intake & Output Chart (I&O Chart)。TPR Chart 為生命表徵紀錄表（體溫、脈搏、呼吸）；BP 為血壓。"}, {"id": "q7", "category": "病房常用英文術語", "page": "講義筆記第 18 頁", "question": "醫護支援人員協助長期臥床或行動不便病人從病床轉移至輪椅或輪床時，常使用的「病人過床板」英文是甚麼？", "options": ["Patslide", "Stretcher", "Commode chair", "Drip stand"], "answer": "Patslide", "explanation": "講義第 18 頁：病人過床板英文為 Patslide；Stretcher 為輪床；Commode chair 為大便車；Drip stand 為鹽水架。"}, {"id": "q8", "category": "病房常用英文術語", "page": "講義筆記第 18 - 19 頁", "question": "護士指示醫護支援人員「留取病人的痰涎樣本送檢」，在病房交更及醫囑中「痰」的英文術語是甚麼？", "options": ["Sputum", "Stool", "Urine", "Vomitus"], "answer": "Sputum", "explanation": "講義第 18 頁：痰為 Sputum；Stool 為大便；Urine 為小便；Vomitus 為嘔吐物。"}, {"id": "q9", "category": "人體結構與感覺", "page": "講義筆記第 27 頁", "question": "根據醫護專業知識與講義筆記，臨終病人在瀕死過程中，人體各種感覺器官中「最後消失的感覺」通常是哪一種？", "options": ["聽覺", "視覺", "味覺", "觸覺"], "answer": "聽覺", "explanation": "講義第 27 頁手寫重點明確標註：人之將死最後消失的感覺是「聽覺」。因此即使臨終病人處於昏迷或看似無反應狀態，醫護人員及家屬仍應在其身旁保持輕柔尊重的語調與之說話。"}, {"id": "q10", "category": "人體結構與感覺", "page": "講義筆記第 27 頁", "question": "關於人類舌頭味蕾對不同味道的敏感分佈，以下哪一項配對是正確的？", "options": ["舌尖：甜味 / 鹹味；舌根：苦味", "舌尖：苦味；舌根：甜味", "舌緣：苦味；舌尖：酸味", "舌根：酸味；舌緣：鹹味"], "answer": "舌尖：甜味 / 鹹味；舌根：苦味", "explanation": "講義第 27 頁：舌頭味蕾分佈為：舌尖對甜 (Sweet) 及鹹 (Salty) 最敏感；舌緣對酸 (Sour) 敏感；舌根對苦 (Bitter) 敏感。"}, {"id": "q11", "category": "人體結構與循環系統", "page": "講義筆記第 27 頁", "question": "人體心臟的左、右心房與心室之間設有「心瓣」，心瓣最主要的生理功能是甚麼？", "options": ["防止血液倒流", "過濾血液中的代謝廢物", "產生心跳電脈衝", "增加血液中的氧氣含量"], "answer": "防止血液倒流", "explanation": "講義第 27 頁：心臟主要分為左右心房和左右心室，上下心房和心室由心瓣相隔，心瓣的作用是「防止血液倒流」。"}, {"id": "q12", "category": "人體結構與神經系統", "page": "講義筆記第 26 頁", "question": "人體的周圍神經系統中，包含多少對腦神經以及多少對脊神經？", "options": ["12 對腦神經，31 對脊神經", "10 對腦神經，30 對脊神經", "12 對腦神經，12 對脊神經", "31 對腦神經，12 對脊神經"], "answer": "12 對腦神經，31 對脊神經", "explanation": "講義第 26 頁：周圍神經系統包括 12 對腦神經 (Cranial Nerves) 及 31 對脊神經 (Spinal Nerves)。"}, {"id": "q13", "category": "常見疾病與病理", "page": "講義筆記第 38 頁", "question": "根據世界衛生組織標準及講義說明，在安靜休息狀態下，成年人的「高血壓」臨床診斷標準是指血壓讀數持續等於或高於多少？", "options": ["收縮壓 ≥ 140 mmHg 或 舒張壓 ≥ 90 mmHg", "收縮壓 ≥ 130 mmHg 或 舒張壓 ≥ 85 mmHg", "收縮壓 ≥ 120 mmHg 或 舒張壓 ≥ 80 mmHg", "收縮壓 ≥ 160 mmHg 或 舒張壓 ≥ 100 mmHg"], "answer": "收縮壓 ≥ 140 mmHg 或 舒張壓 ≥ 90 mmHg", "explanation": "講義第 38 頁：理想成年人血壓應為收縮壓 < 120 mmHg 及舒張壓 < 80 mmHg；當持續達到或超過 140/90 mmHg 時，即被界定為高血壓。"}, {"id": "q14", "category": "常見疾病與病理", "page": "講義筆記第 40 頁", "question": "體重指標（BMI）是評估成年人體重狀況的常用工具，其計算公式是甚麼？", "options": ["體重 (公斤) ÷ [身高 (米) × 身高 (米)]", "身高 (米) ÷ [體重 (公斤) × 體重 (公斤)]", "體重 (磅) ÷ [身高 (厘米) × 身高 (厘米)]", "體重 (公斤) ÷ 身高 (厘米)"], "answer": "體重 (公斤) ÷ [身高 (米) × 身高 (米)]", "explanation": "講義第 40 頁：體重指標 BMI = 體重 (kg) / [身高 (m)]²。世界衛生組織亞洲成年人標準：18.5 - 22.9 為正常，23.0 - 24.9 為過重，≥ 25.0 為肥胖。"}, {"id": "q15", "category": "常見疾病與病理", "page": "講義筆記第 48 頁", "question": "急性中風是嚴重的神經科急症，公眾教育常用的辨識口訣是「談笑用兵」(FAST)，其中「笑」是指觀察病人甚麼徵狀？", "options": ["面部表情不對稱，口角歪斜", "說話言語不清，詞不達意", "雙手平舉時其中一側無力下垂", "神智清醒程度及反應能力"], "answer": "面部表情不對稱，口角歪斜", "explanation": "講義第 48 頁：「談笑用兵」中，「談」指言語表達是否清晰；「笑」指露出笑容時面部兩邊是否對稱、有否口角歪斜；「用」指手腳平舉是否無力下垂；「兵」指即刻致電 999 召喚救護車送院搶救。"}, {"id": "q16", "category": "常見疾病與病理", "page": "講義筆記第 56 頁", "question": "未受控制的糖尿病患者常出現典型的「三多一少」臨床徵狀，所謂的「三多一少」是指甚麼？", "options": ["多飲、多尿、多食、體重減少", "多睡、多汗、多食、排便減少", "多飲、多汗、多尿、食量減少", "多尿、多痛、多喘、活動減少"], "answer": "多飲、多尿、多食、體重減少", "explanation": "講義第 56 頁：糖尿病典型徵狀為「三多一少」：多飲（口渴多喝水）、多尿（尿量及頻率增加）、多食（易感到飢餓食量大）、體重減少（因葡萄糖無法被細胞利用而分解脂肪及蛋白質消耗）。"}, {"id": "q17", "category": "常見疾病與病理", "page": "講義筆記第 60 頁", "question": "肺結核（肺癆）病人服用抗結核藥物「利福平」(Rifampicin) 期間，常見一種良性副作用，醫護人員應預先向病人解釋以消除焦慮，該現象是甚麼？", "options": ["小便、淚水或汗液呈現橙紅色", "頭髮脫落及皮膚乾燥發癢", "大便呈現柏油般黑色", "牙齦持續腫脹出血"], "answer": "小便、淚水或汗液呈現橙紅色", "explanation": "講義第 60 頁手寫重點特別標註：肺結核藥物利福平會導致「尿液、汗水及分泌物變成橙紅色」，這是藥物代謝的正常現象，無須驚慌；另外需注意藥物可能損害肝臟功能，且肺結核患者須每日在胸肺科診所由醫護人員直接督導服藥 (DOTS)。"}, {"id": "q18", "category": "消毒劑與清潔", "page": "講義筆記第 91 頁", "question": "使用家用漂白水（次氯酸鈉）進行病房或環境消毒時，絕對不能與以下哪種清潔劑混和使用，以免化學反應釋放出致命的有毒氯氣？", "options": ["酸性清潔劑（如洗廁劑、潔廁得）", "清水", "中性洗潔精", "70% 消毒酒精"], "answer": "酸性清潔劑（如洗廁劑、潔廁得）", "explanation": "講義第 91 頁：使用漂白水時「切勿與其他酸性清潔劑（如潔廁劑）混和」，因為兩者混合會產生化學反應，釋放出對呼吸道及眼睛有強烈刺激及毒性的氯氣，極度危險。"}, {"id": "q19", "category": "消毒劑與清潔", "page": "講義筆記第 91 頁", "question": "在病房環境消毒中，若地面或物體表面受到病人的「血液、嘔吐物或分泌物」污染時，應使用甚麼濃度的稀釋家用漂白水抹拭消毒？", "options": ["1:49 稀釋家用漂白水 (約 1000 ppm 有效氯)", "1:99 稀釋家用漂白水 (約 500 ppm 有效氯)", "1:4 稀釋家用漂白水", "70% 外用消毒酒精"], "answer": "1:49 稀釋家用漂白水 (約 1000 ppm 有效氯)", "explanation": "講義第 91 頁及第 201 頁：一般日常環境清潔使用 1:99 稀釋漂白水；但當受到血液、體液或嘔吐物污染時，必須使用消毒效力較強的「1:49 稀釋家用漂白水」（將 1 份 5.25% 漂白水與 49 份水混和）抹淨消毒。"}, {"id": "q20", "category": "感染控制與醫療廢物", "page": "講義筆記第 134 - 135 頁", "question": "病房棄置注射針頭、刀片、碎安瓿等鋒利利器時，應放入第 1 組利器收集盒，當利器盒裝滿至多少時必須封口並妥善更換？", "options": ["裝滿至 70% 至 80% (約 3/4 滿) 即須封口", "裝滿至 100% 溢滿為止", "裝滿至 50% 半滿", "裝滿至 95%"], "answer": "裝滿至 70% 至 80% (約 3/4 滿) 即須封口", "explanation": "講義第 135 頁：利器盒屬於第 1 組醫療廢物容器，為保障醫護人員免受針刺意外傷害，容器裝滿至「70% - 80% (即約 3/4 滿)」時便必須封口，切勿過滿或強行擠壓利器。"}, {"id": "q21", "category": "感染控制與廢物分類", "page": "講義筆記第 136 頁", "question": "在病房污衣處理指引中，沾有大量傳染性血液、分泌物或烈性傳染病病人的床單被服，應該放入甚麼顏色的污衣袋內？", "options": ["紅色膠袋 / 水溶性防感染污衣袋", "白色帆布污衣袋", "黑色普通家居垃圾袋", "藍色透明膠袋"], "answer": "紅色膠袋 / 水溶性防感染污衣袋", "explanation": "講義第 136 頁：一般未受污染的常規污衣使用白色袋；沾有傳染性血液、體液或具感染風險的污染被服，必須放進「紅色膠袋」或直接放入「紅色水溶性膠袋」密封，以便洗衣房進行高溫高壓或化學消毒。"}, {"id": "q22", "category": "生命表徵測量", "page": "講義筆記第 164 頁", "question": "在不同測度體溫的途徑中，正常健康成人的「口探」(Oral Temperature) 正常體溫範圍通常是多少？", "options": ["36.5°C - 37.5°C", "35.0°C - 36.0°C", "37.5°C - 38.5°C", "36.0°C - 36.5°C"], "answer": "36.5°C - 37.5°C", "explanation": "講義第 164 頁：不同途徑之正常體溫範圍：口探 (Oral) 及耳探 (Tympanic) 正常為 36.5°C - 37.5°C；腋探 (Axillary) 正常為 36.0°C - 37.0°C；肛探 (Rectal) 正常為 37.0°C - 38.0°C（最接近體內核心溫度）。"}, {"id": "q23", "category": "生命表徵測量", "page": "講義筆記第 164 頁", "question": "若病人剛進食過熱湯、冷飲或吸煙，為確保測量準確，護理人員應在相隔多久之後才可替病人進行口探？", "options": ["15 至 30 分鐘", "1 至 2 分鐘", "5 分鐘", "60 分鐘"], "answer": "15 至 30 分鐘", "explanation": "講義第 164 頁口探注意事項：若病人剛進食、飲用冷熱飲品、吸煙或嚼口香糖，口腔溫度會受外在溫度暫時影響，必須等候 15 至 30 分鐘後方可進行口探測量。"}, {"id": "q24", "category": "生命表徵測量", "page": "講義筆記第 169 頁", "question": "為神智清醒的成年病人進行常規生命表徵檢查時，最常用的末梢動脈「量度脈搏位置」是哪一條動脈？", "options": ["橈動脈 (Radial Artery)", "頸動脈 (Carotid Artery)", "股動脈 (Femoral Artery)", "足背動脈 (Dorsalis Pedis Artery)"], "answer": "橈動脈 (Radial Artery)", "explanation": "講義第 89 頁：手腕拇指側的「橈動脈」(Radial Artery) 是日常最常用及最方便的量度脈搏位置；頸動脈則主要用於心跳驟停或急救心肺復甦時快速評估血液循環。"}, {"id": "q25", "category": "生命表徵測量", "page": "講義筆記第 170 頁", "question": "若替病人量度脈搏時發現脈搏跳動不規則（心律不齊），護理人員應該如何正確計算心率？", "options": ["必須數足完整的一分鐘 (60 秒)", "數 15 秒然後乘以 4", "數 30 秒然後乘以 2", "數 10 秒然後乘以 6"], "answer": "必須數足完整的一分鐘 (60 秒)", "explanation": "講義第 170 頁：正常規律脈搏可數 30 秒乘 2；但如果發現病人脈搏不規則、過快或過慢（心律不齊），必須「數足完整的一分鐘 (60 秒)」，並即時通知當值護士評估。"}, {"id": "q26", "category": "生命表徵測量", "page": "講義筆記第 171 頁", "question": "護理人員在觀察並計算病人的「呼吸率」時，以下哪一種技巧是最正確且符合專業常規的？", "options": ["量完脈搏後手指不離開病人手腕，假裝繼續計脈搏以暗中觀察呼吸起伏", "預先明確大聲告知病人：「我現在要幫你數呼吸，請放鬆深呼吸」", "將手掌直接用力按壓在病人胸膛上感受起伏", "只觀察病人鼻孔是否有呼氣氣流"], "answer": "量完脈搏後手指不離開病人手腕，假裝繼續計脈搏以暗中觀察呼吸起伏", "explanation": "講義第 171 頁：呼吸是可以受大腦意識主觀控制的。如果預先告知病人要量呼吸，病人往往會不自覺地刻意改變呼吸深淺或節奏。因此正確做法是量完脈搏後手指不移開，假裝繼續量脈搏，暗中計算胸腹起伏次數。正常成人安靜呼吸率為每分鐘 12 - 20 次。"}, {"id": "q27", "category": "生命表徵測量", "page": "講義筆記第 166 頁", "question": "使用血壓計替病人測量血壓時，以下哪一項操作注意事項是正確的？", "options": ["測量前讓病人安靜休息 5 - 10 分鐘，手臂高度應與心臟處於同一水平", "可以在病人做過動靜脈造瘻手術 (AV Fistula) 的洗腎手臂上量血壓", "血壓袖帶 (Cuff) 綁得越鬆越準確", "若測量結果不確定，應立即在同一手臂連續重複充氣加壓 3 次"], "answer": "測量前讓病人安靜休息 5 - 10 分鐘，手臂高度應與心臟處於同一水平", "explanation": "講義第 166 頁：量血壓前病人應靜坐休息 5-10 分鐘，手臂與心臟齊平。嚴禁在患肢、乳癌淋巴切除側或已建立洗腎瘻管 (AV Fistula) 的手臂上量血壓；如需重複測量，應間隔 2-3 分鐘讓血管充分充盈復原。"}, {"id": "q28", "category": "檢查準備與檢驗", "page": "講義筆記第 180 頁", "question": "病人排期接受「盆腔及膀胱超聲波檢查」(USG Pelvis/Bladder) 前，醫護人員應指導病人進行甚麼準備？", "options": ["檢查前約 1 小時飲用多杯清水並暫時忍尿，使膀胱脹滿以利顯影", "檢查前必須嚴格禁食禁水 12 小時", "檢查前服用強力瀉藥排清大便", "檢查前靜脈注射大量造影劑"], "answer": "檢查前約 1 小時飲用多杯清水並暫時忍尿，使膀胱脹滿以利顯影", "explanation": "講義第 180 頁：膀胱超聲波檢查前約 1 小時應「飲多杯水令膀胱脹滿」，因為充滿尿液的膀胱能作為超聲波良好的透聲窗，令膀胱及後方盆腔器官影像更加清晰。"}, {"id": "q29", "category": "檢查準備與檢驗", "page": "講義筆記第 193 頁", "question": "使用尿糖及尿酮試紙為病人檢驗尿液時，以下哪一項程序操作是正確的？", "options": ["從試紙瓶取出試紙後必須立刻封蓋，防止試紙受潮變質", "為節省資源，可將試紙縱向剪開一半分開兩次使用", "將試紙浸泡在尿液中至少 5 分鐘後才拿出來", "不用理會瓶上的計時標準，隨時對照顏色即可"], "answer": "從試紙瓶取出試紙後必須立刻封蓋，防止試紙受潮變質", "explanation": "講義第 193 頁：驗尿程序要點：1. 取出試紙後「立刻封蓋」，因試紙上的化學試劑極易受空氣濕度影響失效；2. 試紙放入尿液後應「立刻取出」並抖去多餘尿液；3. 嚴格按瓶上指定時間（如 30 秒、60 秒）對照色條；4. 絕對不可任意剪裁試紙。"}, {"id": "q30", "category": "臨終心理反應", "page": "講義筆記第 196 頁", "question": "根據庫伯勒-羅斯 (Dr. Elisabeth Kübler-Ross) 的臨終心理學說，當瀕死病人不斷埋怨「為甚麼是我？為甚麼會發生在我身上？」，甚至將不滿情緒轉移投射至家人、醫生及護士身上時，病人正處於哪一個心理反應階段？", "options": ["憤怒期 (Anger)", "震驚及否認期 (Shock and Denial)", "討價還價期 (Bargaining)", "憂鬱期 (Depression)"], "answer": "憤怒期 (Anger)", "explanation": "講義第 196 頁：憤怒期 (Anger) 的病人會因無法接受命運而問「為什麼是我？」，負面情緒會轉移至身邊的家人、醫生和護士，並對病房飲食或服務百般投訴。"}, {"id": "q31", "category": "臨終心理反應", "page": "講義筆記第 196 頁", "question": "臨終病人知道「否認」及「憤怒」無法改變事實後，轉而向自己所信仰的神明祈求，發誓「如果能讓我多活一年，我一定改過自新重新做人」，這屬於心理反應的哪一階段？", "options": ["討價還價期 (Bargaining)", "否認期 (Denial)", "憂鬱期 (Depression)", "接受期 (Acceptance)"], "answer": "討價還價期 (Bargaining)", "explanation": "講義第 196 頁：討價還價期 (Bargaining) 的特點是病人希望延長生命，常向所信之神許下誓言（如行善、改變惡習、奉獻），試圖換取更多存活時間。"}, {"id": "q32", "category": "臨終心理反應", "page": "講義筆記第 196 頁", "question": "當臨終病人面對日益衰竭的軀體，深知死亡無可避免，表現出極度悲傷、暗自飲泣、胃口大減且不願與人交談，此時期屬於心理學中的哪一階段？護理人員應特別提高警惕慎防甚麼意外？", "options": ["憂鬱期 (Depression)；應提高警惕慎防病人自我傷害或自殺", "憤怒期 (Anger)；應慎防病人攻擊醫護人員", "接受期 (Acceptance)；應慎防病人拒絕飲食", "否認期 (Denial)；應慎防病人擅自離院"], "answer": "憂鬱期 (Depression)；應提高警惕慎防病人自我傷害或自殺", "explanation": "講義第 196 頁：憂鬱期 (Depression) 的病人放棄乞求，感到極度沮喪悲傷、體重下降，嚴重抑鬱者在此時期「有選擇自殺或自我傷害的風險」，醫護人員需加強監護及情緒支援。"}, {"id": "q33", "category": "臨終病人心理照顧", "page": "講義筆記第 197 頁", "question": "在為臨終病人提供心理與情感溝通護理時，以下哪一種溝通態度是「絕對不可採取」的？", "options": ["使用不切實際的假言安慰（例如：騙病人「你很快就會好起來出院回家」）", "言詞誠懇有禮，表現真誠關懷與諒解", "留心傾聽病人的訴說，提供情緒支援", "適度運用身體語言，如輕握病人的手或輕拍肩膊"], "answer": "使用不切實際的假言安慰（例如：騙病人「你很快就會好起來出院回家」）", "explanation": "講義第 197 頁特別強調：溝通時「切忌假言安慰」（False Reassurance）。虛假的承諾會破壞病人對醫護的信任，令病人無法在剩餘時間內好好交代後事及達成心願。"}, {"id": "q34", "category": "屍體處理三大類別", "page": "講義筆記第 199 頁", "question": "根據香港衛生署及醫管局指引，第 1 類屍體在屍體標籤及處理上應使用甚麼顏色的標籤識別？", "options": ["藍色標籤", "黃色標籤", "紅色標籤", "黑色標籤"], "answer": "藍色標籤", "explanation": "講義第 199 頁：第 1 類屍體以「藍色標籤」識別，適用於所有未感染特定危險傳染病的一般死者，採取標準預防措施，不需要裝入屍袋。"}, {"id": "q35", "category": "屍體處理三大類別", "page": "講義筆記第 199 頁", "question": "以下哪一種傳染病在病人離世後，其屍體屬於「第 2 類（黃色標籤）」傳染預防處理類別？", "options": ["嚴重急性呼吸系統綜合症 (SARS / 沙士)", "炭疽病 (Anthrax)", "鼠疫 (Plague)", "狂犬病 (Rabies)"], "answer": "嚴重急性呼吸系統綜合症 (SARS / 沙士)", "explanation": "講義第 199 頁：第 2 類（黃色標籤）包括：愛滋病 (HIV)、丙型肝炎、未剖驗克雅二氏症(瘋牛症)、嚴重急性呼吸系統綜合症 (SARS)、禽流感、中東呼吸綜合症 (MERS)、COVID-19；炭疽、鼠疫、狂犬病及病毒性出血熱則屬於第 3 類（紅色標籤）。"}, {"id": "q36", "category": "屍體處理三大類別", "page": "講義筆記第 199 頁", "question": "對於感染「炭疽病」、「鼠疫」或「狂犬病」離世的死者，其屍體處理屬於哪一類別？對應甚麼顏色的屍體標籤？", "options": ["第 3 類；紅色標籤", "第 2 類；黃色標籤", "第 1 類；藍色標籤", "第 4 類；黑色標籤"], "answer": "第 3 類；紅色標籤", "explanation": "講義第 199 頁：第 3 類以「紅色標籤」識別，對象包括炭疽病、鼠疫、狂犬病、病毒性出血熱（如埃博拉）以及已剖驗之克雅二氏症等高度致命傳染病。"}, {"id": "q37", "category": "屍體處理三大類別", "page": "講義筆記第 201 - 202 頁", "question": "處理「第 2 類（黃色標籤）」的屍體時，以下哪一項遺體處理常規是「絕對不可進行」的？", "options": ["不可對屍體進行化學防腐處理 (Embalming)", "不可讓家屬瞻仰遺容", "不可在殯儀館內為屍體進行化妝", "不可將遺體放入火化爐火葬"], "answer": "不可對屍體進行化學防腐處理 (Embalming)", "explanation": "講義第 201 頁及第 202 頁：第 2 類屍體可瞻仰遺容、可裝身及化妝，但「不可進行防腐處理」(No Embalming)，以防防腐針刺及排液過程污染環境；並且建議火葬。"}, {"id": "q38", "category": "屍體處理三大類別", "page": "講義筆記第 202 頁", "question": "對於「第 3 類（紅色標籤）」的高度傳染性屍體，在殯儀及善後處置上有極嚴格的法定規定，以下哪一項敘述是完全正確的？", "options": ["屍體入袋後不可拉開拉鍊，不可進行化妝、不可防腐，亦不可讓家屬瞻仰遺容", "家屬可以在不接觸遺體的情況下拉開屍袋拉鍊近距離瞻仰遺容", "殯儀館化妝師可以穿全套防護服為其穿壽衣及化妝", "只要家屬簽署免責同意書即可安排土葬及防腐"], "answer": "屍體入袋後不可拉開拉鍊，不可進行化妝、不可防腐，亦不可讓家屬瞻仰遺容", "explanation": "講義第 202 頁：第 3 類（紅色標籤）傳染風險極高，必須嚴格遵守：1. 不可從膠袋取出屍體；2. 不可拉開拉鍊；3. 不可化妝裝身；4. 不可防腐處理；5. 不可讓家屬瞻仰遺容；必須盡量直接密封火葬。"}, {"id": "q39", "category": "屍體處理三大類別", "page": "講義筆記第 201 頁", "question": "裝載第 2 類及第 3 類傳染病死者的特製屍袋，根據指引其結實厚度規格至少不得少於多少？", "options": ["150 微米 (μm)", "50 微米 (μm)", "100 微米 (μm)", "300 微米 (μm)"], "answer": "150 微米 (μm)", "explanation": "講義第 201 頁 C(ii) 項：第 2 及第 3 類屍體應放在一個結實而「厚度不少於 150 微米」的屍體膠袋內，拉鍊封密或以膠紙網帶紮緊，切勿使用扣針。"}, {"id": "q40", "category": "屍體護理程序", "page": "講義筆記第 199 - 201 頁", "question": "在病房確認病人死亡並準備進行遺體料理前，護理人員首要必須嚴格執行的核對程序是甚麼？", "options": ["核對屍籤上的資料與死者手鈪上的資料是否完全一致", "立即將死者衣物全部丟棄到黑色垃圾袋", "先將屍袋拉鍊完全封閉並貼膠紙", "替死者拔除所有體內引流管但無須通知醫生"], "answer": "核對屍籤上的資料與死者手鈪上的資料是否完全一致", "explanation": "講義第 201 頁 viii 項：料理屍體及入屍袋前後，必須嚴格「核對屍籤（載有死者姓名、身份證號碼、年齡等）與死者手鈪上的資料」，確保身份核實無誤，防止錯認遺體。"}, {"id": "q41", "category": "常見疾病與病理", "page": "講義筆記第 62 頁", "question": "在香港，初生嬰兒及小學生廣泛接種的「卡介苗」(BCG) 是用作預防哪一種傳染病的防疫注射？", "options": ["結核病 (肺癆)", "乙型肝炎", "麻疹", "白喉及破傷風"], "answer": "結核病 (肺癆)", "explanation": "講義第 62 頁：預防結核病的防疫注射為「卡介苗」(BCG Vaccine)，初生嬰兒及經結核菌素試驗呈陰性之小學生均會接受注射。"}, {"id": "q42", "category": "病人護理技巧", "page": "講義筆記第 167 頁", "question": "替病房住院病人定期量度體重時，為取得具可比性及準確的數值，以下哪一項是正確的常規做法？", "options": ["盡量在每日同一時間（如清晨排尿後及進食早餐前）量度，並先將磅秤歸零", "病人必須穿厚外套及皮鞋站在秤面上", "在病人剛吃飽大餐喝大量湯水後立即量度", "由病人自己估計體重直接記錄在圖表上"], "answer": "盡量在每日同一時間（如清晨排尿後及進食早餐前）量度，並先將磅秤歸零", "explanation": "講義第 167 頁：量度體重技巧：1. 磅秤需先歸零；2. 脫下外套及鞋子；3. 盡量固定在每日同一時間（如早上排便排尿後、未進食前）量度，以減少飲食排泄帶來的體重波動。"}, {"id": "q43", "category": "醫護人員名稱與英文縮寫", "page": "講義筆記第 17 頁", "question": "公立醫院中統管全院護理架構及護理專業發展的最高負責人「護理總經理」，其英文職稱縮寫是甚麼？", "options": ["GM(N)", "GM(AS)", "GM(F)", "C.G.M.N."], "answer": "GM(N)", "explanation": "講義第 17 頁：護理總經理為 General Manager (Nursing)，縮寫為 GM(N)；GM(AS) 為行政總經理；GM(F) 為財務總經理；CGMN 為聯網護理總經理。"}, {"id": "q44", "category": "醫院部門英文縮寫", "page": "講義筆記第 15 頁", "question": "專門為出院病人或行動不便之慢性病長者提供上門居家護理的「社康護理服務」，其英文縮寫是甚麼？", "options": ["C.N.S.", "C.G.A.T.", "O.P.D.", "I.C.T."], "answer": "C.N.S.", "explanation": "講義第 15 頁：社康護理服務英文為 Community Nursing Service，縮寫為 C.N.S.；C.G.A.T. 為社區老人評估小組；O.P.D. 為門診部；I.C.T. 為醫院感染控制部。"}, {"id": "q45", "category": "病人護理技巧", "page": "講義筆記第 164 頁", "question": "對於神智不清、神經抽搐、患有呼吸困難只能張口呼吸或 6 歲以下的幼童，以下哪種體溫量度途徑屬於「禁忌」？", "options": ["口探", "耳探", "腋探", "額探"], "answer": "口探", "explanation": "講義第 164 頁：口探禁忌對象包括：神智不清、昏迷、抽搐、呼吸困難（不能閉口）、嬰幼兒、剛接受口腔或鼻部手術者，因病人可能不慎咬斷水銀體溫計或無法正確含緊體溫計造成危險及誤差。"}, {"id": "q46", "category": "消毒劑與清潔", "page": "講義筆記第 88 頁", "question": "在醫療護理程序中，用於病人注射前皮膚消毒或醫護人員手部消毒的「醫用酒精」，最有效且最常用的殺菌濃度是多少？", "options": ["70% 至 75%", "99% 純酒精", "30% 至 40%", "10% 至 20%"], "answer": "70% 至 75%", "explanation": "講義第 88 頁：酒精濃度以 70% 至 75% 最具殺菌效果，因為該濃度的酒精能有效穿透細菌細胞壁並使蛋白質變性凝固；過高濃度（如 99%）會使細菌表面蛋白過快脫水凝固形成保護層，反而無法殺死內部細菌。"}, {"id": "q47", "category": "屍體處理三大類別", "page": "講義筆記第 199 頁", "question": "患有「克雅二氏症」（Creutzfeldt-Jakob Disease, CJD，俗稱瘋牛症人類型）的病人在醫院離世，若其遺體「已經進行過剖驗」，應歸入哪一類屍體處理？", "options": ["第 3 類 (紅色標籤)", "第 2 類 (黃色標籤)", "第 1 類 (藍色標籤)", "第 4 類 (綠色標籤)"], "answer": "第 3 類 (紅色標籤)", "explanation": "講義第 199 頁特別考點：克雅二氏症如果「未經剖驗」，歸入第 2 類（黃色標籤）；但如果「已經剖驗」，腦組織及腦脊髓液等高傳染性普里昂蛋白 (Prion) 暴露，危險性大增，必須提升為「第 3 類（紅色標籤）」嚴格處理！"}, {"id": "q48", "category": "舒緩治療簡介", "page": "講義筆記第 196 頁", "question": "舒緩治療（善終服務 / Palliative Care）的宗旨是為末期病者及其家屬提供整體性照顧，以下哪一項「不符合」舒緩治療的基本信念？", "options": ["使用一切人工科技刻意延長病人的痛苦瀕死過程", "接納死亡是人生的自然過程", "尊重生命，不故意延長或縮短病人的生命", "重視病人的生命質素，盡力緩解身心疼痛"], "answer": "使用一切人工科技刻意延長病人的痛苦瀕死過程", "explanation": "講義第 196 頁舒緩治療信念：1. 接納死亡是人生自然過程；2. 尊重生命；3. 「不故意延長亦不縮短病人生命」；4. 重視生命質素與尊嚴。刻意使用無效儀器延長痛苦並非舒緩治療之宗旨。"}, {"id": "q49", "category": "常見疾病與病理", "page": "講義筆記第 41 頁", "question": "高血壓通常被稱為「隱形殺手」，因為很多患者早期全無不適，但當血壓過高時，病人最常見的自覺徵狀包括甚麼？", "options": ["頭痛、頭暈、後頸部緊繃及視力模糊", "持續高燒及全身關節腫痛", "排尿疼痛及尿液帶血", "大便次數增加及肚瀉"], "answer": "頭痛、頭暈、後頸部緊繃及視力模糊", "explanation": "講義第 41 頁：高血壓常見徵狀包括頭痛（尤其後腦勺晨起頭痛）、頭暈、疲倦、視力模糊、心悸等，但亦有大量患者毫無徵狀，因此需定期測量血壓。"}, {"id": "q50", "category": "醫療廢物處理", "page": "講義筆記第 134 頁", "question": "病房產生的各類垃圾中，以下哪一項「不屬於」法定醫療廢物，應丟棄在黑色普通家居垃圾袋中？", "options": ["病人吃剩的飯盒、水果皮及未受污染的包裝紙", "沾有病人血液的紗布和棉花球", "用過的即棄注射針筒及針咀", "病人的嘔吐物及引流袋內含之體液"], "answer": "病人吃剩的飯盒、水果皮及未受污染的包裝紙", "explanation": "講義第 134 頁：未受病人血液、體液或傳染性分泌物污染的日常生活垃圾（如飯盒、果皮、清潔紙巾、包裝盒），屬於一般生活垃圾，使用「黑色垃圾袋」收集；沾血敷料、針咀及病理廢物方屬醫療廢物。"}, {"id": "q51", "category": "醫療團隊與專職醫療", "page": "講義筆記第 32 頁", "question": "在公立醫院專職醫療團隊中，專門協助中風或骨折病人進行日常生活技能訓練（如自行進食、穿衣、如廁）及家居環境改裝評估的專業人員是甚麼？", "options": ["職業治療師 (Occupational Therapist)", "物理治療師 (Physiotherapist)", "言語治療師 (Speech Therapist)", "足病診療師 (Podiatrist)"], "answer": "職業治療師 (Occupational Therapist)", "explanation": "講義第 32 頁：專職醫療部門分工：職業治療 (Occupational Therapy) 著重於日常自理功能訓練、認知及手部精細動作與家居評估；物理治療 (Physiotherapy) 著重於關節活動、肌肉力量及步態行走訓練；言語治療 (Speech Therapy) 處理吞嚥及言語障礙。"}, {"id": "q52", "category": "醫療團隊與專職醫療", "page": "講義筆記第 32 頁", "question": "病房病人進食時經常出現嚴重嗆咳、吞嚥困難，護士通常會安排哪一個專職醫療部門進行吞嚥能力評估及制定稠度糊餐指引？", "options": ["言語治療部 (Speech Therapy)", "物理治療部 (Physiotherapy)", "營養部 (Dietetics)", "義肢矯形部 (Prosthetics & Orthotics)"], "answer": "言語治療部 (Speech Therapy)", "explanation": "講義第 32 頁：言語治療師主要職責包括評估及治療病人的溝通障礙以及吞嚥障礙 (Dysphagia)，指導合適的食物形態（如碎餐、糊餐）及凝固粉 (Thickener) 調配比例。"}, {"id": "q53", "category": "病房常用英文術語", "page": "講義筆記第 18 頁", "question": "為病人進行心臟電生理活動檢測的「心電圖」，其英文簡稱縮寫是甚麼？", "options": ["E.C.G.", "E.E.G.", "E.M.G.", "E.N.T."], "answer": "E.C.G.", "explanation": "講義第 18 頁：心電圖英文全稱為 Electrocardiogram，縮寫為 E.C.G.（或 EKG）。E.N.T. 是耳鼻喉科 (Ear, Nose, Throat)。"}, {"id": "q54", "category": "病房常用英文術語", "page": "講義筆記第 18 頁", "question": "醫護人員工作時穿戴的外科口罩、手套、保護衣、護目鏡及面罩等統稱為「個人防護裝備」，其英文縮寫是甚麼？", "options": ["P.P.E.", "C.S.S.D.", "P.C.A.", "P.O.C."], "answer": "P.P.E.", "explanation": "講義第 18 頁：個人防護裝備英文為 Personal Protective Equipment，縮寫為 P.P.E.。"}, {"id": "q55", "category": "人體系統與功能", "page": "講義筆記第 26 頁", "question": "健康成年人的膀胱生理容量約為多少毫升？當尿液累積至多少毫升時，大腦會開始產生正常尿意？", "options": ["最大容量約 500 毫升；約累積 250 - 300 毫升時產生尿意", "最大容量約 100 毫升；約累積 50 毫升時產生尿意", "最大容量約 1500 毫升；約累積 1000 毫升時產生尿意", "最大容量約 200 毫升；約累積 100 毫升時產生尿意"], "answer": "最大容量約 500 毫升；約累積 250 - 300 毫升時產生尿意", "explanation": "講義第 26 頁筆記手寫重點標註：正常膀胱最大容量約 500 ml，當儲尿約 250 至 300 ml 時，神經感受器受到擴張刺激，向中樞神經傳遞信號而引起尿意。"}, {"id": "q56", "category": "人體系統與功能", "page": "講義筆記第 26 頁", "question": "人體的自主神經系統 (Autonomic Nervous System) 由哪兩個相互拮抗的系統組成，共同維持人體器官平衡？", "options": ["交感神經系統 與 副交感神經系統", "大腦系統 與 小腦系統", "腦神經系統 與 脊神經系統", "隨意神經系統 與 不隨意神經系統"], "answer": "交感神經系統 與 副交感神經系統", "explanation": "講義第 26 頁：自主神經系統分為：1. 交感神經系統 (Sympathetic，應付緊急緊張、心跳加快、血壓上升)；2. 副交感神經系統 (Parasympathetic，放鬆休養、促進腸胃消化、心跳減緩)。"}, {"id": "q57", "category": "環境衛生與感染控制", "page": "講義筆記第 82 頁", "question": "病房中供病人飲用的熱水瓶及室溫開水壺，根據病房衛生安全常規，應相隔多久清洗及更換一次？", "options": ["早晚兩次更換與清洗", "每星期更換一次", "只要水未喝完就無須更換", "每兩日更換一次"], "answer": "早晚兩次更換與清洗", "explanation": "講義第 82 頁 10 項：病房沸水及室溫開水壺，應「早晚兩次更換」，確保病人飲用水衛生新鮮，防止細菌孳生及灰塵污染。"}, {"id": "q58", "category": "職業安全健康", "page": "講義筆記第 149 頁", "question": "醫護支援人員搬運重物或協助病人扶抱轉移時，為避免腰背拉傷，以下哪一項提舉動作原則是正確的？", "options": ["保持背部平直，屈膝下蹲，利用腿部力量升起，並讓重物貼近身體", "雙腿伸直，彎腰向前俯身用力將重物猛然提起", "提舉重物時，身體應大幅度左右扭轉腰部以借力", "單手用力提起所有重物，另一隻手插袋"], "answer": "保持背部平直，屈膝下蹲，利用腿部力量升起，並讓重物貼近身體", "explanation": "講義第 149 頁職安健搬運原則：1. 保持腰背挺直；2. 屈膝下蹲，運用全身最大最有力的下肢及臀部肌肉發力；3. 重物要盡量貼近身體重心；4. 轉向時移動雙腳，嚴禁扭轉腰部。"}, {"id": "q59", "category": "生命表徵測量", "page": "講義筆記第 166 頁", "question": "測量血壓時，若選擇的血壓袖帶 (Blood Pressure Cuff) 太窄或太寬，對測量結果會有甚麼影響？", "options": ["袖帶太窄會導致讀數偏高；袖帶太寬會導致讀數偏低", "袖帶太窄會導致讀數偏低；袖帶太寬會導致讀數偏高", "袖帶寬窄對血壓讀數完全沒有任何影響", "袖帶太窄會導致血壓計漏氣無法充氣"], "answer": "袖帶太窄會導致讀數偏高；袖帶太寬會導致讀數偏低", "explanation": "講義第 166 頁：標準血壓袖帶氣囊寬度應覆蓋上臂圓周約 40%。若袖帶過窄，需要額外充更高氣壓才能壓扁動脈，測得血壓值會「偏高」(Falsely High)；若袖帶過寬，分散壓力，測得數值會「偏低」(Falsely Low)。"}, {"id": "q60", "category": "檢查準備與檢驗", "page": "講義筆記第 180 頁", "question": "接受正電子電腦掃描 (PET-CT) 檢查前，病人必須嚴格遵守以下哪一項飲食準備？", "options": ["檢查前禁食至少 4 至 6 小時，絕對不可飲用糖水或含糖飲料（可飲少量清水）", "檢查前 2 小時飲用大量葡萄糖水以補充足夠體力", "檢查前必須進食高糖高熱量餐以顯影癌細胞", "檢查前只可飲用濃茶或中藥湯水"], "answer": "檢查前禁食至少 4 至 6 小時，絕對不可飲用糖水或含糖飲料（可飲少量清水）", "explanation": "講義第 180 頁：PET-CT 正電子掃描使用的放射性示蹤劑是葡萄糖類似物 (FDG)。若檢查前進食含糖食物或飲料，體內高血糖會競爭性抑制示蹤劑吸收，嚴重影響顯影效果。因此檢查前 4-6 小時必須禁食，不可飲用糖水或中藥，只可飲用小量清水。"}, {"id": "q61", "category": "舒緩治療簡介", "page": "講義筆記第 196 頁", "question": "在臨終舒緩治療中，倡導為病人及其家屬提供「四全照顧」，所謂「四全」包括以下哪四個層面？", "options": ["全人、全家、全程、全隊", "全體、全心、全力、全民", "全院、全科、全日、全時", "全包、全免、全面、全職"], "answer": "全人、全家、全程、全隊", "explanation": "講義第 196 頁：舒緩治療目標倡導「四全照顧」：1. 全人（身心靈全面照顧）；2. 全家（照顧病人同時關顧家屬心理需要）；3. 全程（從確診末期、臨終到家屬哀傷期全程陪伴）；4. 全隊（醫生、護士、社工、物理治療師、臨床心理學家、院牧及義工結合的跨專業團隊）。"}, {"id": "q62", "category": "屍體處理三大類別", "page": "講義筆記第 199 頁", "question": "對於「第 1 類（藍色標籤）」的死者遺體，在殯儀善後處置方面，以下哪一項敘述是符合指引的？", "options": ["不需要裝入特製屍袋，殯儀館內可以化妝裝身、可防腐、可瞻仰遺容，可土葬或火葬", "必須使用 150 微米屍袋密封且不可拉開拉鍊", "絕對不可進行瞻仰遺容，必須在 24 小時內火化", "家屬必須穿著全套重度防護服才可領取遺體"], "answer": "不需要裝入特製屍袋，殯儀館內可以化妝裝身、可防腐、可瞻仰遺容，可土葬或火葬", "explanation": "講義第 199 頁：第 1 類（藍色標籤）為常規屍體，感染風險低，採取標準預防措施即可。屍體不需入屍袋，允許化妝、穿衣裝身、進行防腐處理、瞻仰遺容，並且可自由選擇土葬或火葬。"}, {"id": "q63", "category": "屍體處理三大類別", "page": "講義筆記第 199 - 201 頁", "question": "以下哪一種傳染病在死者遺體分類中，與炭疽、狂犬病同屬於最高防護級別的「第 3 類（紅色標籤）」？", "options": ["病毒性出血熱 (如伊波拉病毒、登革出血熱等)", "乙型肝炎", "季節性流感", "水痘"], "answer": "病毒性出血熱 (如伊波拉病毒、登革出血熱等)", "explanation": "講義第 199 頁：第 3 類（紅色標籤）包括炭疽病、鼠疫、狂犬病、病毒性出血熱 (Viral Haemorrhagic Fevers，如埃博拉 Ebola、馬爾堡 Marburg 等) 以及已剖驗之克雅二氏症。傳染性及致命性極高。"}, {"id": "q64", "category": "屍體處理程序", "page": "講義筆記第 201 頁", "question": "在病房進行移屍至殮房的過程中，為減少對病房其他病人及探訪者的騷擾與心理不安，護理人員應採取甚麼措施？", "options": ["在移屍必經之路及床位四周圍上屏風", "大聲呼喊通知所有人迴避", "將遺體停放在病房走廊等待一小時", "由病人自行陪同移送"], "answer": "在移屍必經之路及床位四周圍上屏風", "explanation": "講義第 199 頁及第 201 頁 xi 項：病人離世及移屍時，應「用屏風遮掩，在移屍時之必經之路圍上屏風」，以尊重逝者尊嚴，並減低對病房其他體弱病人及家屬的心理影響。"}, {"id": "q65", "category": "病人護理技巧", "page": "講義筆記第 162 - 164 頁", "question": "人體四大「生命表徵」(Vital Signs, TPR & BP) 包括哪四項生理指標？", "options": ["體溫 (T)、脈搏 (P)、呼吸 (R)、血壓 (BP)", "體重、身高、血糖、血脂", "年齡、性別、心率、視力", "出入量、排尿量、食量、睡眠時間"], "answer": "體溫 (T)、脈搏 (P)、呼吸 (R)、血壓 (BP)", "explanation": "講義第 162 頁：四大生命表徵 (Vital Signs) 簡寫為 TPR & BP，即體溫 (Temperature)、脈搏 (Pulse)、呼吸率 (Respiratory Rate) 和血壓 (Blood Pressure)，是評估人體生命基本機能最直接客觀的指標。"}];
+
+    // State
+    let currentQuestions = [];
+    let userAnswers = {};
+    let correctCount = 0;
+    let answeredCount = 0;
+
+    // Pick 20 questions based on topic filter
+    function generateQuiz() {
+      const selectedFilter = document.getElementById('topic-filter').value;
+      userAnswers = {};
+      correctCount = 0;
+      answeredCount = 0;
+      updateScoreUI();
+
+      let eligibleQuestions = [];
+
+      if (selectedFilter === 'all') {
+        eligibleQuestions = [...fullQuestionsBank];
+      } else if (selectedFilter === 'hospice_corpse') {
+        eligibleQuestions = fullQuestionsBank.filter(q => 
+          q.category.includes('屍體') || q.category.includes('臨終') || q.category.includes('舒緩')
+        );
+      } else if (selectedFilter === 'vitals_care') {
+        eligibleQuestions = fullQuestionsBank.filter(q => 
+          q.category.includes('生命表徵') || q.category.includes('檢查') || q.category.includes('病人護理')
+        );
+      } else if (selectedFilter === 'infection_waste') {
+        eligibleQuestions = fullQuestionsBank.filter(q => 
+          q.category.includes('消毒') || q.category.includes('感染') || q.category.includes('廢物') || q.category.includes('衛生') || q.category.includes('職安')
+        );
+      } else if (selectedFilter === 'diseases_systems') {
+        eligibleQuestions = fullQuestionsBank.filter(q => 
+          q.category.includes('疾病') || q.category.includes('系統') || q.category.includes('結構')
+        );
+      } else if (selectedFilter === 'roles_terms') {
+        eligibleQuestions = fullQuestionsBank.filter(q => 
+          q.category.includes('職責') || q.category.includes('縮寫') || q.category.includes('術語') || q.category.includes('專職') || q.category.includes('體系')
+        );
+      }
+
+      // If category has fewer than 20, fallback to padding with other questions
+      shuffleArray(eligibleQuestions);
+      let picked = eligibleQuestions.slice(0, 20);
+
+      if (picked.length < 20) {
+        const remaining = fullQuestionsBank.filter(q => !picked.some(p => p.id === q.id));
+        shuffleArray(remaining);
+        picked = picked.concat(remaining.slice(0, 20 - picked.length));
+      }
+
+      currentQuestions = picked;
+      renderQuizUI();
+    }
+
+    function renderQuizUI() {
+      const container = document.getElementById('questions-container');
+      container.innerHTML = '';
+
+      currentQuestions.forEach((q, qIndex) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = `q-card-${qIndex}`;
+
+        const letters = ['A', 'B', 'C', 'D'];
+
+        // Shuffle options for extra variability while tracking correct answer text
+        const shuffledOptions = [...q.options];
+        shuffleArray(shuffledOptions);
+
+        let optionsHtml = '';
+        shuffledOptions.forEach((opt, optIndex) => {
+          optionsHtml += `
+            <button class="option-btn" id="btn-opt-${qIndex}-${optIndex}" onclick="selectAnswer(${qIndex}, ${optIndex}, '${opt.replace(/'/g, "\'")}')">
+              <span class="option-letter">${letters[optIndex]}</span>
+              <span>${opt}</span>
+            </button>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="question-header">
+            <div class="question-badge-num">${qIndex + 1}</div>
+            <div class="question-info">
+              <div class="meta-tags-row">
+                <span class="page-tag">來源：${q.page}</span>
+                <span class="category-tag">${q.category}</span>
+              </div>
+              <div class="question-stem">${q.question}</div>
+            </div>
+          </div>
+
+          <div class="options-grid">
+            ${optionsHtml}
+          </div>
+
+          <div class="explanation-box" id="explanation-${qIndex}">
+            <div class="explanation-result-title" id="explanation-title-${qIndex}"></div>
+            <div class="explanation-detail">${q.explanation}</div>
+            <div class="explanation-page-callout">講義重點出處：${q.page}</div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      document.getElementById('bottom-summary-text').textContent = '請完成上方 20 條題目後，可在此查看成績並換一批題目繼續練習。';
+    }
+
+    function selectAnswer(qIndex, optIndex, selectedValue) {
+      if (userAnswers[qIndex] !== undefined) return; // already answered
+
+      userAnswers[qIndex] = selectedValue;
+      answeredCount++;
+
+      const q = currentQuestions[qIndex];
+      const isCorrect = (selectedValue === q.answer);
+
+      if (isCorrect) correctCount++;
+      updateScoreUI();
+
+      // Style options
+      const card = document.getElementById(`q-card-${qIndex}`);
+      const buttons = card.querySelectorAll('.option-btn');
+
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        const optText = btn.querySelector('span:nth-child(2)').textContent;
+
+        if (optText === q.answer) {
+          if (idx === optIndex) {
+            btn.classList.add('selected-correct');
+          } else {
+            btn.classList.add('reveal-correct');
+          }
+        } else if (idx === optIndex && !isCorrect) {
+          btn.classList.add('selected-wrong');
+        }
+      });
+
+      // Show detailed explanation
+      const expBox = document.getElementById(`explanation-${qIndex}`);
+      const expTitle = document.getElementById(`explanation-title-${qIndex}`);
+
+      expBox.style.display = 'block';
+      if (isCorrect) {
+        expBox.className = 'explanation-box correct';
+        expTitle.textContent = '答啱咗！答案完全正確！';
+      } else {
+        expBox.className = 'explanation-box wrong';
+        expTitle.textContent = `答錯咗，請再記一記！正確答案係：【${q.answer}】`;
+      }
+
+      // Check if all 20 are answered
+      if (answeredCount === 20) {
+        const pct = Math.round((correctCount / 20) * 100);
+        let evaluation = '';
+        if (pct >= 90) evaluation = '成績非常優異！所有核心概念掌握得好紮實！';
+        else if (pct >= 75) evaluation = '成績良好！答錯既題目建議翻查對應既講義頁數加深記憶！';
+        else evaluation = '仍有提升空間，建議針對答錯既章節講義頁數多加重溫！';
+
+        document.getElementById('bottom-summary-text').innerHTML = `
+          <strong>本次測驗完成！最終得分：${correctCount} / 20 (正答率: ${pct}%)</strong><br>
+          <span style="font-size: 0.9rem; color: #475569;">${evaluation}</span>
+        `;
+      }
+    }
+
+    function updateScoreUI() {
+      const topScore = document.getElementById('top-score-display');
+      if (answeredCount === 0) {
+        topScore.textContent = '0 / 0 (0%)';
+      } else {
+        const pct = Math.round((correctCount / answeredCount) * 100);
+        topScore.textContent = `已答 ${answeredCount} / 20 題 ｜ 正答率: ${pct}% (得分: ${correctCount})`;
+      }
+    }
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Document Ready
+    document.addEventListener('DOMContentLoaded', () => {
+      generateQuiz();
+
+      // Topic filter change
+      document.getElementById('topic-filter').addEventListener('change', () => {
+        generateQuiz();
+      });
+
+      // Bottom refresh button
+      document.getElementById('btn-refresh-quiz-bottom').addEventListener('click', () => {
+        generateQuiz();
+        // Smoothly scroll back to the top of the container
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
