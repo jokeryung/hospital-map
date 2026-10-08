@@ -60,7 +60,9 @@
       color: white;
       padding: 24px 20px;
       box-shadow: var(--shadow-md);
-      position: relative;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     .header-content {
@@ -92,30 +94,6 @@
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-    }
-
-        .nav-portal-btn {
-      background: #ffffff;
-      color: #1e3a8a;
-      padding: 6px 14px;
-      border-radius: 9999px;
-      font-size: 0.82rem;
-      font-weight: 800;
-      text-decoration: none;
-      border: 1.5px solid #ffffff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-      transition: all 0.15s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-    }
-
-    .nav-portal-btn:hover {
-      background: #f8fafc;
-      color: #2563eb;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.25);
     }
 
     .stat-badge {
@@ -780,26 +758,6 @@
       transform: translateY(0);
     }
 
-    .quiz-bottom-bar {
-      margin-top: 24px;
-      padding-top: 20px;
-      border-top: 2px dashed #e2e8f0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      text-align: center;
-    }
-
-    .btn-refresh-large {
-      padding: 14px 28px;
-      font-size: 1.02rem;
-      width: 100%;
-      max-width: 440px;
-      justify-content: center;
-      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
-    }
-
     /* Filter Quiz Mode */
     .quiz-mode-select {
       padding: 9px 12px;
@@ -1114,17 +1072,29 @@
       background: white;
     }
   
-    .nav-portal-btn-pro {
-      background: #d97706 !important;
-      color: #ffffff !important;
-      border-color: #d97706 !important;
+    /* Navigation Portal Buttons */
+    .nav-portal-btn {
+      background: #ffffff;
+      color: #1e3a8a;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-decoration: none;
+      border: 1.5px solid #ffffff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
     }
-    .nav-portal-btn-pro:hover {
-      background: #b45309 !important;
-      border-color: #b45309 !important;
+    .nav-portal-btn:hover {
+      background: #f8fafc;
+      color: #2563eb;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.25);
     }
-
-  
     .nav-portal-btn-home {
       background: #f1f5f9 !important;
       color: #0f172a !important;
@@ -1133,10 +1103,18 @@
     .nav-portal-btn-home:hover {
       background: #e2e8f0 !important;
     }
+    .nav-portal-btn-simple {
+      background: #0d9488 !important;
+      color: #ffffff !important;
+      border-color: #14b8a6 !important;
+    }
+    .nav-portal-btn-simple:hover {
+      background: #0f766e !important;
+    }
     .nav-portal-btn-pro {
       background: #d97706 !important;
       color: #ffffff !important;
-      border-color: #d97706 !important;
+      border-color: #f59e0b !important;
     }
     .nav-portal-btn-pro:hover {
       background: #b45309 !important;
@@ -1150,15 +1128,14 @@
   <header>
     <div class="header-content">
       <div class="header-title-box">
-        <h1>醫管局醫院聯網溫習地圖</h1>
+        <h1>醫管局醫院聯網溫習地圖與測驗系統</h1>
         <p>依據醫護支援人員 (PCA) 護理技巧課程筆記編製 ｜ 43 間公立醫院及醫療機構全收錄</p>
       </div>
       <div class="header-stats">
         <a href="index.html" class="nav-portal-btn nav-portal-btn-home">← 返回主頁目錄</a>
-        <a href="quiz.html" class="nav-portal-btn">切換至：簡單測驗 →</a>
+        <a href="quiz.html" class="nav-portal-btn nav-portal-btn-simple">切換至：普通測驗 →</a>
         <a href="quiz_pro.html" class="nav-portal-btn nav-portal-btn-pro">切換至：加強版測驗 →</a>
-        <div class="stat-badge">7 大醫院聯網</div>
-        <div class="stat-badge">43 間公立機構</div>
+        <div class="stat-badge">7 大醫院聯網 ｜ 43 間公立機構</div>
       </div>
     </div>
   </header>
@@ -1402,19 +1379,16 @@
             <span>得分:</span>
             <span class="num" id="current-score">0 / 0</span>
           </div>
+
+          <button class="btn-refresh" id="btn-refresh-quiz">
+            <span>換一批題目 / 重新生成 5 題</span>
+          </button>
         </div>
       </div>
 
       <!-- Questions List Container -->
       <div class="questions-list" id="questions-container">
         <!-- Injected via JavaScript -->
-      </div>
-
-      <!-- Quiz Bottom Actions -->
-      <div class="quiz-bottom-bar">
-        <button class="btn-refresh btn-refresh-large" id="btn-refresh-quiz">
-          <span>換一批題目 / 重新生成 5 題 (再練習)</span>
-        </button>
       </div>
     </div>
 
@@ -2605,14 +2579,9 @@
         generateQuiz();
       });
 
-      // Refresh quiz button (moved to bottom)
+      // Refresh quiz button
       document.getElementById('btn-refresh-quiz').addEventListener('click', () => {
         generateQuiz();
-        // Smoothly scroll back to the beginning of the quiz
-        const quizEl = document.getElementById('quiz-container');
-        if (quizEl) {
-          quizEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
       });
 
       // Toggle all groups button
