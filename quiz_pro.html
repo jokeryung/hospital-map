@@ -791,7 +791,7 @@
         <a href="index.html" class="nav-portal-btn nav-portal-btn-home">← 返回主頁目錄</a>
         <a href="map.html" class="nav-portal-btn nav-portal-btn-map">切換至：醫院地圖 →</a>
         <a href="quiz.html" class="nav-portal-btn nav-portal-btn-simple">切換至：普通測驗 (基礎版) →</a>
-        <div class="stat-badge">精選題庫：532 題 (133 範圍 × 4 題型)</div>
+        <div class="stat-badge">精選題庫：268 題 (67 範圍 × 4 題型)</div>
       </div>
     </div>
   </header>
@@ -964,6 +964,10 @@
 
     // Generate test based on mode
     function generateTest() {
+      currentFilterType = 'all';
+      document.querySelectorAll('.filter-chip').forEach(c => {
+        c.classList.toggle('active', c.dataset.filter === 'all');
+      });
       userMCAnswers = {};
       userSQHits = {};
       mcScore = 0;
@@ -1228,7 +1232,19 @@
 
     function checkTestCompletion() {
       const bottomSummary = document.getElementById('bottom-summary-text');
-      if (currentMode === 'exam' && mcAnsweredCount === 30) {
+      if (currentFilterType !== 'all' && currentMC.length > 0 && mcAnsweredCount === currentMC.length) {
+        const pct = Math.round((mcScore / currentMC.length) * 100);
+        const typeNames = {
+          'combination': '組合配搭題 (I-IV)',
+          'positive': '核心概念題',
+          'scenario': '臨床情境案例題'
+        };
+        const label = typeNames[currentFilterType] || '專項練習';
+        bottomSummary.innerHTML = `
+          <strong>【${label}專項練習完成！】得分：${mcScore} / ${currentMC.length} (正答率: ${pct}%)</strong><br>
+          <span style="font-size: 0.9rem; color: #475569;">練習完成！可點擊下方按鈕從題庫再抽 20 題繼續專項強化，或切換至「全部題型」。</span>
+        `;
+      } else if (currentMode === 'exam' && mcAnsweredCount === 30) {
         const pct = Math.round((mcScore / 30) * 100);
         bottomSummary.innerHTML = `
           <strong>【正式考試完成！】MC 得分：${mcScore} / 30 (正答率: ${pct}%)</strong><br>
@@ -1283,13 +1299,42 @@
       document.querySelectorAll('.filter-chip').forEach(c => {
         c.classList.toggle('active', c.dataset.filter === type);
       });
-      document.querySelectorAll('.question-card').forEach(card => {
-        if (type === 'all' || card.dataset.qtype === type) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+
+      if (type === 'all') {
+        generateTest();
+        return;
+      }
+
+      // Draw 20 questions of this specific type directly from the entire pool
+      const filteredPool = fullMCBank.filter(q => q.type === type || (type === 'combination' && q.type === 'combo'));
+      const drawCount = Math.min(20, filteredPool.length);
+      const historyKey = RECENT_TESTS_MC_KEY + '_' + type;
+
+      currentMC = drawFromPool(filteredPool, drawCount, historyKey);
+      userMCAnswers = {};
+      mcScore = 0;
+      mcAnsweredCount = 0;
+
+      const typeNames = {
+        'combination': '組合配搭題 (I-IV)',
+        'positive': '核心概念題',
+        'scenario': '臨床情境案例題'
+      };
+      const label = typeNames[type] || '專項題型';
+
+      document.getElementById('mc-count-pill').textContent = `共 ${currentMC.length} 題 (${label}專項抽測)`;
+      const descEl = document.getElementById('mode-desc-text');
+      if (descEl) {
+        descEl.textContent = `專項練習模式：從全題庫 67 題【${label}】中隨機精選 ${currentMC.length} 題集中強化`;
+      }
+
+      const bottomSummary = document.getElementById('bottom-summary-text');
+      if (bottomSummary) {
+        bottomSummary.textContent = `已從題庫抽調 20 題【${label}】，完成後可點擊下方按鈕再抽下一批 20 題。`;
+      }
+
+      renderMC();
+      updateScoreUI();
     }
 
     function shuffleArray(array) {
@@ -1317,7 +1362,11 @@
 
       // Bottom refresh button
       document.getElementById('btn-refresh-quiz-bottom').addEventListener('click', () => {
-        generateTest();
+        if (currentFilterType !== 'all') {
+          filterMCType(currentFilterType);
+        } else {
+          generateTest();
+        }
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     });
