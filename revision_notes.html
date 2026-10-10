@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>雞精短答衝刺筆記 ｜ 醫護支援人員護理技巧 I 基礎證書</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #7c2d12;
+      --primary-light: #ea580c;
+      --bg: #0b1329;
+      --card-bg: #1e293b;
+      --card-inner: #0f172a;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --highlight-bg: #fef08a;
+      --highlight-color: #854d0e;
+      --keyword-color: #f59e0b;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 20%, #1a162b 0%, #0b1329 100%);
+      font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #451a03 0%, #9a3412 100%);
+      color: white;
+      padding: 22px 18px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(251, 146, 60, 0.3);
+    }
+
+    .header-content {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .header-title-box h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-title-box p {
+      font-size: 0.85rem;
+      color: #fed7aa;
+      margin-top: 4px;
+    }
+
+    .header-nav-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-btn:hover, .nav-btn:active {
+      background: #ffffff;
+      color: #7c2d12;
+      border-color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .nav-btn.home-btn {
+      background: #ffffff;
+      color: #451a03;
+      font-weight: 800;
+      border-color: #ffffff;
+    }
+
+    .badge-count {
+      background: rgba(251, 146, 60, 0.25);
+      border: 1px solid #fb923c;
+      color: #fed7aa;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    /* Container */
+    .container {
+      max-width: 900px;
+      margin: 18px auto 40px;
+      padding: 0 16px;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Quick Filter Nav */
+    .quick-nav {
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    }
+
+    .quick-nav-title {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .chips-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .topic-chip {
+      background: #0f172a;
+      color: #cbd5e1;
+      border: 1px solid #334155;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .topic-chip:hover, .topic-chip:active {
+      background: #ea580c;
+      color: white;
+      border-color: #ea580c;
+    }
+
+    /* Topic Cards */
+    .topic-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.35);
+      transition: transform 0.15s ease, border-color 0.15s ease;
+      scroll-margin-top: 140px;
+    }
+
+    .topic-card:hover {
+      border-color: #f97316;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .topic-num {
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(234, 88, 12, 0.4);
+    }
+
+    .card-title-box {
+      flex: 1;
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .page-badge {
+      background: #451a03;
+      color: #fdba74;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(251, 146, 60, 0.3);
+    }
+
+    .category-badge {
+      background: #1e293b;
+      color: #94a3b8;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid #334155;
+    }
+
+    .card-title {
+      font-size: 1.12rem;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.35;
+    }
+
+    .card-note {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-top: 2px;
+      font-style: italic;
+    }
+
+    /* Point Form Content */
+    .points-list {
+      background: var(--card-inner);
+      border: 1px solid rgba(51, 65, 85, 0.7);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .point-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+
+    .point-bullet {
+      color: #f97316;
+      font-weight: 900;
+      font-size: 1.1rem;
+      line-height: 1.3;
+      flex-shrink: 0;
+    }
+
+    .point-text {
+      flex: 1;
+    }
+
+    /* Keyword Highlight: yellow text color only */
+    .keyword {
+      color: #fbbf24;
+      font-weight: 700;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 24px 16px;
+      color: #64748b;
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+      background: #0f172a;
+      margin-top: auto;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 600px) {
+      .header-title-box h1 {
+        font-size: 1.18rem;
+      }
+      .topic-card {
+        padding: 16px 14px;
+      }
+      .card-title {
+        font-size: 1.02rem;
+      }
+      .point-item {
+        font-size: 0.88rem;
+      }
+      .points-list {
+        padding: 12px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header>
+    <div class="header-content">
+      <div class="header-title-box">
+        <h1><span>🎯</span> 醫護支援人員 (PCA) 雞精短答衝刺筆記</h1>
+        <p>最後溫習衝刺 ｜ 100% 講義重點核對 ｜ 關鍵字 Highlight 速記</p>
+      </div>
+      <div class="header-nav-row">
+        <a href="index.html" class="nav-btn home-btn">← 返回主頁目錄</a>
+        <a href="quiz_pro.html" class="nav-btn">加強版測驗 →</a>
+        <a href="quiz.html" class="nav-btn">基礎版測驗 →</a>
+        <a href="map.html" class="nav-btn">醫院地圖 →</a>
+        <div class="badge-count">核心課題：14 篇重點</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Quick Jump Bar -->
+    <div class="quick-nav">
+      <div class="quick-nav-title">⚡ 快速跳轉至指定重點課題：</div>
+      <div class="chips-wrap">
+        <a href="#topic_01" class="topic-chip">1. 角色與主要職責</a><a href="#topic_02" class="topic-chip">2. 護理病人 13 項職務</a><a href="#topic_03" class="topic-chip">3. 原發與繼發高血壓 / BMI</a><a href="#topic_04" class="topic-chip">4. 中風危險因素</a><a href="#topic_05" class="topic-chip">5. 中風常見併發症 (記哂)</a><a href="#topic_06" class="topic-chip">6. 糖尿病病徵病狀</a><a href="#topic_07" class="topic-chip">7. 避免燙傷措施 (must試水溫)</a><a href="#topic_08" class="topic-chip">8. 病房高危活動</a><a href="#topic_09" class="topic-chip">9. 標準預防 / 針咀單手技術</a><a href="#topic_10" class="topic-chip">10. 飛沫傳染隔離與防護</a><a href="#topic_11" class="topic-chip">11. 生物性危害物品分類</a><a href="#topic_12" class="topic-chip">12. 利器安全與刺傷急救</a><a href="#topic_13" class="topic-chip">13. 滑倒及絆倒預防</a><a href="#topic_14" class="topic-chip">14. 庫伯勒-羅斯心理五階段</a>
+      </div>
+    </div>
+
+    <!-- Topics List -->
+    <div class="topics-container">
+      
+      <div class="topic-card" id="topic_01">
+        <div class="card-top">
+          <div class="topic-num">1</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 5 頁</span>
+              <span class="category-badge">醫療體系與職責</span>
+            </div>
+            <h2 class="card-title">醫護支援人員的角色及主要職責 (Role & Major Responsibilities)</h2>
+            <div class="card-note">講義手寫標註 SQ，重點考核醫護支援人員 9 大核心職責</div>
+          </div>
+        </div>
+        <div class="points-list">
+          
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">協助護士為病人提供<span class="keyword">個人護理服務</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">直接或間接執行與<span class="keyword">照顧病人有關的服務</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">協助護士執行<span class="keyword">臨床護理、檢查</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">按指示為病房<span class="keyword">處理雜務</span>及提供其他照顧病人的服務</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">負責<span class="keyword">護送工作</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">處理<span class="keyword">一般文書工作</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">執行<span class="keyword">清潔及消毒工作</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">負責<span class="keyword">運送文件</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">執行護士或醫療人員<span class="keyword">委派之其他工作</span></div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="topic-card" id="topic_02">
+        <div class="card-top">
+          <div class="topic-num">2</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 6 頁</span>
+              <span class="category-badge">病人護理與常規</span>
+            </div>
+            <h2 class="card-title">醫護支援人員一般職務：護理病人 (Patient Care)</h2>
+            <div class="card-note">講義綠框重點及手寫標註 SQ，涵蓋 13 項日常病人照顧核心常規</div>
+          </div>
+        </div>
+        <div class="points-list">
+          
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">照顧病人<span class="keyword">日常起居及衛生</span>（如：淋浴、床上浴、口腔護理等）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">準備及<span class="keyword">分派膳食</span>（包括分發飯餐、飲料及食具等）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">為病人提供舒適環境、<span class="keyword">整理床鋪及床邊櫃</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">按指示為病人進行<span class="keyword">特別的個人護理</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">協助病人<span class="keyword">轉換體位、轉床及上落輪椅</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">回應病人<span class="keyword">按鈴</span>，給予適當協助</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">量度及記錄病人<span class="keyword">體重、體高</span>和<span class="keyword">飲食及排泄量</span>（定時量度小便量）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">負責執行一般例行觀察和<span class="keyword">生命體徵工作</span>（體溫、血壓、脈搏、呼吸等），記錄並報告主理護士</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">由護士指派的其他病人服務及病房工作（替病人預備 X 光或其他檢查手術及治療等）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">收集<span class="keyword">尿液、糞便和痰涎樣本</span>作化驗</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">協助病人<span class="keyword">死後的料理</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">協助病人穿<span class="keyword">安全背心及加上床欄</span>，以保障病人安全</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">協助病人處理<span class="keyword">出入院事項</span>（如：更衣及收拾物品）</div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="topic-card" id="topic_03">
+        <div class="card-top">
+          <div class="topic-num">3</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 40 頁</span>
+              <span class="category-badge">常見疾病認知</span>
+            </div>
+            <h2 class="card-title">高血壓成因及危險因素 (生理因素與體重指標)</h2>
+            <div class="card-note">高血壓兩大成因分類、三大生理危險因素與 BMI 計算公式</div>
+          </div>
+        </div>
+        <div class="points-list">
+          
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>原發性高血壓</strong>：佔 <span class="keyword">百分之九十</span> 原因不明，相信與 <span class="keyword">遺傳因素</span> 及 <span class="keyword">生活習慣</span> 有關，一般在 <span class="keyword">中年以後發病</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>繼發性高血壓</strong>：佔 <span class="keyword">百分之十</span>，由其他疾病引起（如 <span class="keyword">腎病</span>、腎上腺腫瘤、甲狀腺機能亢進症等）；當基本疾病治癒後，血壓就會恢復正常</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>生理危險因素</strong>：① 隨 <span class="keyword">年齡增長而上升</span>；② 更年期前，通常 <span class="keyword">男性的血壓比女性高</span>；③ <span class="keyword">肥胖</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>體重指標 (BMI) 計算公式</strong>：<span class="keyword">體重 (公斤) ÷ [身高 (米)]²</span>（用作客觀分析體重是否適中的最常方法）</div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="topic-card" id="topic_04">
+        <div class="card-top">
+          <div class="topic-num">4</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 48 頁</span>
+              <span class="category-badge">常見疾病認知</span>
+            </div>
+            <h2 class="card-title">導致中風的八大危險因素</h2>
+            <div class="card-note">講義手寫星號重點，考核可預防與不可預防之中風高危導因</div>
+          </div>
+        </div>
+        <div class="points-list">
+          
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">吸煙</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">年齡</span>：年紀越大，中風機會越大</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">高血壓</span>（最關鍵且可控制之危險因素）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">血內膽固醇過高</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">過重</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">缺乏運動</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">先天性腦血管腫瘤</span>或<span class="keyword">血管壁過薄</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">其他疾病</span>（如 <span class="keyword">糖尿病</span>、<span class="keyword">風濕性心臟病</span> 等會令中風危險倍增）</div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="topic-card" id="topic_05">
+        <div class="card-top">
+          <div class="topic-num">5</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 48 頁</span>
+              <span class="category-badge">常見疾病認知</span>
+            </div>
+            <h2 class="card-title">中風後常見併發症</h2>
+            <div class="card-note">講義手寫標註「記哂」及星號，必背之 11 大臨床併發症</div>
+          </div>
+        </div>
+        <div class="points-list">
+          
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">壓瘡</span>（長期臥床受壓部位血液循環不良所致）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">肺炎</span>（吸入性肺炎或臥床引致肺部感染）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">消化道出血</span>（壓力性潰瘍出血）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">癲癇發作</span>（腦細胞受損引發異常放電）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">吞嚥困難</span>（極高嗆咳及窒息風險，需特別護理）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">患側肌肉痙攣</span>（偏癱肢體張力過高與攣縮）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">情緒問題 (抑鬱)</span>（失去自理能力之後發心理創傷）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">昏迷或死亡</span>（重症大面積腦損傷危及生命）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">便秘</span>（腸道蠕動減慢與行動不便）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">水腫</span>（患肢缺乏主動肌肉泵血導致淋巴及靜脈回流受阻）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">泌尿道感染</span>（留置導尿管或神經源性膀胱）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">呼吸道感染</span>（痰液積聚排痰無力）</div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="topic-card" id="topic_06">
+        <div class="card-top">
+          <div class="topic-num">6</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 56 頁</span>
+              <span class="category-badge">常見疾病認知</span>
+            </div>
+            <h2 class="card-title">糖尿病六大常見病徵病狀</h2>
+            <div class="card-note">講義手寫星號重點，必考核心病徵及典型臨床表現</div>
+          </div>
+        </div>
+        <div class="points-list">
+          
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">皮膚癢</span>，尤其 <span class="keyword">女性陰部痕癢</span>（高血糖引致念珠菌/真菌感染）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">口渴</span>（多飲，滲透性利尿導致身體缺水）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">多尿</span>（腎小管無法完全重吸收過多葡萄糖）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">疲倦</span>（細胞無法有效攝取葡萄糖轉化為能量）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">體重下降</span>（身體分解脂肪與肌肉蛋白供能）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">傷口難於癒合</span>（高血糖抑制免疫白血球吞噬功能與微血管病變）</div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="topic-card" id="topic_07">
+        <div class="card-top">
+          <div class="topic-num">7</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 94 頁</span>
+              <span class="category-badge">安全與意外預防</span>
+            </div>
+            <h2 class="card-title">病房預防意外措施：避免燙傷</h2>
+            <div class="card-note">講義手寫標註 SQ 及星號，臨床調校水溫與熱飲防範守則</div>
+          </div>
+        </div>
+        <div class="points-list">
+          
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">如病人 <span class="keyword">神智不清</span>，將附近的 <span class="keyword">暖水壺移開</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">熱湯或熱粥</span>，應放在 <span class="keyword">兒童 / 老弱病者不能接觸的地方</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">沐浴時，調校水溫應 <span class="keyword">先開凍水，然後開熱水</span>（必須先用手腕內側試水溫）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">沐浴完，應 <span class="keyword">先關熱水，然後關凍水</span>（防止管道殘留熱水燙傷下一位使用者）</div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="topic-card" id="topic_08">
+        <div class="card-top">
+          <div class="topic-num">8</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 94 頁</span>
+              <span class="category-badge">安全與意外預防</span>
+            </div>
+            <h2 class="card-title">容易在病房引致意外的高危活動</h2>
+            <div class="card-note">講義手寫標註 SQ 及星號，高危跌倒與意外活動情境</div>
+          </div>
+        </div>
+        <div class="points-list">
+          
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">大小便次數頻密</span> 或需於床上、床邊如廁</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">不安全地使用大便椅、輪椅</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">跨越床欄</span>，易生意外</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">不安全地使用「<span class="keyword">高靠背椅</span>」</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">不安全地使用「<span class="keyword">活動鹽水架</span>」借力</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">高估自己活動能力</span>，不聽從醫護人員勸告；自行下床但力不從心</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">單腳站立穿鞋</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">跨過門檻</span> 時不小心摔倒</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">繁忙的時段單獨使用輔助步行器</span> 在病室內外行走</div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="topic-card" id="topic_09">
+        <div class="card-top">
+          <div class="topic-num">9</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 109 頁</span>
+              <span class="category-badge">感染控制常規</span>
+            </div>
+            <h2 class="card-title">標準預防措施 (Standard Precaution) 要點及針咀利器指引</h2>
+            <div class="card-note">講義手寫標註星號，針對所有醫院制定的血液體液通用感染防護</div>
+          </div>
+        </div>
+        <div class="points-list">
+          
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">汗液以外</span>，任何血液、體液、分泌物及排泄物應視作具有傳染性</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">凡接觸以上各種或其沾染物（衣服或物品），均需預先 <span class="keyword">配戴乳膠手套</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">任何情況下，<span class="keyword">卸除手套後，必須洗手</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">小心處理針咀及利器</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">切勿回套針咀</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">必要時使用 <span class="keyword">單手技術</span>，才可回套針咀（如：針蓋放枱邊，單手用針插回，針蓋向天拾蓋）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">使用針咀及利器後，必須立即棄置於 <span class="keyword">利器收集箱 (Sharp Box)</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">利器收集箱 (Sharp Box) 已裝滿 <span class="keyword">3/4 時（不應超過八成）</span>，要更換一個</div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="topic-card" id="topic_10">
+        <div class="card-top">
+          <div class="topic-num">10</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 110 頁</span>
+              <span class="category-badge">感染控制常規</span>
+            </div>
+            <h2 class="card-title">飛沫傳染預防措施 (Droplet Precautions)</h2>
+            <div class="card-note">講義紅圈重點：適用疾病、傳播機制、隔離距離與個人防護裝備</div>
+          </div>
+        </div>
+        <div class="points-list">
+          
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>常見適用疾病</strong>：<span class="keyword">流行性感冒</span>、腦膜炎雙球菌、腮腺炎、德國麻疹</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>產生機制</strong>：通過病人咳嗽、打噴嚏、談話，或進行抽痰、支氣管內窺鏡檢查產生之 <span class="keyword">懸浮微粒 (Aerosol)</span> 經呼吸道傳播</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>病房與隔離安排</strong>：應盡可能安排病人 <span class="keyword">獨立房間</span>；如未能，應將相同感染的病人「<span class="keyword">群集護理</span>」，或與其他病人保持 <span class="keyword">3 呎 (約 1 米) 距離</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>病人衛教</strong>：教導病人在咳嗽及打噴嚏時，使用 <span class="keyword">紙巾蓋住口和鼻</span>，之後要徹底洗手</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>醫護防護要求</strong>：員工如要進入病人房間、或與病人相距 <span class="keyword">3 呎範圍內</span> 執行醫療護理程序時，必須配戴 <span class="keyword">外科口罩</span> 及合適個人防護裝備</div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="topic-card" id="topic_11">
+        <div class="card-top">
+          <div class="topic-num">11</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 134 頁</span>
+              <span class="category-badge">感染控制與廢物管理</span>
+            </div>
+            <h2 class="card-title">生物性危害的高危物品</h2>
+            <div class="card-note">講義第 134 頁圈劃考點，四大高傳染性生物危害物品分類</div>
+          </div>
+        </div>
+        <div class="points-list">
+          
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">血液、體液及被污染的衣物床單</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">用過的針筒和刀片</span>（高危利器危害）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">醫療廢物</span>（人體組織、化驗培養基及傳染性廢料）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><span class="keyword">受感染的染病屍體</span>（需特製防滲屍袋及專用標籤處理）</div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="topic-card" id="topic_12">
+        <div class="card-top">
+          <div class="topic-num">12</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 135 頁</span>
+              <span class="category-badge">職業安全與意外處理</span>
+            </div>
+            <h2 class="card-title">針刺或被利器所傷預防措施及刺傷緊急處理</h2>
+            <div class="card-note">講義紅圈考點，利器箱規格、清倒指引與針刺意外即時急救</div>
+          </div>
+        </div>
+        <div class="points-list">
+          
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>預防針刺措施</strong>：使用利器時要小心處理，<span class="keyword">不可回套、屈曲或折斷針咀</span>；必須時使用 <span class="keyword">單手技術</span> 回套</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>收集箱規格</strong>：所有尖銳物品必須棄置在防穿漏的 <span class="keyword">利器收集箱</span> 內，箱外寫上「利器」及貼有「<span class="keyword">生物性危害</span>」標誌</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>容量更換標準</strong>：不要盛載過滿，大約 <span class="keyword">3/4 容量 (75%-80%)</span> 時便應妥善棄置；保持箱身清潔乾爽</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>封口棄置流程</strong>：棄置時要 <span class="keyword">密封利器收集箱</span>，然後棄置於 <span class="keyword">紅色膠袋內及縛紮好</span>，並於袋外寫明「生物性危害」或「小心利器」</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>垃圾處理禁忌</strong>：處理垃圾時，<span class="keyword">不應用手擠壓垃圾袋內的物件</span>，以防當中有尖利或玻璃物件造成刺割傷</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>針刺傷即時處理程序 (必考！)</strong>：如被針刺傷，應 ① <span class="keyword">輕輕將血從患處擠壓出來</span>；② 在 <span class="keyword">流動清水下徹底沖洗傷口</span>；③ 止血後以 <span class="keyword">無菌敷料覆蓋</span>；④ 即時 <span class="keyword">報告主管</span>；⑤ 往急症室或醫生處求診進行血液化驗及預防投藥</div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="topic-card" id="topic_13">
+        <div class="card-top">
+          <div class="topic-num">13</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 149 頁</span>
+              <span class="category-badge">職業安全與環境管理</span>
+            </div>
+            <h2 class="card-title">病房滑倒及絆倒預防措施</h2>
+            <div class="card-note">講義手寫標註 SQ 及星號，病房地面環境安全 10 大預防措施</div>
+          </div>
+        </div>
+        <div class="points-list">
+          
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">選擇合適的 <span class="keyword">防滑地板</span>，並定期加以修護</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">立即處理 <span class="keyword">水漬或濺出物</span>，經常保持地面整潔及乾爽</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">使用「<span class="keyword">小心地滑</span>」警告牌提高警覺</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">穿著適當的 <span class="keyword">防滑鞋具</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">門口加設 <span class="keyword">地氈</span> 方便清理鞋底</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">在地面高低不平或傾斜的地方，加上 <span class="keyword">標誌或加添扶手</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">避免 <span class="keyword">電線繞過通道</span>，保持行人道暢通</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">提供 <span class="keyword">足夠照明</span></div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">適當地劃分行人區和來往路線等（<span class="keyword">人潮分流</span>）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">在較滑的地面行走時要 <span class="keyword">減慢速度</span></div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="topic-card" id="topic_14">
+        <div class="card-top">
+          <div class="topic-num">14</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 196 頁</span>
+              <span class="category-badge">臨終關懷與心理護理</span>
+            </div>
+            <h2 class="card-title">臨終病人的五種精神狀況 (庫伯勒-羅斯心理五階段)</h2>
+            <div class="card-note">講義手寫星號標註「記哂」，必考之臨終心理五大進程與特徵</div>
+          </div>
+        </div>
+        <div class="points-list">
+          
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>1. <span class="keyword">震驚及否認期 (Shock and denial)</span></strong>：首個心理反應，否認死亡「絕不是我！不可能是真的！」，屬精神緩衝及心理自衛，表現激動或感情麻木</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>2. <span class="keyword">憤怒期 (Anger)</span></strong>：怨憤「為什麼是我？」，負面情緒轉移至家人、醫生和護士甚至神，探問是否惡有惡報，投訴食物欠佳及醫護不盡責</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>3. <span class="keyword">討價還價期 (Bargaining)</span></strong>：知道無法改變事實，轉向所信之神（神、佛等）祈求，立下誓約換取更長生命（如改過自新或改變飲食習慣）</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>4. <span class="keyword">憂鬱期 (Depression)</span></strong>：面對日益嚴重病情不得不認同事實而放棄乞求，感到極度沮喪悲傷、胃口減退、體重下降，嚴重抑鬱者在此時期有自殺或自我傷害風險，需嚴密防範</div>
+          </div>
+        
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text"><strong>5. <span class="keyword">接受期 (Acceptance)</span></strong>：深知即將告別人世，情緒變得較平靜，無奈接受命運或反過來安慰家人，利用僅有時間及精力為自己作死後安排</div>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    醫護支援人員護理技巧 I 基礎證書 ｜ 雞精短答衝刺專區 ｜ 嚴格核對講義筆記
+  </footer>
+
+</body>
+</html>
