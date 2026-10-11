@@ -22,8 +22,8 @@
       --text-muted: #94a3b8;
       --border: #334155;
       --highlight-bg: rgba(56, 189, 248, 0.15);
-      --highlight-color: #38bdf8;
-      --keyword-color: #38bdf8;
+      --highlight-color: #a5f3fc;
+      --keyword-color: #7dd3fc;
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 18px;
@@ -344,18 +344,22 @@
       flex: 1;
     }
 
-    /* Keyword & Subtitle Highlight: 淺藍色 (Light Blue) */
-    .keyword,
+    /* Keyword & Subtitle Highlight: 亮淺藍色 (Luminous Light Blue) */
     .point-text strong,
     .point-text strong span {
-      color: #38bdf8 !important;
+      color: #7dd3fc !important;
       font-weight: 800;
     }
 
     .keyword {
-      background: rgba(56, 189, 248, 0.15);
-      padding: 1px 4px;
+      color: #a5f3fc !important;
+      font-weight: 800;
+      background: rgba(56, 189, 248, 0.22);
+      border: 1px solid rgba(165, 243, 252, 0.35);
+      padding: 1px 6px;
       border-radius: 4px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
     }
 
     .sub-points-list {
