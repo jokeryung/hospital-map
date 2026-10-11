@@ -1,0 +1,2917 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>雞精MC衝刺筆記 ｜ 醫護支援人員護理技巧 I 基礎證書</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0369a1;
+      --primary-light: #0284c7;
+      --primary-accent: #38bdf8;
+      --bg: #0b1329;
+      --card-bg: #1e293b;
+      --card-inner: #0f172a;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --highlight-bg: rgba(56, 189, 248, 0.15);
+      --highlight-color: #38bdf8;
+      --keyword-color: #38bdf8;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 20%, #152243 0%, #0b1329 100%);
+      font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header - NOT sticky, normal scroll */
+    header {
+      background: linear-gradient(135deg, #082f49 0%, #0369a1 100%);
+      color: white;
+      padding: 22px 18px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .header-content {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .header-title-box h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-title-box p {
+      font-size: 0.85rem;
+      color: #bae6fd;
+      margin-top: 4px;
+    }
+
+    .header-nav-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-btn:hover, .nav-btn:active {
+      background: #ffffff;
+      color: #0369a1;
+      border-color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .nav-btn.home-btn {
+      background: #ffffff;
+      color: #082f49;
+      font-weight: 800;
+      border-color: #ffffff;
+    }
+
+    .badge-count {
+      background: rgba(56, 189, 248, 0.25);
+      border: 1px solid #38bdf8;
+      color: #bae6fd;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    /* Container */
+    .container {
+      max-width: 900px;
+      margin: 18px auto 40px;
+      padding: 0 16px;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Controls: Search & Category Chips */
+    .controls-container {
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .search-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: #0f172a;
+      border: 1.5px solid #334155;
+      color: #f8fafc;
+      padding: 10px 16px 10px 38px;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-box input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 0.95rem;
+      pointer-events: none;
+    }
+
+    .category-filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .filter-chip {
+      background: #0f172a;
+      color: #94a3b8;
+      border: 1px solid #334155;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+
+    .filter-chip:hover {
+      color: #f8fafc;
+      border-color: #64748b;
+    }
+
+    .filter-chip.active {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #38bdf8;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+    }
+
+    /* Topic Cards */
+    .topic-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.35);
+      transition: transform 0.15s ease, border-color 0.15s ease;
+      scroll-margin-top: 24px;
+    }
+
+    .topic-card:hover {
+      border-color: #38bdf8;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .topic-num {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: white;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.4);
+    }
+
+    .card-title-box {
+      flex: 1;
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .page-badge {
+      background: #082f49;
+      color: #7dd3fc;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .points-badge {
+      background: rgba(56, 189, 248, 0.18);
+      color: #7dd3fc;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 2px 9px;
+      border-radius: 6px;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      letter-spacing: 0.2px;
+    }
+
+    .category-badge {
+      background: #1e293b;
+      color: #94a3b8;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid #334155;
+    }
+
+    .card-title {
+      font-size: 1.12rem;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.35;
+    }
+
+    .card-note {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-top: 2px;
+      font-style: italic;
+    }
+
+    /* Point Form Content */
+    .points-list {
+      background: var(--card-inner);
+      border: 1px solid rgba(51, 65, 85, 0.7);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .point-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+
+    .point-bullet {
+      color: #f97316;
+      font-weight: 900;
+      font-size: 1.1rem;
+      line-height: 1.3;
+      flex-shrink: 0;
+    }
+
+    .point-text {
+      flex: 1;
+    }
+
+    /* Keyword & Subtitle Highlight: 淺藍色 (Light Blue) */
+    .keyword,
+    .point-text strong,
+    .point-text strong span {
+      color: #38bdf8 !important;
+      font-weight: 800;
+    }
+
+    .keyword {
+      background: rgba(56, 189, 248, 0.15);
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+
+    .sub-points-list {
+      margin-top: 10px;
+      margin-left: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      padding-left: 12px;
+      border-left: 2px solid rgba(56, 189, 248, 0.35);
+    }
+
+    .sub-point-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: #cbd5e1;
+    }
+
+    .sub-point-bullet {
+      color: var(--keyword-color);
+      font-size: 0.95rem;
+      line-height: 1.4;
+      user-select: none;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 24px 16px;
+      color: #64748b;
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+      background: #0f172a;
+      margin-top: auto;
+    }
+
+    /* Floating Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      border: 1px solid rgba(56, 189, 248, 0.6);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(2, 132, 199, 0.35);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0.92;
+      text-decoration: none;
+    }
+
+    .back-to-top:hover {
+      opacity: 1;
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), 0 3px 8px rgba(2, 132, 199, 0.45);
+      background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+      color: #ffffff;
+    }
+
+    .back-to-top:active {
+      transform: scale(0.95);
+    }
+
+    .back-to-top svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 600px) {
+      .header-title-box h1 {
+        font-size: 1.18rem;
+      }
+      .topic-card {
+        padding: 16px 14px;
+      }
+      .card-title {
+        font-size: 1.02rem;
+      }
+      .point-item {
+        font-size: 0.88rem;
+      }
+      .points-list {
+        padding: 12px 12px;
+      }
+    }
+  </style>
+</head>
+<body id="top">
+
+  <!-- Header (Normal scroll, not sticky) -->
+  <header>
+    <div class="header-content">
+      <div class="header-title-box">
+        <h1>📑 雞精MC衝刺筆記 ｜ 講義全範圍速記</h1>
+        <p>嚴格覆蓋 test img3 Google 雲端講義全部 80 頁精華 ｜ 手機隨身溫習 ｜ 關鍵字 Highlight</p>
+      </div>
+      <div class="header-nav-row">
+        <a href="index.html" class="nav-btn home-btn">← 返回首頁</a>
+        <a href="revision_notes.html" class="nav-btn">📝 雞精短答筆記</a>
+        <a href="quiz_pro.html" class="nav-btn">🎯 加強版測驗 (260題)</a>
+        <a href="map.html" class="nav-btn">🗺️ 聯網分佈地圖</a>
+        <span class="badge-count" id="visibleCountBadge">共 42 個重點課題</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+
+    <!-- Controls: Search & Category Chips -->
+    <div class="controls-container">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="搜尋課題名稱、講義頁數、疾病或關鍵字..." oninput="handleSearch()">
+      </div>
+      <div class="category-filter-row" id="categoryFilterRow">
+        <button class="filter-chip active" onclick="filterCategory('ALL')">全部 (42)</button>
+        <button class="filter-chip" onclick="filterCategory('醫療體系與職責')">醫療體系 (3)</button>
+        <button class="filter-chip" onclick="filterCategory('醫護人員與職級架構')">職級與團隊 (2)</button>
+        <button class="filter-chip" onclick="filterCategory('病房常用術語與縮寫')">常用縮寫 (2)</button>
+        <button class="filter-chip" onclick="filterCategory('人體解剖與生理系統')">解剖生理 (6)</button>
+        <button class="filter-chip" onclick="filterCategory('常見臨床疾病與護理')">常見疾病 (6)</button>
+        <button class="filter-chip" onclick="filterCategory('生命表徵測量規範')">生命表徵 (5)</button>
+        <button class="filter-chip" onclick="filterCategory('感染控制與隔離防護')">感染控制 (5)</button>
+        <button class="filter-chip" onclick="filterCategory('醫療廢物與環境安全')">環境安全 (4)</button>
+        <button class="filter-chip" onclick="filterCategory('起居照顧與出院安排')">起居照顧 (3)</button>
+        <button class="filter-chip" onclick="filterCategory('臨床檢查預備與標本')">檢查標本 (4)</button>
+        <button class="filter-chip" onclick="filterCategory('臨終關懷與遺體護理')">臨終遺體 (2)</button>
+      </div>
+    </div>
+
+    <!-- Cards Stream -->
+    <div id="cardsStream">
+
+      <div class="topic-card" id="mc_01" data-cat="醫療體系與職責">
+        <div class="card-top">
+          <div class="topic-num">1</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 5 頁</span>
+              <span class="category-badge">醫療體系與職責</span>
+              <span class="points-badge">共 6 個重點</span>
+            </div>
+            <h2 class="card-title">香港醫療體系與公立私營醫院架構</h2>
+            <div class="card-note">講義第 5 頁，香港醫療雙軌體制、醫管局管理規模、急症室收費及 13 間私家醫院</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>雙軌醫療體制</strong>：由特區政府醫務衞生局統籌醫療政策，維持<span class="keyword">公營與私營醫療雙軌並行</span>，公營醫療作為市民最後健康安全網。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>醫院管理局 (HA) 架構</strong>：法定獨立機構，依法統籌管轄全港 <span class="keyword">43 間公立醫院及醫療機構</span>、49 間專科門診及 73 間普通科門診，主要經費由特區政府財政撥款資助。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>7 大醫院聯網劃分</strong>：醫管局按地域劃分為 <span class="keyword">7 大醫院聯網</span>（港島東 HKEC、港島西 HKWC、九龍東 KEC、九龍中 KCC、九龍西 KWC、新界東 NTEC、新界西 NTWC），達致區域資源共享與協同轉介。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>急症室求診收費標準</strong>：符合資格人士 (持有香港身份證) 每次求診登記費為 <span class="keyword">180 港元</span>；非符合資格人士每次收費為 1,230 港元。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>13 間註冊私家醫院分佈</strong>：全港現時共有 <span class="keyword">13 間依法註冊的私營醫院</span>，提供多元化自費門診及住院服務：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>港島區 (6間)</strong>：嘉諾撒醫院、明德國際醫院、養和醫院、港怡醫院、聖保祿醫院、香港港安醫院–司徒拔道</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>九龍區 (4間)</strong>：播道醫院、聖德肋撒醫院 (法國醫院)、香港浸信會醫院、寶血醫院 (明愛)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>新界區 (3間)</strong>：仁安醫院、香港港安醫院–荃灣、香港中文大學醫院</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>公私營醫療協作 (PPP)</strong>：透過政府資助誘因善用私營市場醫療能量，縮短公立醫院白內障、造影及慢性病管理等輪候時間。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_02" data-cat="醫療體系與職責">
+        <div class="card-top">
+          <div class="topic-num">2</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 10 頁</span>
+              <span class="category-badge">醫療體系與職責</span>
+              <span class="points-badge">共 3 個重點</span>
+            </div>
+            <h2 class="card-title">醫院管理局《病人約章》：病人的權利與責任</h2>
+            <div class="card-note">講義第 10 頁，促進醫患互信合作，確立法律與倫理層面四大權利與四大責任</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>約章核心宗旨</strong>：確立病人和醫護人員之間的<span class="keyword">夥伴合作關係</span>，加強互相信任與尊重，提高醫療透明度及照護質素。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>病人的四大權利 (Patient Rights)</strong>：法律與醫德賦予病人之基本權益：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>醫療護理權</strong>：獲享有及時、專業、合理且有尊嚴的醫療診斷與護理服務，不受任何非法歧視</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>知情同意權</strong>：清楚知悉自己的診斷、治療方案、潛在風險、替代療法及處方藥物名稱與副作用，並有權在充分知情下<span class="keyword">接受或拒絕治療</span></div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>隱私保密權</strong>：個人病歷、檢查報告、病情私隱及身體私密部位獲得醫療團隊嚴格保護，未經同意不得向無關第三方披露</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>投訴與申訴權</strong>：對醫療程序、服務質素或收費有疑義時，有權透過醫院病人聯絡主任 (PRO) 提出查詢或正式申訴並獲得客觀回覆</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>病人的四大責任 (Patient Responsibilities)</strong>：病人就診期間必須履行之配合義務：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>誠實交代病歷</strong>：向醫護團隊如實提供現時病情、既往病史、現正服用藥物及已知之<span class="keyword">藥物過敏史 (Drug Allergy)</span></div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>配合身份核對</strong>：向醫護人員出示身份證明文件並配合<span class="keyword">核對病人手帶 (ID Wristband)</span>，保障用藥與檢查安全</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>遵守醫院規則</strong>：遵守病房探訪時間及防感染指引，愛惜醫院公物設施，保持環境安寧</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>尊重醫護人員</strong>：不得對前線醫護施加任何言語辱罵或肢體暴力，遵循醫囑進行康復</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_03" data-cat="醫療體系與職責">
+        <div class="card-top">
+          <div class="topic-num">3</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 15 - 16 頁</span>
+              <span class="category-badge">醫療體系與職責</span>
+              <span class="points-badge">共 6 個重點</span>
+            </div>
+            <h2 class="card-title">醫院部門設施、病房運作與入院核對指引</h2>
+            <div class="card-note">講義第 15 - 16 頁，中央護理部、社區護理、ICU/CCU 及雙重身份核對規範</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>中央護理部 (C.N.D.)</strong>：統籌管理全院護士及醫護支援人員的人力調配、排班、專業培訓及臨床護理質素審核。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>社區護理服務 (C.N.S.)</strong>：為出院後行動不便、慢性病或需延續治療之病人提供<span class="keyword">上門家居訪視護理</span>，包括傷口換藥、造口照護、更換尿喉及家屬照顧衛教。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>感染控制組 (I.C.T.)</strong>：專責監測病房院內感染暴發、制定全院隔離防護政策、指導突發傳染病處置及監督環境清潔消毒。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>重症監護病房類別</strong>：深切治療部 (<span class="keyword">I.C.U.</span>) 收治多器官衰竭、嚴重創傷及術後需全面生命維持之危重病人；心臟科加護病房 (<span class="keyword">C.C.U.</span>) 專門收治急性心肌梗塞及嚴重惡性心律失常病人。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>病人入院核對「雙重標識」</strong>：執行任何護理、給藥或抽血前，必須同時核對至少兩項獨立標識：<span class="keyword">病人姓名 (Full Name)</span> 及 <span class="keyword">身份證號碼 (HKID)</span> 或出生日期，並與病人佩戴之手帶資料逐字核對無誤。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>病人貴重物品處置</strong>：入院時強烈建議病人將貴重首飾、大量現金交由家屬帶走；若無家屬在場需代管，必須由<span class="keyword">兩名醫護人員共同點核</span>、登記簽署並鎖入病房保險箱。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_04" data-cat="醫護人員與職級架構">
+        <div class="card-top">
+          <div class="topic-num">4</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 17 頁</span>
+              <span class="category-badge">醫護人員與職級架構</span>
+              <span class="points-badge">共 6 個重點</span>
+            </div>
+            <h2 class="card-title">公立醫院護理職級序列與管理架構</h2>
+            <div class="card-note">講義第 17 頁，由行政管理至臨床前線之六大護理職級序列分工與法定職權</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>部門運作經理 (D.O.M.)</strong>：主管整個專科部門（如內科、外科、急症科）之護理行政、人力預算調配、資源管理及重大政策推行。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>病房經理 (W.M.)</strong>：掌管個別單一病房之全面日常護理管理、護理質量監督、輪更排班、職安健環境及跨部門溝通協調。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>高級資深護師 (A.P.N.)</strong>：具備深厚專科臨床經驗之專科護師，負責處理複雜罕見個案、指導前線臨床照護、開展護理科研與帶教培訓。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>註冊護士 (R.N. - Registered Nurse)</strong>：三年以上專上大專或大學學位學歷，持有護士管理局第一部執照，具備<span class="keyword">獨立執業資格</span>，負責全面病人護理評估、靜脈注射、執行醫囑給藥及急救處置。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>登記護士 (E.N. - Enrolled Nurse)</strong>：兩年專業護理訓練，持有護士管理局第二部執照，在註冊護士的指導及監督下，執行病房各項常規護理、基本給藥、傷口處理及生命表徵監測。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>醫護支援人員 (PCA)</strong>：在護士指導與督導下，直接執行病人<span class="keyword">個人衛生起居照顧</span>（沐浴、更衣、餵食、翻身防壓瘡）、收集臨床常規標本、測量生命表徵及病房物料運送。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_05" data-cat="醫護人員與職級架構">
+        <div class="card-top">
+          <div class="topic-num">5</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 17 頁</span>
+              <span class="category-badge">醫護人員與職級架構</span>
+              <span class="points-badge">共 6 個重點</span>
+            </div>
+            <h2 class="card-title">專職醫療團隊 (Allied Health) 專業分工與職責</h2>
+            <div class="card-note">講義第 17 頁，物理治療、職業治療、言語治療、醫務社工、營養師等跨專業合作</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>物理治療師 (PT - Physiotherapist)</strong>：專注於粗大動作與軀體運動功能康復、胸肺物理治療（拍痰、胸肺震盪、體位引流）、中風偏癱關節活動度訓練、助行器步態訓練及疼痛物理治療。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>職業治療師 (OT - Occupational Therapist)</strong>：專注於<span class="keyword">日常生活自理能力 (ADL) 訓練</span>（穿衣、進食、梳洗）、精細動作訓練、認知障礙評估、量身訂造壓力衣及家居環境安全改裝評估。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>言語治療師 (ST - Speech Therapist)</strong>：專責評估與治療<span class="keyword">吞嚥困難 (Dysphagia)</span>，制定食物稠度指引（凝固粉調配、糊餐/碎餐），並開展發音障礙、失語症之言語溝通功能康復。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>醫務社工 (MSW - Medical Social Worker)</strong>：為病人及家屬提供情緒輔導、出院後安老院舍或殘疾院舍轉介、申請撒瑪利亞基金及醫療費用減免、協調社區經濟援助支援網絡。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>營養師 (Dietitian)</strong>：評估病人營養與代謝狀態，針對糖尿病、慢性腎病、心血管疾病、術後創傷及管飼餵食病人設計專屬治療餐單與營養配方。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>義肢矯形師 (P&O - Prosthetist & Orthotist)</strong>：為截肢病人設計量造假肢，為脊柱側彎、關節畸形或足部下垂病人訂製矯形支架、腰封及足底矯形鞋墊，改善骨骼排列與負重功能。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_06" data-cat="病房常用術語與縮寫">
+        <div class="card-top">
+          <div class="topic-num">6</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 18 頁</span>
+              <span class="category-badge">病房常用術語與縮寫</span>
+              <span class="points-badge">共 3 個重點</span>
+            </div>
+            <h2 class="card-title">病房常用英文縮寫與醫療名詞</h2>
+            <div class="card-note">講義第 18 頁，臨床生命表徵、給藥醫囑頻率及常用護理英文名詞</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>生命表徵監測縮寫</strong>：<span class="keyword">B.P.</span> = 血壓 (Blood Pressure)；<span class="keyword">P.</span> = 脈搏 (Pulse)；<span class="keyword">T.</span> = 體溫 (Temperature)；<span class="keyword">R.</span> = 呼吸 (Respiration)；<span class="keyword">SpO2</span> = 脈搏血氧飽和度；<span class="keyword">Hst / BGM</span> = 床邊血糖測試。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>常用給藥頻率英文縮寫</strong>：病房處方與醫囑紀錄中必須熟記之標準頻率代碼：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>Stat (Statim)</strong>：立即、即刻執行一次（緊急醫囑）</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>Q.D. (Quaque die)</strong>：每日一次 (Once daily)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>B.D. / B.I.D. (Bis in die)</strong>：每日兩次 (Twice daily)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>T.D.S. / T.I.D. (Ter in die)</strong>：每日三次 (Three times daily)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>Q.I.D. (Quater in die)</strong>：每日四次 (Four times daily)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>Q4H (Quaque 4 horae)</strong>：每 4 小時一次</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>P.R.N. (Pro re nata)</strong>：需要時服用 (As needed)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>P.O. (Per os)</strong>：經口服 (By mouth)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>N.P.O. (Nil per os)</strong>：<span class="keyword">禁食 (Nothing by mouth)</span>，嚴禁經口進食或飲水</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>病房常規處置英文縮寫</strong>：<span class="keyword">I/O (Intake/Output)</span> = 水分出入量記錄；<span class="keyword">D/C (Discontinue)</span> = 停止醫囑；<span class="keyword">AAROM</span> = 輔助主動關節活動；<span class="keyword">PROM</span> = 被動關節活動；<span class="keyword">CPR</span> = 心肺復甦法。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_07" data-cat="病房常用術語與縮寫">
+        <div class="card-top">
+          <div class="topic-num">7</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 18, 181 - 185 頁</span>
+              <span class="category-badge">病房常用術語與縮寫</span>
+              <span class="points-badge">共 7 個重點</span>
+            </div>
+            <h2 class="card-title">臨床影像學與電生理檢驗英文縮寫全覽</h2>
+            <div class="card-note">講義第 18, 181 - 185 頁，心電圖、腦電圖、肌電圖、CT、MRI、超聲波及內窺鏡縮寫</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>ECG / EKG (Electrocardiogram)</strong>：<span class="keyword">靜態心電圖</span>，記錄心臟 12 導聯電位活動曲線，診斷心律失常、心肌缺血及急性心肌梗塞的核心工具。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>EEG (Electroencephalogram)</strong>：<span class="keyword">腦電圖</span>，記錄大腦皮層神經元電信號，主要用於診斷癲癇發作 (Epilepsy)、腦炎及大腦異常放電。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>EMG (Electromyogram)</strong>：<span class="keyword">肌電圖</span>，利用針電極記錄骨骼肌及周圍神經傳導電位，評估周圍神經病變及肌無力病因。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>CT (Computed Tomography)</strong>：<span class="keyword">電腦斷層掃描</span>，利用 X 射線進行人體橫切面斷層顯像，常用於急性腦出血、胸部腫瘤及腹部創傷評估。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>MRI (Magnetic Resonance Imaging)</strong>：<span class="keyword">磁力共振掃描</span>，利用強磁場與射頻脈衝成像，無電離輻射，對腦神經組織、脊髓、軟組織韌帶及關節軟骨具極高分辨率。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>USG (Ultrasonography)</strong>：<span class="keyword">超聲波掃描</span>，利用高頻聲波反射無創成像，廣泛用於腹部實質器官（肝膽脾胰腎）、心臟、盆腔及產科胎兒監測。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>OGD (胃鏡) 與 Colonoscopy (大腸鏡)</strong>：<span class="keyword">OGD</span> = 食道胃十二指腸內窺鏡；<span class="keyword">Colonoscopy</span> = 全大腸內窺鏡，可直接觀察腔內黏膜潰瘍、出血並切除息肉。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_08" data-cat="人體解剖與生理系統">
+        <div class="card-top">
+          <div class="topic-num">8</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 24 - 28, 32 頁</span>
+              <span class="category-badge">人體解剖與生理系統</span>
+              <span class="points-badge">共 5 個重點</span>
+            </div>
+            <h2 class="card-title">骨骼系統結構、骨骼數目與關節生理特性</h2>
+            <div class="card-note">講義第 32 頁，全身 206 塊骨骼、中軸骨 vs 四肢骨、三類關節與顳頜關節特性</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>全身骨骼總數</strong>：正常成年人全身骨骼總數為 <span class="keyword">206 塊骨骼</span>，具支撐軀體、保護內臟、造血 (紅骨髓) 及儲存鈣磷之功能。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>中軸骨骼 (Axial Skeleton - 80塊)</strong>：位於身體中軸，主要保護腦部及胸腹腔重要臟器：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>顱骨 (Skull - 28塊)</strong>：保護腦組織及感覺器官</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>脊柱 (Vertebrae - 26塊)</strong>：頸椎 7 節、胸椎 12 節、腰椎 5 節、薦骨 1 塊 (由5節融合)、尾骨 1 塊 (由4節融合)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>胸廓 (Thoracic Cage - 25塊)</strong>：胸骨 1 塊，肋骨 12 對 (共 24 條)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>四肢骨骼 (Appendicular Skeleton - 126塊)</strong>：包括上肢帶骨 (鎖骨、肩胛骨)、上肢骨 (肱骨、橈骨、尺骨、腕骨、掌骨、指骨) 及下肢帶骨 (髖骨)、下肢骨 (股骨、髕骨、脛骨、腓骨、跗骨、跖骨、趾骨)。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>關節三大生理分類</strong>：骨與骨或軟骨相連接之處稱為關節：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>不動關節 (Fibrous)</strong>：骨塊緊密嵌合，無活動性，如顱骨縫合線 (Sutures)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>半動關節 (Cartilaginous)</strong>：具軟骨緩衝，活動度微小，如椎間盤 (Intervertebral Discs)、恥骨聯合</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>完全活動關節 (Synovial)</strong>：具關節囊、滑膜及關節滑液，活動幅度最大，如球窩關節 (肩/髖)、鉸鏈關節 (肘/膝)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>顱骨唯一可活動關節</strong>：顱骨的關節除 <span class="keyword">顳頜關節 (TMJ - Temporomandibular Joint)</span> 外，其餘均為不動關節（以縫合為主）。顳頜關節負責說話與咀嚼活動。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_09" data-cat="人體解剖與生理系統">
+        <div class="card-top">
+          <div class="topic-num">9</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 27 - 29 頁</span>
+              <span class="category-badge">人體解剖與生理系統</span>
+              <span class="points-badge">共 6 個重點</span>
+            </div>
+            <h2 class="card-title">心血管系統解剖結構、心瓣功能與血液循環途徑</h2>
+            <div class="card-note">講義第 27 - 29 頁，心臟四腔室、心瓣防倒流、冠狀動脈及體循環/肺循環完整途徑</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>心臟四腔室解剖特點</strong>：心臟分為左心房 (LA)、右心房 (RA)、左心室 (LV)、右心室 (RV)。<span class="keyword">左心室心肌壁厚度約為右心室的 3 倍</span>，因需產生高壓克服全身周圍阻力泵血。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>心瓣結構與生理作用</strong>：房室瓣包括二尖瓣 (左房與左室之間)、三尖瓣 (右房與右室之間)；半月瓣包括主動脈瓣及肺動脈瓣。心瓣核心作用：<span class="keyword">確保血液單向流動，防止血液倒流</span>。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>心臟自體供血管道</strong>：由從主動脈根部發出的 <span class="keyword">左、右冠狀動脈 (Coronary Arteries)</span> 專責供應心肌細胞氧氣與養分。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>體循環途徑 (大循環)</strong>：左心室 (充氧血) → 主動脈 → 全身各級動脈 → 全身毛細血管網 (釋出氧吸收CO2，變缺氧血) → 各級靜脈 → 上/下腔靜脈 → 右心房。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>肺循環途徑 (小循環)</strong>：右心室 (缺氧血) → 肺動脈 (攜帶缺氧血) → 肺泡毛細血管網 (排出CO2吸收氧氣，變充氧血) → 肺靜脈 (攜帶充氧血) → 左心房。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>血管特點比較</strong>：動脈管壁厚彈性大、血流快；靜脈管壁薄、腔大、血流慢且四肢靜脈內<span class="keyword">具有靜脈瓣</span>防止血液倒流；毛細血管僅一層內皮細胞，是物質交換場所。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_10" data-cat="人體解剖與生理系統">
+        <div class="card-top">
+          <div class="topic-num">10</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 31, 34 - 38 頁</span>
+              <span class="category-badge">人體解剖與生理系統</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">呼吸系統解剖結構、肺葉特點與氣體交換生理</h2>
+            <div class="card-note">講義第 31 頁，上/下呼吸道分界線、左肺2葉右肺3葉、肺泡單純擴散交換機制</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>呼吸道解剖劃分分界</strong>：臨床上以 <span class="keyword">喉 (Larynx)</span> 為分界線：喉以上為上呼吸道（鼻腔、咽、喉）；喉以下為下呼吸道（氣管、主支氣管、細支氣管、肺泡）。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>左右肺臟解剖特點</strong>：肺臟分左右兩側：<span class="keyword">左肺分為 2 葉</span>（因容納心臟向左傾斜，體積較小）；<span class="keyword">右肺分為 3 葉</span>（體積較大，分上、中、下葉）。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>氣體交換真正場所</strong>：<span class="keyword">肺泡 (Alveoli)</span> 是進行氣體交換的微觀功能單位，表面被豐富的毛細血管網包繞，透過「單純擴散作用 (Diffusion)」使氧氣進入毛細血管，二氧化碳排出至肺泡。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>吸氣與呼氣力學機制</strong>：吸氣時膈肌與肋間外肌收縮，膈頂下降，胸腔體積擴大產生負壓吸入氣體；呼氣時肌肉放鬆，膈頂回升，胸廓彈性回縮壓出肺內氣體。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_11" data-cat="人體解剖與生理系統">
+        <div class="card-top">
+          <div class="topic-num">11</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 35, 40 - 46 頁</span>
+              <span class="category-badge">人體解剖與生理系統</span>
+              <span class="points-badge">共 5 個重點</span>
+            </div>
+            <h2 class="card-title">連續中空消化道解剖順序、器官分工與消化吸收</h2>
+            <div class="card-note">講義第 35 頁，消化道連續管道順序、小腸大腸各分段、肝膽胰輔助功能</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>連續中空消化道解剖順序</strong>：由口腔至肛門為一連續中空管道：<span class="keyword">口腔 → 口咽 → 食道 → 胃 → 小腸 → 大腸 → 肛門</span>。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>小腸三大分段及功能</strong>：分為 <span class="keyword">十二指腸 (Duodenum) → 空腸 (Jejunum) → 迴腸 (Ileum)</span>。小腸是人體消化食物與吸收營養的最主要器官（長約 5-6 米，具豐富環狀皺襞及絨毛）。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>大腸結構順序及功能</strong>：分為 <span class="keyword">盲腸 (附闌尾) → 升結腸 → 橫結腸 → 降結腸 → 乙狀結腸 → 直腸</span>。主要功能為吸收水分與無機鹽、濃縮並形成糞便、排出身體。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>肝臟與膽囊生理功能</strong>：肝臟負責製造膽汁、代謝營養、解毒及凝血因子合成；膽囊負責儲存與濃縮膽汁，進食油脂後排入十二指腸乳化脂肪。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>胰臟雙重分泌功能</strong>：外分泌胰液含澱粉酶、脂肪酶與蛋白酶助消化；內分泌胰島 α 細胞分泌升糖素，β 細胞分泌<span class="keyword">胰島素 (Insulin)</span> 降血糖。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_12" data-cat="人體解剖與生理系統">
+        <div class="card-top">
+          <div class="topic-num">12</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 21, 26, 36 頁</span>
+              <span class="category-badge">人體解剖與生理系統</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">泌尿系統解剖結構、尿液生成與排尿量生理指標</h2>
+            <div class="card-note">講義第 36 頁，腎臟、輸尿管、膀胱、尿道解剖特點及少尿/無尿/多尿標準數值</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>泌尿系統器官組成</strong>：由 <span class="keyword">雙腎 (Kidneys)、輸尿管 (Ureters)、膀胱 (Bladder)、尿道 (Urethra)</span> 組成。腎臟生成尿液調節體液平衡，輸尿管蠕動輸送，膀胱暫時儲存，尿道排出。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>男女尿道解剖差異</strong>：女性尿道短 (僅 3-5 cm) 且粗直，鄰近陰道及肛門，極易發生<span class="keyword">逆行性尿路感染 (UTI)</span>；男性尿道長 (18-20 cm) 且彎曲，兼具排尿與排精通道。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>正常成人尿量指標</strong>：成人 24 小時正常總尿量為 <span class="keyword">1000 至 2000 ml</span>；每小時正常尿量至少應維持在 <span class="keyword">30 至 50 ml</span>。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>異常尿量臨界值 (高頻必考)</strong>：臨床重要異常指標數值：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>少尿 (Oliguria)</strong>：24 小時總尿量 <span class="keyword">少於 400 ml</span>，或每小時少於 17 ml</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>無尿 (Anuria)</strong>：24 小時總尿量 <span class="keyword">少於 100 ml</span>（提示急性腎衰竭或嚴重休克）</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>多尿 (Polyuria)</strong>：24 小時總尿量 <span class="keyword">多於 2500 ml</span>（常見於糖尿病或尿崩症）</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_13" data-cat="人體解剖與生理系統">
+        <div class="card-top">
+          <div class="topic-num">13</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 21, 27 頁</span>
+              <span class="category-badge">人體解剖與生理系統</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">神經系統劃分、自主神經調控與舌頭味蕾分佈</h2>
+            <div class="card-note">講義第 21, 27 頁，中樞/周圍神經、交感/副交感及舌尖甜/舌根苦等味蕾敏感分佈</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>神經系統結構劃分</strong>：<span class="keyword">中樞神經系統 (CNS)</span> 包括腦與脊髓，負責信息整合調控；<span class="keyword">周圍神經系統 (PNS)</span> 包括 12 對腦神經及 31 對脊神經，負責傳入感覺及傳出運動衝動。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>自主神經系統功能協同</strong>：交感神經支配應激反應 (心跳加速、血壓上升、瞳孔放大、支氣管擴張)；副交感神經支配休整與消化 (心跳減慢、促進胃腸蠕動)。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>感覺器官定義與範疇</strong>：感應外界刺激的專屬器官，包括眼 (視覺)、耳 (聽覺與平衡覺)、鼻 (嗅覺)、舌 (味覺) 及皮膚 (觸覺/溫度覺/痛覺)。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>舌頭味蕾生理分佈 (高頻考點)</strong>：味蕾主要分佈於舌表面，各區域敏感度各有側重：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>舌尖部</strong>：對 <span class="keyword">甜味</span> 最敏感</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>舌前兩側</strong>：對 <span class="keyword">鹹味</span> 最敏感</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>舌後兩側</strong>：對 <span class="keyword">酸味</span> 最敏感</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>舌根部</strong>：對 <span class="keyword">苦味</span> 最敏感</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_14" data-cat="常見臨床疾病與護理">
+        <div class="card-top">
+          <div class="topic-num">14</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 38 - 41 頁</span>
+              <span class="category-badge">常見臨床疾病與護理</span>
+              <span class="points-badge">共 5 個重點</span>
+            </div>
+            <h2 class="card-title">高血壓診斷指標、兩大病因分類、併發症與 DASH 管理</h2>
+            <div class="card-note">講義第 38 - 41 頁，無形殺手、>=140/90 mmHg 標準、腦心腎並發症及得舒飲食</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>高血壓定義與診斷標準</strong>：於安靜休息狀態下，收縮壓 (上壓) 持續 <span class="keyword">≥ 140 mmHg</span>，或舒張壓 (下壓) 持續 <span class="keyword">≥ 90 mmHg</span>。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>臨床特性「無形殺手」</strong>：大部分病人早期全無異常徵狀，少數出現後枕頭痛、頭暈、耳鳴或眼花，往往在出現嚴重併發症時才被確診。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>病因兩大類別</strong>：原發性高血壓 (佔 90-95%，原因未明，與遺傳/肥胖/高鈉有關)；繼發性高血壓 (佔 5-10%，由腎病、內分泌異常或血管狹窄等明確病因引起)。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>長期未控制之靶器官損害</strong>：腦 (中風腦梗塞/腦出血)；心臟 (冠心病、心絞痛、心室肥厚、心力衰竭)；腎臟 (動脈硬化、蛋白尿、慢性腎衰竭)；眼 (視網膜出血失明)。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>非藥物生活管理 (DASH 得舒飲食)</strong>：生活方式干預要點：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>低鈉少鹽</strong>：每日食鹽攝取量少於 5 克 (約 1 茶匙)，避免醃製食品與味精</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>飲食原則</strong>：高鉀、高鎂、高鈣、高纖維；多吃蔬菜、水果、全穀類、脫脂低脂奶及白肉瘦肉</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>生活調控</strong>：戒煙限酒，維持正常體重 (BMI 18.5-22.9)，每週維持至少 150 分鐘中等強度有氧運動</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_15" data-cat="常見臨床疾病與護理">
+        <div class="card-top">
+          <div class="topic-num">15</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 45 - 46 頁</span>
+              <span class="category-badge">常見臨床疾病與護理</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">中風急救識別 FAST 口訣、八大危險因素與良肢位擺放</h2>
+            <div class="card-note">講義第 45 - 46 頁，缺血/出血性中風、FAST 急救口訣及偏癱良肢位預防關節攣縮</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>中風兩大病理分類</strong>：<span class="keyword">缺血性中風 (約佔 70-80%)</span> 由腦動脈硬化血栓形成或心臟栓子栓塞引起；<span class="keyword">出血性中風 (約佔 20-30%)</span> 多由長期高血壓或腦動脈瘤破裂出血引起。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>中風八大危險因素</strong>：高血壓、吸煙、年齡增長、高膽固醇、糖尿病、心臟病 (心房顫動)、缺乏運動肥胖、家族遺傳史。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>中風急救識別口訣 FAST</strong>：急性發作時迅速判斷之黃金準則：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>F - Face (臉部)</strong>：面部表情不對稱，口角歪斜，不能微笑或露齒</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>A - Arm (手臂)</strong>：雙臂向前平舉時，其中一側手臂無力下垂或癱瘓</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>S - Speech (語言)</strong>：說話含糊不清、口齒伶俐障礙或難以理解他人說話</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>T - Time (時間)</strong>：記下發病確實時間，立即撥打 999 送往急症室（黃金溶栓窗口期為 3-4.5 小時）</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>偏癱病人良肢位擺放目的</strong>：預防偏癱肢體關節攣縮、畸形及肩關節半脫位，促進運動功能早期康復：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>患側臥位 (首選體位)</strong>：患肩前伸避免壓迫，肘伸直前臂旋後；患側髖伸展，膝輕度屈曲</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>健側臥位</strong>：患側上肢及下肢均由軟枕充分墊起支撐，保持功能位</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>仰臥位注意事項</strong>：枕頭不宜過高，患側肩胛下墊軟枕防後縮，手中握毛巾卷，足底放防下垂墊</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_16" data-cat="常見臨床疾病與護理">
+        <div class="card-top">
+          <div class="topic-num">16</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 49, 51 頁</span>
+              <span class="category-badge">常見臨床疾病與護理</span>
+              <span class="points-badge">共 5 個重點</span>
+            </div>
+            <h2 class="card-title">冠心病心絞痛臨床特點與硝酸甘油 (NTG) 舌下含服指引</h2>
+            <div class="card-note">講義第 49, 51 頁，冠狀動脈狹窄缺血、發作誘因、NTG 舌下含服 5-5-5 原則</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>冠心病全名與病理</strong>：全名為<span class="keyword">冠狀動脈心臟病 (缺血性心臟病)</span>，因環繞心臟供血之冠狀動脈血管粥樣硬化狹窄或痙攣，導致心肌供血不足。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>心絞痛常見誘發因素</strong>：劇烈體力活動、情緒極度激動緊張、飽餐、受寒冷空氣刺激、用力排便等，使心肌耗氧量突增而誘發發作。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>心絞痛疼痛部位與特徵</strong>：胸骨後或心前區呈現壓榨性、悶痛、緊縮感，常放射至<span class="keyword">左肩、左臂內側、頸部或下頜</span>，休息或含藥後多數於數分鐘內緩解。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>硝酸甘油 (NTG) 舌下含服指引 (高頻考點)</strong>：緊急用藥標準流程：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>立即坐下或半臥</strong>：停止活動，切勿站立含藥（防直立性低血壓頭暈跌倒）</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>舌下含服 (Sublingual)</strong>：置於<span class="keyword">舌下溶解吸收</span>，切勿吞服或嚼碎；口內應有辛辣微麻感</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>5 分鐘重複原則</strong>：如 5 分鐘後痛楚未減，可含第 2 粒；再過 5 分鐘仍痛可含第 3 粒；<span class="keyword">最多含服 3 粒 (共 15 分鐘)</span></div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>呼叫急救</strong>：若含服 3 粒後胸痛持續不減甚至加劇，高度懷疑急性心肌梗塞，立即召喚 999 救護車送院</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>NTG 藥物保存注意事項</strong>：藥物必須密閉儲存於原裝<span class="keyword">深褐色避光玻璃瓶內</span>，置於陰涼乾燥處，防高溫受潮；每次取藥後立即旋緊瓶蓋。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_17" data-cat="常見臨床疾病與護理">
+        <div class="card-top">
+          <div class="topic-num">17</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 53 - 56 頁</span>
+              <span class="category-badge">常見臨床疾病與護理</span>
+              <span class="points-badge">共 5 個重點</span>
+            </div>
+            <h2 class="card-title">糖尿病病理分型、「三多一少」徵狀、低血糖急救與足部護理</h2>
+            <div class="card-note">講義第 53 - 56 頁，一型/二型糖尿病、典型臨床症狀、15-15低血糖急救與護足常規</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>糖尿病兩大病理分型</strong>：<span class="keyword">一型糖尿病 (胰島素依賴型)</span> 多發於青少年，胰島 β 細胞被破壞導致胰島素絕對缺乏，需終身依賴外源胰島素；<span class="keyword">二型糖尿病 (非胰島素依賴型)</span> 多發於中老年及肥胖者，主因胰島素抵抗。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>典型「三多一少」臨床症狀</strong>：多尿 (Polyuria，滲透性利尿)、多飲 (Polydipsia，口渴頻飲)、多食 (Polyphagia，細胞能量匱乏)、體重減輕 (Weight Loss，消耗脂肪蛋白質)。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>急性低血糖反應 (Hypoglycemia) 表現</strong>：血糖低於 3.9 mmol/L 時出現冒冷汗、心悸、手顫、飢餓感、面色蒼白、頭暈、視力模糊、意識混亂甚至昏迷。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>低血糖「15-15 急救原則」</strong>：急救步驟指引：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>清醒者即刻補糖</strong>：立即口服 <span class="keyword">15 克快速吸收碳水化合物</span>（如半杯果汁、3 粒方糖、半罐汽水）</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>15 分鐘後復測</strong>：靜坐休息 15 分鐘後重新測量血糖，若仍低於標準需再次補充</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>昏迷者處理禁忌</strong>：神志不清者<span class="keyword">嚴禁強行灌食液體</span>（防吸入性窒息），保持側臥並立即求醫靜脈給糖</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>糖尿病日常足部護理 (Foot Care) 要點</strong>：每日溫水洗腳（先測水溫防燙傷），印乾趾縫；每日在光線充足處借助小鏡子檢查足底有無水泡割傷；指甲平剪直剪；穿吸汗棉襪及合腳鞋，<span class="keyword">切勿赤腳行走</span>。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_18" data-cat="常見臨床疾病與護理">
+        <div class="card-top">
+          <div class="topic-num">18</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 58 - 60 頁</span>
+              <span class="category-badge">常見臨床疾病與護理</span>
+              <span class="points-badge">共 5 個重點</span>
+            </div>
+            <h2 class="card-title">肺結核病原體、空氣傳播途徑與全監督短程治療 (DOTS)</h2>
+            <div class="card-note">講義第 58 - 60 頁，結核桿菌抗酸性、空氣飛沫核傳播、午後低熱夜汗、DOTS服藥指引</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>致病原微生物特性</strong>：由<span class="keyword">結核分枝桿菌 (Mycobacterium tuberculosis)</span> 感染引起，屬抗酸桿菌，生長緩慢，對乾燥酸鹼耐受強，但對濕熱、紫外線及 70% 酒精敏感。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>傳染途徑：空氣傳播</strong>：透過<span class="keyword">空氣傳播 / 飛沫核傳播 (Airborne Transmission)</span>。患者咳嗽、打噴嚏、大聲說話時產生微細飛沫核懸浮於空氣中飄散，他人吸入而感染。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>常見典型臨床徵狀</strong>：持續咳嗽超過 3 週、咯血痰、<span class="keyword">午後低熱、夜間盜汗 (Night Sweats)</span>、食慾不振、體重進行性減輕及乏力。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>全監督短程治療 (DOTS)</strong>：世衛推行核心策略（Directly Observed Treatment, Short-course），要求<span class="keyword">醫護人員直接面視監督病人吞下每粒抗結核藥</span>，療程通常為 6 至 9 個月。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>擅自停藥之後果</strong>：不規律或過早停藥會誘發結核菌突變產生抗藥性，惡化為<span class="keyword">耐多藥結核 (MDR-TB)</span>，需轉用二線昂貴且副作用極大的注射藥物，死亡率極高。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_19" data-cat="常見臨床疾病與護理">
+        <div class="card-top">
+          <div class="topic-num">19</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 63 頁</span>
+              <span class="category-badge">常見臨床疾病與護理</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">慢性阻塞性肺病 (COPD) 病理特徵與低流量給氧原則</h2>
+            <div class="card-note">講義第 63 頁，吸煙主因、氣道不完全可逆受限、低濃度低流量氧療生理機制</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>COPD 定義與組成</strong>：包含<span class="keyword">慢性支氣管炎與肺氣腫</span>，特點為持續存在且呈進行性發展的不完全可逆性氣流受限。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>最主要致病因素</strong>：<span class="keyword">長期吸煙 (Smoking)</span> 及吸入二手煙是首要病因；其他包括職業粉塵、室內外空氣污染及遺傳性抗胰蛋白酶缺乏。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>臨床體徵表現</strong>：慢性咳嗽、咳痰、逐漸加重之活動後氣促、呼吸困難，晚期胸廓前後徑增大形成典型<span class="keyword">「桶狀胸」(Barrel Chest)</span>。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>氧療核心原則：低濃度低流量給氧</strong>：給氧指引與生理禁忌：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>給氧參數</strong>：採用鼻導管給予 <span class="keyword">1 至 2 L/min 低流量氧氣</span>（吸氧濃度 FiO2 維持約 24% 至 28%）</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>生理調控機制</strong>：COPD 病人長期二氧化碳滯留，呼吸中樞對高 PaCO2 刺激鈍化，呼吸主要依賴<span class="keyword">低氧血症 (低 PaO2)</span> 對外周化學感受器的刺激維持</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>嚴禁高濃度給氧</strong>：若盲目給予高濃度高流量氧氣，解除低氧刺激，會導致<span class="keyword">呼吸中樞抑制引起呼吸暫停</span>及二氧化碳麻醉昏迷</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_20" data-cat="生命表徵測量規範">
+        <div class="card-top">
+          <div class="topic-num">20</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 163 - 164, 169 頁</span>
+              <span class="category-badge">生命表徵測量規範</span>
+              <span class="points-badge">共 5 個重點</span>
+            </div>
+            <h2 class="card-title">人體體溫參考值、測量途徑禁忌與耳探操作手法</h2>
+            <div class="card-note">講義第 163 - 164, 169 頁，口探/肛探/腋探/耳探正常值、各途徑禁忌及拉耳方向</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>人體各部位正常體溫參考範圍</strong>：口腔探熱 36.0°C - 37.4°C；<span class="keyword">肛門探熱 36.5°C - 37.9°C (最高，接近核心體溫)</span>；腋下探熱 35.5°C - 36.9°C (最低)；耳膜探熱 36.0°C - 37.5°C。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>耳膜探熱操作手法 (高頻考點)</strong>：將耳廓拉直使探頭對準鼓膜：成人及 3 歲以上兒童向 <span class="keyword">後及向上</span> 拉直耳廓；3 歲以下嬰幼兒向 <span class="keyword">後及向下</span> 拉。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>口腔探熱禁忌病人</strong>：嬰幼兒、神志不清、精神異常、抽搐痙攣、呼吸困難、口腔手術破損或剛進食冷熱飲品/吸煙者（需間隔 15-30 分鐘）。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>肛門探熱操作與禁忌</strong>：側臥屈膝，塗潤滑劑插入深度約 <span class="keyword">3 cm</span>；直腸手術、腹瀉、痔瘡出血、嚴重心臟病 (防刺激迷走神經引起心動過緩) 及白血病凝血異常者禁用。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>腋下探熱操作要點</strong>：先以乾毛巾擦乾腋汗，探頭置於腋窩正中緊貼皮膚夾緊 5-10 分鐘；過度消瘦或嚴重出汗者不宜。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_21" data-cat="生命表徵測量規範">
+        <div class="card-top">
+          <div class="topic-num">21</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 164, 170 頁</span>
+              <span class="category-badge">生命表徵測量規範</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">成人正常脈搏頻率、測量部位與脈搏短絀雙人測量規範</h2>
+            <div class="card-note">講義第 164, 170 頁，正常60-100次/分、橈動脈/頸動脈/心尖搏動、房顫脈搏短絀</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>正常脈搏頻率標準</strong>：正常成年人靜息脈率為 <span class="keyword">每分鐘 60 至 100 次</span>（長者約 60-70 次/分）；> 100 次/分為心動過速，< 60 次/分為心動過緩。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>常用測量部位與選擇</strong>：橈動脈 (腕部拇指側橈骨小頭內側，最常用)；頸動脈 (氣管旁胸鎖乳突肌前緣，心肺復甦時快速評估)；心尖搏動 (左側第5肋間鎖骨中線內側，聽診1整分鐘)。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>測量基本手法禁忌</strong>：使用食指、中指及無名指指腹平放於動脈處按壓測量，<span class="keyword">嚴禁使用拇指</span>（因檢查者拇指自身有較強動脈搏動，易造成混淆）。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>脈搏短絀 (Pulse Deficit) 測量指引</strong>：臨床重要測量規範：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>好發病症</strong>：多見於<span class="keyword">心房顫動 (Atrial Fibrillation)</span> 病人</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>臨床表徵</strong>：同一時間內<span class="keyword">心尖搏動次數大於外周橈動脈脈搏次數</span>，脈律完全不齊，強弱不等</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>測量人員規範</strong>：必須由 <span class="keyword">兩名醫護人員同時測量 1 整分鐘</span>，一人聽心尖搏動，一人數橈動脈，隨後記錄並計算短絀差值</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_22" data-cat="生命表徵測量規範">
+        <div class="card-top">
+          <div class="topic-num">22</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 165 頁</span>
+              <span class="category-badge">生命表徵測量規範</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">成人正常呼吸頻率、觀察技巧與異常呼吸型態鑑別</h2>
+            <div class="card-note">講義第 165 頁，正常12-20次/分、隱蔽計數技巧、潮式呼吸與端坐呼吸特徵</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>成人正常呼吸生理指標</strong>：成年人正常靜息呼吸頻率為 <span class="keyword">每分鐘 12 至 20 次</span>，呈均勻、平靜、無聲之胸腹起伏（一吸一呼算作一次呼吸）。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>測量操作隱蔽觀察技巧</strong>：測量完脈搏後手指不離開手腕，保持診脈姿勢，眼光轉向觀察胸腹起伏，避免病人因自覺意識控制而改變真實呼吸頻率；計數 30 秒乘 2，異常者計數 1 整分鐘。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>潮式呼吸 (Cheyne-Stokes Respiration)</strong>：呼吸由淺慢逐漸變為深快，達高峰後又逐漸變為淺慢，繼而出現一段時間的<span class="keyword">呼吸暫停 (約 5 至 30 秒)</span>，周而復始；多見於中樞神經病變或臨終瀕死狀態。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>端坐呼吸 (Orthopnea)</strong>：平臥時胸悶氣促加劇，被迫採取坐位或半臥位以利用重力使膈肌下降、減輕肺充血及胸腔壓迫，多見於急性左心衰竭或支氣管哮喘發作。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_23" data-cat="生命表徵測量規範">
+        <div class="card-top">
+          <div class="topic-num">23</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 166 頁</span>
+              <span class="category-badge">生命表徵測量規範</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">血壓測量標準操作規範與袖帶/體位誤差防範</h2>
+            <div class="card-note">講義第 166 頁，手臂心臟同高、袖帶位置與鬆緊、袖帶過鬆過緊高低誤差分析</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>測量前準備與安靜休息</strong>：受測前在安靜環境休息 5-10 分鐘，避免 30 分鐘內劇烈運動、吸煙、飲用咖啡或濃茶，排空膀胱。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>受測手臂與心臟水平高度</strong>：測量時受測手臂裸露平放，手臂與血壓計感應處必須與 <span class="keyword">心臟處於同一水平線</span>。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>袖帶包紮位置與鬆緊度</strong>：袖帶寬度應覆蓋上臂長度 2/3，氣囊下緣距肘窩約 2-3 cm，鬆緊度以<span class="keyword">能容納一隻手指</span>為宜；聽診器置於肱動脈搏動處，嚴禁塞入袖帶內。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>常見操作誤差原因分析 (高頻考點)</strong>：數值偏差規律對照：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>袖帶纏得過鬆 / 過寬</strong>：測得血壓值 <span class="keyword">偏低</span></div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>袖帶纏得過緊 / 過窄</strong>：測得血壓值 <span class="keyword">偏高</span></div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>受測手臂位置高於心臟水平</strong>：測得血壓值 <span class="keyword">偏低</span></div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>受測手臂位置低於心臟水平</strong>：測得血壓值 <span class="keyword">偏高</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_24" data-cat="生命表徵測量規範">
+        <div class="card-top">
+          <div class="topic-num">24</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 18, 157 頁</span>
+              <span class="category-badge">生命表徵測量規範</span>
+              <span class="points-badge">共 2 個重點</span>
+            </div>
+            <h2 class="card-title">脈搏血氧飽和度 (SpO2) 監測與臨床干擾因素</h2>
+            <div class="card-note">講義第 18, 157 頁，正常>=95%、低於90%缺氧、指甲油/低體溫/抖動干擾防範</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>SpO2 定義與正常數值</strong>：反映血液中氧合血紅蛋白佔全部血紅蛋白的百分比；在室溫空氣下正常值為 <span class="keyword">95% 至 100%</span>，低於 90% 提示嚴重缺氧需即時通報處置。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>常見影響測量之臨床干擾因素</strong>：可能導致讀數假性偏低或無法偵測之情況：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>指甲油與人工指甲</strong>：有色指甲油吸收紅外光譜，必須以去光水抹除後方可準確測量</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>肢體末梢循環不良 / 低體溫</strong>：休克、寒冷使外周血管強烈收縮血流灌注不足，可溫暖手指或改測耳垂</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>劇烈顫抖或肢體躁動</strong>：肌肉震顫產生偽差干擾信號捕獲</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>環境強光直射</strong>：手術無影燈或陽光直射探頭感光元件</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_25" data-cat="感染控制與隔離防護">
+        <div class="card-top">
+          <div class="topic-num">25</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 106 頁</span>
+              <span class="category-badge">感染控制與隔離防護</span>
+              <span class="points-badge">共 3 個重點</span>
+            </div>
+            <h2 class="card-title">傳染病傳播鏈 (Chain of Infection) 六大環節與傳播途徑</h2>
+            <div class="card-note">講義第 106 頁，致病原/傳染源/離開/途徑/進入/宿主六大環節，接觸/飛沫/空氣途徑</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>傳播鏈六大環節 (Chain of Infection)</strong>：傳染病蔓延必須具備之連鎖要素：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>1. 致病原 (Infectious Agent)</strong>：細菌、病毒、真菌、衣原體、寄生蟲</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>2. 傳染源 (Reservoir)</strong>：病人、無症狀帶菌者、受污染的水源、醫療儀器</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>3. 離開途徑 (Portal of Exit)</strong>：呼吸道黏膜、消化道排泄物、血液體液、破損皮膚</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>4. 傳播途徑 (Mode of Transmission)</strong>：接觸傳播、飛沫傳播、空氣傳播、媒介載體傳播</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>5. 進入途徑 (Portal of Entry)</strong>：呼吸道、消化道、破損皮膚傷口、黏膜組織、尿道</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>6. 易感宿主 (Susceptible Host)</strong>：免疫力低下者、長者、慢性病患者、術後病人</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>阻斷傳播鏈之感控原理</strong>：感染控制的核心：只要<span class="keyword">中斷傳播鏈其中任何一個環節</span>（如徹底洗手、佩戴口罩、消毒環境），傳染病即無法繼續擴散。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>主要傳播途徑特性對比</strong>：接觸傳播 (直接接觸體液或間接接觸污染物，如 MRSA)；飛沫傳播 (顆粒 > 5 微米，飛揚距離約 1 米內，如流感)；空氣傳播 (飛沫核 < 5 微米，可長時間懸浮遠距離飄散，如肺結核)。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_26" data-cat="感染控制與隔離防護">
+        <div class="card-top">
+          <div class="topic-num">26</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 106 - 107 頁</span>
+              <span class="category-badge">感染控制與隔離防護</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">WHO 病房潔手五大時刻 (5 Moments) 與七步洗手法規範</h2>
+            <div class="card-note">講義第 106 - 107 頁，潔手五大時刻、肥皂洗手 40-60 秒 vs 酒精搓手 20-30 秒</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>世衛病房潔手五大時刻 (5 Moments)</strong>：病房日常防感染之核心依據：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>時刻 1</strong>：接觸病人前 (Before touching a patient)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>時刻 2</strong>：執行清潔/無菌操作前 (Before clean/aseptic procedure)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>時刻 3</strong>：接觸病人體液風險後 (After body fluid exposure risk)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>時刻 4</strong>：接觸病人後 (After touching a patient)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>時刻 5</strong>：接觸病人周圍環境後 (After touching patient surroundings)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>肥皂清水洗手 vs 酒精搓手液</strong>：雙手有肉眼可見污垢、接觸血液體液、或護理梭狀芽孢桿菌 (C. difficile) 及諾如病毒病人時，<span class="keyword">必須使用肥皂及流動清水洗手</span>（揉搓至少 20 秒，全過程 40-60 秒）。無可見污垢時可使用酒精搓手液。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>酒精搓手液搓擦時間</strong>：取適量酒精搓手液，按七步洗手法全面揉搓，持續搓擦 <span class="keyword">20 至 30 秒</span> 直至雙手完全風乾。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>七步洗手口訣部位</strong>：掌心對掌心 → 手背指縫 → 掌心指縫交錯 → 指背在掌心 → 大拇指旋轉 → 指尖在掌心旋轉 → 手腕部揉搓。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_27" data-cat="感染控制與隔離防護">
+        <div class="card-top">
+          <div class="topic-num">27</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 121 頁</span>
+              <span class="category-badge">感染控制與隔離防護</span>
+              <span class="points-badge">共 2 個重點</span>
+            </div>
+            <h2 class="card-title">個人防護裝備 (PPE) 標準穿戴順序與安全脫卸順序</h2>
+            <div class="card-note">講義第 121 頁，穿戴五部曲 vs 脫卸七部曲，先脫手套後脫衣，全程嚴格潔手</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>PPE 標準穿戴順序 (Donning)</strong>：進入污染區或病房前順序：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>1. 潔手</strong>：以酒精搓手液徹底潔手</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>2. 穿保護衣 / 隔離衣 (Gown)</strong>：繫緊頸帶及腰帶，確保覆蓋軀幹</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>3. 戴外科口罩或 N95</strong>：拉開覆蓋口鼻下巴，壓緊鼻樑金屬條，做密合度檢查</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>4. 戴護目鏡 / 面罩</strong>：覆蓋眼部與臉部</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>5. 戴手套 (Gloves)</strong>：將手套袖口拉過隔離衣袖口之上</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>PPE 安全脫卸順序 (Doffing - 高頻必考)</strong>：離開病房時防止自體污染之順序：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>1. 脫手套 (Gloves)</strong>：手套外側最污染，捏住手套外緣翻卷脫下，丟棄於黃色膠袋</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>2. 潔手</strong>：脫手套後立即進行手部衛生</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>3. 脫護目鏡 / 面罩</strong>：僅觸摸後部頭帶取下</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>4. 脫隔離衣 (Gown)</strong>：解開帶子，向前向下翻卷包裹內側成團棄置</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>5. 潔手</strong>：再次進行手部衛生</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>6. 脫口罩 (Mask)</strong>：手僅觸摸耳帶或後頸帶取下，嚴禁觸碰口罩外表面</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>7. 再次徹底潔手</strong>：以肥皂清水或酒精搓手液完成最後潔手</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_28" data-cat="感染控制與隔離防護">
+        <div class="card-top">
+          <div class="topic-num">28</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 121 頁</span>
+              <span class="category-badge">感染控制與隔離防護</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">飛沫傳染預防措施 (Droplet Precautions) 與運送病人指引</h2>
+            <div class="card-note">講義第 121 頁，單人房/群集護理、床距至少3呎、進入戴口罩及限制非必要運送</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>病房隔離安置原則</strong>：應優先安排入住單人隔離病房；若無單人房，將同種病原體感染之病人安排在同一房間進行<span class="keyword">「群集護理」(Cohort Nursing)</span>。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>病床間隔物理距離</strong>：病床與病床之間必須保持 <span class="keyword">至少 3 呎 (約 1 米)</span> 的安全間距，並拉上床簾作物理分隔。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>醫護人員個人防護裝備</strong>：走近病人 1 米範圍內或進入病房執行常規護理時，必須佩戴<span class="keyword">外科口罩</span>；有體液噴濺風險時加戴護目鏡及穿保護衣。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>運送病人防護措施指引</strong>：嚴格限制非必要的跨病房轉移與運送；若必須運送，病情許可下必須為病人<span class="keyword">配戴外科口罩</span>，並預先通知接收部門做好防護。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_29" data-cat="感染控制與隔離防護">
+        <div class="card-top">
+          <div class="topic-num">29</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 136 頁</span>
+              <span class="category-badge">感染控制與隔離防護</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">病房污衣處理、分類標準與水溶性防感染膠袋應用</h2>
+            <div class="card-note">講義第 136 頁，一般污衣 vs 傳染性污衣、水溶性袋 (Alginate Bag) 與防抖動</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>一般污衣 (Soiled Linen)</strong>：無明顯血液、體液或傳染性排泄物污染之普通床單被套，放入普通布質或膠質污衣袋運送清洗。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>傳染性 / 污染污衣 (Infected Linen)</strong>：被大量血液、體液、排泄物或已知具傳染性病原體污染之床單衣物。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>水溶性膠袋 (Alginate Bag) 包裝規範</strong>：污染污衣必須先置入專用<span class="keyword">水溶性膠袋</span>內密封紮緊，再套入印有「生物性危害」標誌之紅色或透明外層膠袋，雙層防滲送洗（洗衣機熱水溶解內袋，全程無須人手接觸）。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>收集操作禁忌</strong>：更換及收集污衣時<span class="keyword">切勿抖動床單</span>以防飛揚塵埃及致病微生物；抱持污衣時應保持距離，切勿貼近自身制服。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_30" data-cat="醫療廢物與環境安全">
+        <div class="card-top">
+          <div class="topic-num">30</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 88 - 91, 105 頁</span>
+              <span class="category-badge">醫療廢物與環境安全</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">病房消毒劑應用、稀釋漂白水 (1:99 / 1:49) 規範與安全禁忌</h2>
+            <div class="card-note">講義第 88 - 91 頁，1:99日常 vs 1:49血液嘔吐物、靜置15-30分鐘、24小時用完</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>稀釋漂白水兩大比例與用途</strong>：以 5.25% 次氯酸鈉家用漂白水為基準：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>1:99 稀釋漂白水 (約 500 ppm)</strong>：用於日常病房環境、傢俬、病床欄杆、地面常規清潔抹拭</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>1:49 稀釋漂白水 (約 1000 ppm)</strong>：用於被嘔吐物、排泄物、分泌物或血液污染之環境表面消毒</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>調配八大安全守則</strong>：冷水調配（熱水分解失效）；嚴禁混合酸性清潔劑（防產生劇毒氯氣）；經稀釋漂白水最好在 <span class="keyword">24 小時內用完</span>。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>消毒作用靜置時間</strong>：抹拭消毒後，必須<span class="keyword">靜置 15 至 30 分鐘</span>，讓有效氯充分發揮殺菌功效，隨後用清水抹淨並抹乾。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>漂白水濺入眼睛應急</strong>：若不慎濺入眼睛，必須即時以大量流動清水連續沖洗 <span class="keyword">至少 15 分鐘</span>，並立即前往急症室求診。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_31" data-cat="醫療廢物與環境安全">
+        <div class="card-top">
+          <div class="topic-num">31</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 81, 133 頁</span>
+              <span class="category-badge">醫療廢物與環境安全</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">醫療廢物分類膠袋、利器收集箱規範與針刺傷應急處理</h2>
+            <div class="card-note">講義第 81, 133 頁，黑色/紅色/黃色膠袋、鵝頸結、利器箱3/4更換、針刺傷5大急救</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>垃圾廢物膠袋顏色分類</strong>：<span class="keyword">黑色膠袋</span> = 一般生活與非感染性辦公垃圾；<span class="keyword">紅色膠袋</span> = 輕度污染敷料或利器盒外包裝；<span class="keyword">黃色膠袋</span> = 法定醫療與人體組織廢物 (Clinical Waste)，需以專用<span class="keyword">「鵝頸結」</span>封口緊紮。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>利器收集箱規格與更換上限</strong>：防穿漏硬塑料材質，貼有「生物性危害」標誌；盛載達 <span class="keyword">3/4 容量 (75% - 80%)</span> 時必須更換封口，嚴禁滿溢。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>使用利器禁忌</strong>：嚴禁徒手回套針帽、屈曲或折斷針咀；必須回套時僅能採用「單手技術」。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>針刺傷即時處理程序 (五大步驟)</strong>：若不幸被針刺傷應按順序採取以下應急步驟：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>① 擠血</strong>：輕輕將血從<span class="keyword">患處擠壓出來</span></div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>② 沖洗</strong>：在<span class="keyword">流動清水下徹底沖洗傷口</span></div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>③ 覆蓋</strong>：止血後以<span class="keyword">無菌敷料覆蓋</span></div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>④ 報告</strong>：即時<span class="keyword">報告主管</span>及感染控制護士</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>⑤ 求診</strong>：往急症室求診進行<span class="keyword">血液化驗及預防投藥</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_32" data-cat="醫療廢物與環境安全">
+        <div class="card-top">
+          <div class="topic-num">32</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 83, 94 頁</span>
+              <span class="category-badge">醫療廢物與環境安全</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">病房醫療儀器存量點核、送修記錄與防跌防燙環境措施</h2>
+            <div class="card-note">講義第 83, 94 頁，儀器目錄、定期點核、外借記錄、防滑防跌及洗澡先冷後熱</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>醫療儀器存量點核制度</strong>：病房必須保存清晰的儀器設備存量名冊，每班或定時點核各項儀器數量，確保配件齊全無損壞，不足或故障應立即通報上級。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>儀器外借與送修登記</strong>：儀器送往修理或被其他部門借出時，必須詳實記錄日期、時間、儀器型號編號、借出人及簽署，便於追蹤調配。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>病房防跌防絆倒環境措施</strong>：地面保持絕對乾爽，清潔後豎立警示牌；整理走廊電線雜物；病床降至最低高度並鎖妥床掣煞車；夜間保留地燈照明。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>病房防燙傷操作指引</strong>：協助病人沐浴時，放水順序必須為<span class="keyword">「先放冷水，後放熱水」</span>；水溫嚴禁超過 40°C-43°C；餵食熱湯熱飲前先測試溫度。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_33" data-cat="醫療廢物與環境安全">
+        <div class="card-top">
+          <div class="topic-num">33</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 140 頁</span>
+              <span class="category-badge">醫療廢物與環境安全</span>
+              <span class="points-badge">共 2 個重點</span>
+            </div>
+            <h2 class="card-title">人力提舉與病人搬運 (MHO) 六大步驟與人體工學姿勢</h2>
+            <div class="card-note">講義第 140 頁，靠近重物、雙腳分開、背直屈膝、深吸氣、大腿發力挺起</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>提舉傷害預防核心原則</strong>：善用大肌肉群 (大腿與臀部肌肉) 代替背部腰椎發力，縮短重心力臂，減少腰部扭傷。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>正確人力提舉搬運六大步驟</strong>：搬運重物與扶抱病人標準流程：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>1. 靠近重物</strong>：身體盡量靠近被搬運的物體或病人，縮短重力距離</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>2. 穩固立足</strong>：雙腳分開與肩同寬，前後微錯，取得穩固支撐基底</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>3. 背直屈膝</strong>：保持<span class="keyword">背部挺直，屈膝蹲下</span>，嚴禁彎腰弓背搬重</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>4. 緊握物件</strong>：以雙手手掌穩固握持把手或物體邊緣，確保不溜手</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>5. 吸氣收腹</strong>：深吸氣使胸廓膨脹以支持脊柱，收緊核心肌肉</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>6. 大腿發力</strong>：<span class="keyword">利用雙腿四頭肌用力挺起站立</span>；轉身時移動腳步，切忌扭轉腰部</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_34" data-cat="起居照顧與出院安排">
+        <div class="card-top">
+          <div class="topic-num">34</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 152, 157 - 158 頁</span>
+              <span class="category-badge">起居照顧與出院安排</span>
+              <span class="points-badge">共 3 個重點</span>
+            </div>
+            <h2 class="card-title">馬斯洛人類基本需要五大層次與出院安排 (NEATS) 指引</h2>
+            <div class="card-note">講義第 152, 157 - 158 頁，生理安全社交尊嚴自我實現，出院核對與非緊急救護車</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>馬斯洛人類基本需要五個層次</strong>：由底層至高層依次滿足：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>1. 生理需要 (Physiological)</strong>：<span class="keyword">最基礎、最優先滿足</span>：呼吸、食物、水分、排泄、睡眠、保暖</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>2. 安全需要 (Safety)</strong>：免受威脅、環境安全、防跌防燙、避免病痛與經濟保障</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>3. 社交愛與歸屬 (Belonging)</strong>：家庭關愛、社交友誼、獲得醫護人員接納同理</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>4. 自尊需要 (Esteem)</strong>：受到他人尊重、自我肯定、維護隱私與個人尊嚴</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>5. 自我實現 (Self-actualization)</strong>：發揮個人最高潛能、實現個人抱負與人生價值</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>病人出院護理程序</strong>：必須先獲主診醫生簽署出院許可；護士核對身份並解釋出院帶藥與覆診日期；醫護支援人員協助清點交還貴重物品、協助更衣並取下識別手帶。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>非緊急救護運送服務 (NEATS)</strong>：專為行動不便、臥床或需輪椅且無其他合適交通工具之病人提供出院/轉院服務，需由醫護人員提早評估並透過醫院聯網預約。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_35" data-cat="起居照顧與出院安排">
+        <div class="card-top">
+          <div class="topic-num">35</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 140 - 152 頁</span>
+              <span class="category-badge">起居照顧與出院安排</span>
+              <span class="points-badge">共 3 個重點</span>
+            </div>
+            <h2 class="card-title">病人個人衛生照顧：活動假牙清潔與修剪指甲操作規範</h2>
+            <div class="card-note">講義第 140 - 152 頁，假牙冷水浸泡防變形、盆底放毛巾防摔破、指甲平剪直剪</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>活動假牙清潔操作指引</strong>：清潔時洗手盆底必須<span class="keyword">墊放毛巾或盛半盆清水</span>，防止假牙失手滑落摔破；使用專用假牙刷及牙膏/溫和清潔劑輕柔刷洗表面及凹陷處。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>假牙儲存存放要點</strong>：取下不戴時必須浸泡於<span class="keyword">冷開水</span>或專用假牙清潔液中，標明床號姓名；<span class="keyword">嚴禁使用熱水浸泡或烘烤</span>，以免假牙塑料基托受熱變形扭曲。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>修剪指甲常規與禁忌</strong>：剪指甲前先以溫水浸泡軟化指甲；手指甲修剪成微弧形，腳趾甲必須<span class="keyword">平剪、直剪</span>，兩側邊緣用指甲銼銼平，切勿修剪太深以防甲溝炎嵌甲；糖尿病病人指甲護理需格外小心防破損。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_36" data-cat="起居照顧與出院安排">
+        <div class="card-top">
+          <div class="topic-num">36</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 160 - 166 頁</span>
+              <span class="category-badge">起居照顧與出院安排</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">鼻胃管餵飼 (NG Tube) 操作規範、體位擺放與防誤吸指引</h2>
+            <div class="card-note">講義第 160 - 166 頁，半坐臥30-45度、確認胃管位置、餵前抽吸胃殘餘、餵後維持體位</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>餵食前體位擺放</strong>：餵飼前協助病人採取<span class="keyword">半坐臥位 (抬高床頭 30 至 45 度)</span> 或坐位，利用重力防止營養液胃內反流及誤吸入氣管。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>確認胃管在胃內之三大方法</strong>：抽取胃液測 pH 試紙 (pH < 5.5 呈酸性)；聽診器置於上腹部，注入 10-20ml 空氣聽氣過水聲；檢查外露刻度是否移位。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>評估胃殘留量 (Gastric Residual Volume)</strong>：餵前抽吸胃內容物，若殘留量超過規定標準 (通常 > 100-150ml)，應暫停餵食或減量，並即時通報護士處理。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>餵食後體位維持</strong>：餵食完畢後以溫水沖洗管道防堵塞；病人必須<span class="keyword">維持半坐臥位至少 30 至 60 分鐘</span>，切勿立即放平床頭或劇烈翻身拍背。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_37" data-cat="臨床檢查預備與標本">
+        <div class="card-top">
+          <div class="topic-num">37</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 181 - 182 頁</span>
+              <span class="category-badge">臨床檢查預備與標本</span>
+              <span class="points-badge">共 3 個重點</span>
+            </div>
+            <h2 class="card-title">消化道內窺鏡檢查預備：胃鏡 (OGD) 與大腸鏡 (Colonoscopy)</h2>
+            <div class="card-note">講義第 181 - 182 頁，知情同意書、胃鏡禁食6-8小時、術後吞嚥恢復、大腸鏡清腸水樣便</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>知情同意書 (Consent Form) 簽署原則</strong>：檢查前必須由主診醫生向病人或合法代理人詳細解釋檢查目的、過程、穿孔出血風險及替代方案，由病人在神志清醒下自願簽署。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>上消化道胃鏡 (OGD) 檢查護理</strong>：檢查前必須<span class="keyword">嚴格禁食禁水至少 6 至 8 小時</span>，取下活動假牙及眼鏡；檢查後等待喉頭局麻藥效消退，直至<span class="keyword">吞嚥反射完全恢復 (約 1-2 小時)</span>，先試飲少量溫水無嗆咳後方可進食。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>大腸內窺鏡 (Colonoscopy) 檢查預備</strong>：檢查前 2-3 天改進低渣飲食（禁食高纖蔬菜、水果、芝麻）；前一日遵醫囑服用清腸瀉藥 (Klean-Prep / Fleet)；清腸合格標準：排泄物直至排出<span class="keyword">無渣澄清黃色水樣便</span>始為合格。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_38" data-cat="臨床檢查預備與標本">
+        <div class="card-top">
+          <div class="topic-num">38</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 184 頁</span>
+              <span class="category-badge">臨床檢查預備與標本</span>
+              <span class="points-badge">共 3 個重點</span>
+            </div>
+            <h2 class="card-title">X光造影檢查預備：鋇餐造影與鋇灌腸造影照護指引</h2>
+            <div class="card-note">講義第 184 頁，鋇劑不溶於水易板結、檢查後多飲水防便秘、大便排出白色石膏樣</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>鋇餐造影 (Barium Meal)</strong>：經口吞服硫酸鋇劑，X 射線透視食道、胃及十二指腸黏膜潰瘍與腫瘤；檢查前必須禁食禁水 8 小時。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>鋇灌腸造影 (Barium Enema)</strong>：經肛門直腸注入硫酸鋇劑及氣體，透視檢查全大腸腔內病變；檢查前需徹底清潔腸道。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>檢查後關鍵護理措施 (高頻考點)</strong>：硫酸鋇不溶於水，易在結腸內水分被吸收後板結形成糞石造成腸梗阻：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>多喝清水</strong>：檢查結束後囑病人<span class="keyword">大量飲水 (每日 2000 至 3000 ml)</span>，加速鋇劑排出</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>排便衛教</strong>：告知病人術後數天內大便會排出<span class="keyword">灰白色或白色石膏樣糞便</span>，此屬正常排鋇現象無須驚慌</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>通便藥物</strong>：若檢查後 2-3 天仍無排便，應遵醫囑給予輕瀉劑助排</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_39" data-cat="臨床檢查預備與標本">
+        <div class="card-top">
+          <div class="topic-num">39</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 185 頁</span>
+              <span class="category-badge">臨床檢查預備與標本</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">靜態心電圖 (ECG) 12 導聯電極片標準黏貼定位與操作規範</h2>
+            <div class="card-note">講義第 185 頁，紅黃綠黑肢體導聯、V1-V6胸前導聯解剖定位、受測時平靜勿動勿語</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>操作前準備與環境要求</strong>：關閉周圍大功率電器防交流電干擾；病人平臥放鬆，解開衣領，取下金屬飾物與手錶；局部皮膚用酒精擦拭脫脂並塗抹導電膠。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>四肢導聯電極顏色代碼標準 (高頻考點)</strong>：肢體導聯標準黏貼位置：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>紅色 (RA)</strong>：右上肢 (右手腕內側)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>黃色 (LA)</strong>：左上肢 (左手腕內側)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>綠色 (LL)</strong>：左下肢 (左腳踝內側)</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>黑色 (RL)</strong>：右下肢 (右腳踝內側，接地線)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>胸前 6 大導聯解剖定位 (V1 - V6)</strong>：胸部電極精確位置：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>V1</strong>：胸骨右緣第 4 肋間</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>V2</strong>：胸骨左緣第 4 肋間</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>V3</strong>：V2 與 V4 連線之中點</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>V4</strong>：左側第 5 肋間鎖骨中線上</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>V5</strong>：左側腋前線與 V4 同一水平</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>V6</strong>：左側腋中線與 V4 同一水平</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>描記時病人注意事項</strong>：記錄心電圖時囑病人閉目平靜呼吸，<span class="keyword">切勿說話或移動身體</span>，防止肌肉顫抖偽差干擾曲線。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_40" data-cat="臨床檢查預備與標本">
+        <div class="card-top">
+          <div class="topic-num">40</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 186, 190 頁</span>
+              <span class="category-badge">臨床檢查預備與標本</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">病房常規標本收集指引：大便隱血、中段尿 (MSU)、24小時尿與痰</h2>
+            <div class="card-note">講義第 186, 190 頁，大便飲食禁忌、中段尿棄前後取中、24小時首尿棄末尿留、清晨咳深痰</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>大便標本與隱血試驗 (OBT)</strong>：取異常膿血黏液糞便蠶豆大小送檢；做隱血試驗前 3 天禁食動物血、肝臟、菠菜及含鐵劑藥物，避免化驗偽陽性。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>中段尿標本 (Midstream Urine - MSU)</strong>：留取前先以消毒水清潔尿道外口，排尿時<span class="keyword">棄去前段尿液，留取中段尿約 30 至 50 ml</span> 入無菌試管，排盡末段尿液。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>24 小時尿液收集法 (高頻考點)</strong>：定量化驗蛋白質或激素標準流程：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>第一天早上 7:00</strong>：囑病人排空膀胱，<span class="keyword">將此第一次尿液倒掉</span>，開始計時</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>24 小時收集過程</strong>：其後每次排出的所有尿液（包括大便時）全數倒入防腐大收集瓶內</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>第二天早上 7:00</strong>：囑病人排最後一次尿，<span class="keyword">必須全數保留於收集瓶內</span>，結束收集</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>量體積送檢</strong>：測量記錄 24 小時總尿量，搖勻後抽取規定量試管送檢</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>常規痰標本收集規範</strong>：最佳時間為<span class="keyword">清晨醒來後</span>；先用清水漱口清除口腔雜質，深吸氣用力自氣管深部咳出濃痰，切勿將唾液送檢。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_41" data-cat="臨終關懷與遺體護理">
+        <div class="card-top">
+          <div class="topic-num">41</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 196 頁</span>
+              <span class="category-badge">臨終關懷與遺體護理</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">庫伯勒-羅斯臨終心理五階段與瀕死病人生理機能變化</h2>
+            <div class="card-note">講義第 196 頁，否認/憤怒/磋商/憂鬱/接受心理五期、喉鳴音、聽覺最後消失</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>臨終心理反應五階段 (Kübler-Ross)</strong>：病人面對絕症死亡時的心理調適歷程：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>1. 否認期 (Denial)</strong>：「這不可能是真的，一定弄錯了！」震驚、否認診斷、逃避現實</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>2. 憤怒期 (Anger)</strong>：「為甚麼是我？太不公平了！」遷怒家屬、醫護及周圍一切事物</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>3. 磋商期 (Bargaining)</strong>：「如果讓我看見孫子長大，我願意做任何事。」企圖延期死亡或尋求奇蹟</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>4. 憂鬱期 (Depression)</strong>：「我快要走了，甚麼都沒用了。」極度悲傷寡言、食慾減退，<span class="keyword">自殺自傷高危期需密切防範</span></div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>5. 接受期 (Acceptance)</strong>：「我準備好了，隨遇而安。」內心歸於平靜，接受命運，交代後事</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>瀕死期呼吸系統生理變化</strong>：呼吸淺慢微弱，出現潮式呼吸；咽喉部肌肉鬆弛分泌物積聚無力咳出，呼吸時產生典型<span class="keyword">「瀕死喉鳴音」(Death Rattle)</span>。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>瀕死期循環與神經機能衰退</strong>：脈搏細弱難捫，血壓進行性驟降，四肢末梢冰冷，指甲嘴唇發紺；肌張力喪失下頜下垂，大小便失禁。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>感官功能：聽覺最後消失</strong>：視覺最早模糊，但<span class="keyword">聽覺通常是臨終最後消失的感官</span>；因此床旁切勿大聲議論病情，應保持環境祥和，給予溫柔關懷告別言語。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card" id="mc_42" data-cat="臨終關懷與遺體護理">
+        <div class="card-top">
+          <div class="topic-num">42</div>
+          <div class="card-title-box">
+            <div class="meta-row">
+              <span class="page-badge">講義第 199 - 202 頁</span>
+              <span class="category-badge">臨終關懷與遺體護理</span>
+              <span class="points-badge">共 4 個重點</span>
+            </div>
+            <h2 class="card-title">病房屍體護理 (Last Offices) 操作程序與三大傳染病分類處置</h2>
+            <div class="card-note">講義第 199 - 202 頁，屏風遮掩、填塞孔道、雙標籤、第1/2/3類屍體處置要求</div>
+          </div>
+        </div>
+        <div class="points-list">
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>確認死亡後病房即刻處置</strong>：必須經主診醫生正式確認並簽署死亡證明書後方可操作；拉起床簾或屏風遮蔽保護尊嚴；拔除各類引流管及導管（若屬死因裁判官或需屍檢案件則切勿拔除任何管線）。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>遺體料理常規步驟 (Last Offices)</strong>：使死者合上雙眼，裝回活動假牙，合攏下頜用繃帶固定；擦拭體表，以棉球妥善填塞口鼻耳肛門等天然孔道防分泌物滲出；穿上壽衣或病服，雙手平放腹部。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>雙重識別標籤 (ID Tags)</strong>：填寫兩張遺體身份識別標籤：一張繫於死者腳趾或手腕，另一張繫於外層屍袋表面，確保資料無誤。
+            </div>
+          </div>
+          <div class="point-item">
+            <span class="point-bullet">✦</span>
+            <div class="point-text">
+              <strong>屍體處理三大感控分類標準 (必考重點)</strong>：傳染病處置規範：
+              <div class="sub-points-list">
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>第 1 類 (Category 1 - 藍色標籤)</strong>：無特殊傳染病常規死者：無須特殊屍袋，可在殯儀館正常化妝及讓親屬瞻仰遺容</div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>第 2 類 (Category 2 - 黃色標籤)</strong>：血液及體液傳染病 (如乙型肝炎、丙型肝炎、愛滋病 HIV、多重耐藥菌)：必須使用專用防滲漏屍袋密封包裹；可瞻仰遺容但<span class="keyword">嚴禁進行防腐處理</span></div>
+                </div>
+                <div class="sub-point-item">
+                  <span class="sub-point-bullet">•</span>
+                  <div><strong>第 3 類 (Category 3 - 紅色標籤)</strong>：極高危烈性傳染病 (如炭疽、SARS、伊波拉、鼠疫、天花、禽流感)：必須立即使用雙層防滲漏特厚屍袋密封，嚴禁打開；<span class="keyword">嚴禁瞻仰遺容、嚴禁化妝及防腐處理</span>，必須立即火化或深埋</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    醫護支援人員護理技巧 I 基礎證書 ｜ 雞精MC全範圍衝刺筆記 ｜ 嚴格核對講義 80 頁全內容
+  </footer>
+
+  <!-- Floating Back to Top Button -->
+  <a href="#top" id="backToTopBtn" class="back-to-top" onclick="event.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'});" title="返回最頂" aria-label="返回最頂">
+    <svg viewBox="0 0 24 24">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </a>
+
+  <!-- Live Search and Filter Script -->
+  <script>
+    let currentCategory = 'ALL';
+
+    function filterCategory(cat) {
+      currentCategory = cat;
+      const chips = document.querySelectorAll('.filter-chip');
+      chips.forEach(chip => {
+        if ((cat === 'ALL' && chip.textContent.startsWith('全部')) || chip.textContent.includes(cat.substring(0, 4))) {
+          chip.classList.add('active');
+        } else {
+          chip.classList.remove('active');
+        }
+      });
+      applyFilters();
+    }
+
+    function handleSearch() {
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+      const cards = document.querySelectorAll('.topic-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-cat');
+        const text = card.textContent.toLowerCase();
+
+        const matchCat = (currentCategory === 'ALL' || cat === currentCategory);
+        const matchQuery = (!query || text.includes(query));
+
+        if (matchCat && matchQuery) {
+          card.style.display = 'block';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      document.getElementById('visibleCountBadge').textContent = `顯示 ${visibleCount} / ${cards.length} 個課題`;
+    }
+  </script>
+
+</body>
+</html>
