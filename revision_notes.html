@@ -35,6 +35,10 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       background: radial-gradient(circle at 50% 20%, #1a162b 0%, #0b1329 100%);
       font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -51,9 +55,6 @@
       color: white;
       padding: 22px 18px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
       border-bottom: 1px solid rgba(251, 146, 60, 0.3);
     }
 
@@ -190,7 +191,7 @@
       margin-bottom: 20px;
       box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.35);
       transition: transform 0.15s ease, border-color 0.15s ease;
-      scroll-margin-top: 140px;
+      scroll-margin-top: 24px;
     }
 
     .topic-card:hover {
@@ -394,12 +395,56 @@
         padding: 12px 12px;
       }
     }
+      /* Floating Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+      color: #ffffff;
+      border: 1px solid rgba(251, 146, 60, 0.6);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(234, 88, 12, 0.35);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0.92;
+      text-decoration: none;
+    }
+
+    .back-to-top:hover {
+      opacity: 1;
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), 0 3px 8px rgba(234, 88, 12, 0.45);
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+      color: #ffffff;
+    }
+
+    .back-to-top:active {
+      transform: translateY(-1px) scale(0.98);
+    }
+
+    .back-to-top svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 2.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
   </style>
 </head>
 <body>
 
   <!-- Sticky Header -->
-  <header>
+  <header id="top">
     <div class="header-content">
       <div class="header-title-box">
         <h1><span>🎯</span> 醫護支援人員 (PCA) 雞精短答衝刺筆記</h1>
@@ -1214,6 +1259,13 @@
   <footer>
     醫護支援人員護理技巧 I 基礎證書 ｜ 雞精短答衝刺專區 ｜ 嚴格核對講義筆記
   </footer>
+
+  <!-- Floating Back to Top Button -->
+  <a href="#top" id="backToTopBtn" class="back-to-top" onclick="event.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'});" title="返回最頂" aria-label="返回最頂">
+    <svg viewBox="0 0 24 24">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </a>
 
 </body>
 </html>
